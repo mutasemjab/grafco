@@ -43,7 +43,7 @@
                 @endphp
                 <article class="news-item" data-year="{{ $year }}" data-index="{{ $index }}">
                     <div class="news-item-image">
-                        <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $locale === 'ar' ? $item->name_ar : $item->name_en }}">
+                        <img src="{{ asset('assets/admin/uploads/' . $item->photo) }}" alt="{{ $locale === 'ar' ? $item->name_ar : $item->name_en }}">
                     </div>
                     <div class="news-item-body">
                         <div class="news-item-head">
