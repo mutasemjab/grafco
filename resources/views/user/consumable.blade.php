@@ -21,17 +21,7 @@
                 </span>
             </div>
 
-            <div class="cons-side-box">
-                @foreach($consumables as $index => $consumable)
-                <button class="cons-side-item cons-nav {{ $index === 0 ? 'is-active' : '' }}" 
-                        data-cons-btn 
-                        data-panel="consumable-{{ $consumable->id }}" 
-                        data-title="{{ $locale === 'ar' ? $consumable->name_ar : $consumable->name_en }}">
-                    {{ $locale === 'ar' ? $consumable->name_ar : $consumable->name_en }}
-                </button>
-                @endforeach
-            </div>
-
+           
             <div class="cons-side-logos">
                 @foreach($consumables as $consumable)
                 <button class="cons-logo-item cons-nav" 
