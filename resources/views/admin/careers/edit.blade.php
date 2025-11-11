@@ -86,7 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($item->positions as $position)
+                    @foreach ($item->availablePositions as $position)
                         <tr>
                             <td><img src="{{ asset('assets/admin/uploads/' . $position->photo) }}" width="60" class="rounded"></td>
                             <td>{{ $position->name_en }}</td>
