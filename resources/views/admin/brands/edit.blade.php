@@ -23,7 +23,7 @@
 
                         <div class="form-group">
                             <label>{{ __('messages.photo') }}</label><br>
-                            <img src="{{ asset('storage/'.$brand->photo) }}" width="80" class="mb-2 rounded">
+                            <img src="{{ asset('assets/admin/uploads/'.$brand->photo) }}" width="80" class="mb-2 rounded">
                             <input type="file" name="photo" class="form-control">
                         </div>
 

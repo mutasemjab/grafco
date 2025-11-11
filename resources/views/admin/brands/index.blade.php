@@ -26,7 +26,7 @@
                 <tbody>
                     @foreach($brands as $brand)
                     <tr>
-                        <td><img src="{{ asset('storage/'.$brand->photo) }}" width="60" class="rounded"></td>
+                        <td><img src="{{ asset('assets/admin/uploads/'.$brand->photo) }}" width="60" class="rounded"></td>
                         <td>{{ $brand->name }}</td>
                         <td>
 
