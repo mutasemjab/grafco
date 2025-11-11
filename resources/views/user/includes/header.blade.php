@@ -37,11 +37,7 @@
                 {{ $properties['native'] }}
             </a>
             @endforeach
-            <button class="icon-btn" type="button" data-open="locale">
-                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18Zm0-16c-2.8 0-5 3.1-5 7s2.2 7 5 7 5-3.1 5-7-2.2-7-5-7Zm0 0c1.7 0 3.3 3.1 3.3 7S13.7 19 12 19 8.7 15.9 8.7 11 10.3 5 12 5Zm7 6H5m14 0Z" fill="currentColor"/>
-                </svg>
-            </button>
+            
             <button class="icon-btn" type="button" data-open="search">
                 <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M21 21l-3.9-3.9M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
