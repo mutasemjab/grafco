@@ -124,7 +124,7 @@
     @foreach($services as $service)
     <article class="service-card">
       <div class="service-ico">
-       <img src="{{asset('assets/admin/uploads'.$service->icon)}}" alt="">
+       <img src="{{asset('assets/admin/uploads/'.$service->icon)}}" alt="">
       </div>
       <h3 class="service-title">{{ $locale === 'ar' ? $service->name_ar : $service->name_en }}</h3>
       <p class="service-text">{!! $locale === 'ar' ? $service->description_ar : $service->description_en !!}</p>
