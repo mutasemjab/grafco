@@ -43,7 +43,6 @@ class ServicePageSectionController extends Controller
             'features_en.*' => 'nullable|string',
             'features_ar' => 'nullable|array',
             'features_ar.*' => 'nullable|string',
-            'image_right' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);
 
@@ -89,7 +88,6 @@ class ServicePageSectionController extends Controller
             'features_en.*' => 'nullable|string',
             'features_ar' => 'nullable|array',
             'features_ar.*' => 'nullable|string',
-            'image_right' => 'nullable|boolean',
             'order' => 'nullable|integer',
         ]);
 

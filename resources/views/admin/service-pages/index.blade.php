@@ -21,7 +21,6 @@
                     <th>{{ __('messages.slug') }}</th>
                     <th>{{ __('messages.name_en') }}</th>
                     <th>{{ __('messages.name_ar') }}</th>
-                    <th>{{ __('messages.sections') }}</th>
                     <th>{{ __('messages.order') }}</th>
                     <th>{{ __('messages.actions') }}</th>
                 </tr>
@@ -33,11 +32,7 @@
                     <td><code>{{ $item->slug }}</code></td>
                     <td>{{ $item->name_en }}</td>
                     <td>{{ $item->name_ar }}</td>
-                    <td>
-                        <a href="{{ route('service-pages.show', $item->id) }}" class="btn btn-sm btn-info">
-                            {{ $item->sections_count }} {{ __('messages.sections') }}
-                        </a>
-                    </td>
+                 
                     <td>{{ $item->order }}</td>
                     <td>
                         <a href="{{ route('service-pages.edit', $item->id) }}" class="btn btn-sm btn-success">
