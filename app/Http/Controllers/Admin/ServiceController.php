@@ -37,7 +37,7 @@ class ServiceController extends Controller
             'icon' => 'required|image',
         ]);
 
-        $icon = uploadImage('assets/admin/uploads', $request->photo);
+        $icon = uploadImage('assets/admin/uploads', $request->icon);
 
         Service::create([
             'name_en' => $request->name_en,
@@ -67,7 +67,7 @@ class ServiceController extends Controller
 
         $icon = $service->icon;
         if($request->hasFile('icon')){
-            $icon = uploadImage('assets/admin/uploads', $request->photo);
+            $icon = uploadImage('assets/admin/uploads', $request->icon);
         }
 
         $service->update([
