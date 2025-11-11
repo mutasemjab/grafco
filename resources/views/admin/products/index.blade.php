@@ -56,7 +56,7 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $product->category->name_en }}</span>
                             </td>
-                            <td>{{ $product->brand->name_en }}</td>
+                            <td>{{ $product->brand->name }}</td>
                             <td>
                                 @if($product->show_price)
                                     <strong>{{ number_format($product->price, 2) }}</strong>
