@@ -11,7 +11,7 @@
         ['name'=> __('front.contact'),'route'=>'contact'],
         ['name'=> __('front.career'),'route'=>'career'],
     ];
-        
+
     $setting = App\Models\Setting::first();
 
 @endphp
@@ -32,12 +32,22 @@
         </div>
 
         <div class="top-actions">
-             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-            <a class="lang-chip"  hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                {{ $properties['native'] }}
-            </a>
+           @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                <a class="lang-chip"  hreflang="{{ $localeCode }}"
+                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                    @if($localeCode == 'ar')
+                        ع
+                    @elseif($localeCode == 'en')
+                        EN
+                    @else
+                        {{ strtoupper($localeCode) }}
+                    @endif
+
+                </a>
             @endforeach
-            
+
+
             <button class="icon-btn" type="button" data-open="search">
                 <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M21 21l-3.9-3.9M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>

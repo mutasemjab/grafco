@@ -147,7 +147,7 @@ html,body{overflow-x:hidden}
 .hero-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;gap:22px;min-height:78vh;max-width:var(--container)}
 .hero-title{color:#fff;font-size:64px;line-height:1.05;margin:0}
 .hero-title i{display:block;width:280px;height:8px;background:#01AD5E;border-radius:6px;margin:-15px 0 0}
-.hero-sub{color:rgba(255,255,255,.9);font-size:20px;max-width:640px;margin:6px 0 0}
+.hero-sub{color:rgba(255,255,255,.9);font-size:17px;max-width:640px;margin:6px 0 0}
 .hero-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
 .btn-cta{display:inline-flex;align-items:center;gap:10px;background:#01AD5E;color:#fff;text-decoration:none;padding:14px 22px;border-radius:12px;font-weight:700}
 .call-chip{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;color:#fff}

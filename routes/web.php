@@ -30,37 +30,39 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
-  Route::get('/', [HomeController::class, 'index'])->name('home');
-  Route::get('/service', [ServiceController::class, 'index'])->name('service');
-  Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
-  Route::post('/parts-requests', [PartsRequestController::class, 'store'])->name('parts-requests.store');
-  Route::get('/consumable', [ConsumableController::class, 'index'])->name('consumable');
-  Route::get('/about', [AboutController::class, 'index'])->name('about');
-  Route::get('/news', [NewsController::class, 'index'])->name('news');
-  Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-  Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
-  Route::get('/career', [CareerController::class, 'index'])->name('career');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/service', [ServiceController::class, 'index'])->name('service');
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::post('/parts-requests', [PartsRequestController::class, 'store'])->name('parts-requests.store');
+    Route::get('/consumable', [ConsumableController::class, 'index'])->name('consumable');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+    Route::get('/news', [NewsController::class, 'index'])->name('news');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+    Route::get('/career', [CareerController::class, 'index'])->name('career');
 
-  // routes/web.php
-Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.category');
-Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
-Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
+    // routes/web.php
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/brand/{id}', [ProductController::class, 'index'])->name('products.brand');
+    Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.category');
+    Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
+    Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
 
 
-  // Frontend Page Routes
-  Route::get('/terms-and-conditions', function () {
-    $page = \App\Models\Page::where('type', 1)->first();
-    if (!$page) {
-      return view('user.not-found');
-    }
-    return view('user.page', compact('page'));
-  })->name('front.page.terms');
+    // Frontend Page Routes
+    Route::get('/terms-and-conditions', function () {
+        $page = \App\Models\Page::where('type', 1)->first();
+        if (!$page) {
+            return view('user.not-found');
+        }
+        return view('user.page', compact('page'));
+    })->name('front.page.terms');
 
-  Route::get('/privacy-policy', function () {
-    $page = \App\Models\Page::where('type', 2)->first();
-    if (!$page) {
-      return view('user.not-found');
-    }
-    return view('user.page', compact('page'));
-  })->name('front.page.privacy');
+    Route::get('/privacy-policy', function () {
+        $page = \App\Models\Page::where('type', 2)->first();
+        if (!$page) {
+            return view('user.not-found');
+        }
+        return view('user.page', compact('page'));
+    })->name('front.page.privacy');
 });

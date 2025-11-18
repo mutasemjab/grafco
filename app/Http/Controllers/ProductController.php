@@ -14,24 +14,36 @@ class ProductController extends Controller
     public function index($categorySlug = null)
     {
         $categories = Category::mainCategories()
-            ->with(['children.products', 'products'])
+            ->with(['children.products' => function($query) {
+                $query->where('is_active', true);
+            }, 'products' => function($query) {
+                $query->where('is_active', true);
+            }])
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
-        
+
         $selectedCategory = null;
+        $selectedBrand = null;
         $selectedBrands = collect();
-        
-        if ($categorySlug) {
+
+        // Check if filtering by brand
+        if (request()->has('brand')) {
+            $selectedBrand = Brand::findOrFail(request('brand'));
+            $selectedBrands = Brand::all();
+        }
+        // Check if filtering by category
+        elseif ($categorySlug) {
             $selectedCategory = Category::where('slug', $categorySlug)->firstOrFail();
             $selectedBrands = Brand::whereHas('products', function($q) use ($selectedCategory) {
                 $q->where('category_id', $selectedCategory->id);
             })->get();
-        } else {
+        }
+        else {
             $selectedBrands = Brand::all();
         }
-        
-        return view('user.products', compact('categories', 'selectedCategory', 'selectedBrands'));
+
+        return view('user.products', compact('categories', 'selectedCategory', 'selectedBrands', 'selectedBrand'));
     }
 
     public function show($slug)
@@ -39,14 +51,14 @@ class ProductController extends Controller
         $product = Product::where('slug', $slug)
             ->with(['category', 'brand', 'features', 'specifications', 'downloads'])
             ->firstOrFail();
-        
+
         $categories = Category::mainCategories()
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
 
         $setting = Setting::first();
-        
+
         return view('user.product-details', compact('product', 'categories','setting'));
     }
 
@@ -66,7 +78,7 @@ class ProductController extends Controller
 
         $validated['product_id'] = $productId;
         $validated['status'] = 'pending';
-        
+
         ProductRequest::create($validated);
 
         return back()->with('success', __('products.request_sent_successfully'));
