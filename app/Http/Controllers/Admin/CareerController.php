@@ -90,7 +90,7 @@ class CareerController extends Controller
 
         $path = uploadImage('assets/admin/uploads', $request->photo);
 
-        $career->positions()->create([
+        $career->availablePositions()->create([
             'name_en'=>$request->name_en,
             'name_ar'=>$request->name_ar,
             'photo'=>$path
