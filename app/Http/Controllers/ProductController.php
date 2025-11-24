@@ -13,46 +13,79 @@ class ProductController extends Controller
 {
    public function index($categorySlug = null)
     {
-        // Eager load categories with their brands (from the pivot table)
-        $categories = Category::mainCategories()
-            ->with([
-                'children.products' => function($query) {
-                    $query->where('is_active', true);
-                },
-                'children.brands', // Load brands for subcategories
-                'products' => function($query) {
-                    $query->where('is_active', true);
-                },
-                'brands' // Load brands for main categories
-            ])
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
-
         $selectedCategory = null;
         $selectedBrand = null;
 
-        // Check if filtering by brand first
+        // Check if filtering by brand (from query parameter)
         if (request()->has('brand')) {
             $selectedBrand = Brand::findOrFail(request('brand'));
-            
-            // If brand is selected but no category, find the category from URL or brand's products
-            if ($categorySlug) {
-                $selectedCategory = Category::where('slug', $categorySlug)
-                                            ->with('brands')
-                                            ->firstOrFail();
-            }
         }
-        // Check if filtering by category only
-        elseif ($categorySlug) {
+
+        // Check if filtering by category (from URL path)
+        if ($categorySlug) {
             $selectedCategory = Category::where('slug', $categorySlug)
                                         ->with('brands')
                                         ->firstOrFail();
         }
 
+        // Load categories with their relationships
+        $categories = Category::mainCategories()
+            ->with([
+                'children' => function($query) {
+                    $query->where('is_active', true);
+                },
+                'children.brands',
+                'brands'
+            ])
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        // Load products for each category based on filters
+        foreach ($categories as $category) {
+            // Check if this category should be filtered
+            $shouldFilterThisCategory = !$selectedCategory || $selectedCategory->id == $category->id;
+
+            if ($shouldFilterThisCategory) {
+                // Load products for main category
+                $categoryProductsQuery = Product::where('category_id', $category->id)
+                                                ->where('is_active', true);
+                
+                if ($selectedBrand) {
+                    $categoryProductsQuery->where('brand_id', $selectedBrand->id);
+                }
+                
+                $category->filteredProducts = $categoryProductsQuery->get();
+
+                // Load products for subcategories
+                if ($category->children->count() > 0) {
+                    foreach ($category->children as $subcategory) {
+                        $subProductsQuery = Product::where('category_id', $subcategory->id)
+                                                   ->where('is_active', true);
+                        
+                        if ($selectedBrand) {
+                            $subProductsQuery->where('brand_id', $selectedBrand->id);
+                        }
+                        
+                        $subcategory->filteredProducts = $subProductsQuery->get();
+                    }
+                }
+            } else {
+                // Don't load products for other categories
+                $category->filteredProducts = collect();
+                
+                if ($category->children->count() > 0) {
+                    foreach ($category->children as $subcategory) {
+                        $subcategory->filteredProducts = collect();
+                    }
+                }
+            }
+        }
+
         return view('user.products', compact('categories', 'selectedCategory', 'selectedBrand'));
     }
 
+    
     public function show($slug)
     {
         $product = Product::where('slug', $slug)

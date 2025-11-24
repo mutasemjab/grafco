@@ -27,7 +27,7 @@
         <div class="footer-links-col">
             <h3 class="footer-title">{{ __('front.quick_links') }}</h3>
             <ul class="footer-links">
-                <li><a href="{{ route('products.category') }}">{{ __('front.products') }}</a></li>
+                <li><a href="{{ route('products.index') }}">{{ __('front.products') }}</a></li>
                 <li><a href="#">{{ __('front.applications') }}</a></li>
                 <li><a href="#">{{ __('front.brands') }}</a></li>
                 <li><a href="{{ route('service') }}">{{ __('front.services') }}</a></li>

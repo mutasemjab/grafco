@@ -32,7 +32,7 @@
             <div class="prod-nav">
                 @foreach($categories as $category)
                 <button class="prod-nav-item {{ $product->category->id == $category->id ? 'is-active' : '' }}" 
-                        onclick="window.location.href='{{ route('products.category', $category->slug) }}'">
+                        onclick="window.location.href='{{ route('products.index', $category->slug) }}'">
                     <span class="prod-nav-arrow">
                         <svg width="10" height="10" viewBox="0 0 24 24">
                             <path d="M9 6l6 6-6 6" fill="none" stroke="{{ $product->category->id == $category->id ? '#fff' : '#665D99' }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

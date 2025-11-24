@@ -17,7 +17,7 @@
                     </span>
 
                     <div class="hero-cta">
-                        <a href="<?php echo e(route('products.category')); ?>" class="btn-cta"><?php echo e(__('front.our_products')); ?>
+                        <a href="<?php echo e(route('products.index')); ?>" class="btn-cta"><?php echo e(__('front.our_products')); ?>
 
                             <svg width="18" height="18" viewBox="0 0 24 24">
                                 <path d="M5 12h12M13 6l6 6-6 6" stroke="#fff" stroke-width="2" fill="none"
@@ -49,7 +49,7 @@
         <div class="container featured-grid">
             <div class="featured-left">
                 <h2 class="featured-title"><?php echo e(__('messages.featured')); ?><br><?php echo e(__('messages.products')); ?></h2>
-                <a href="<?php echo e(route('products.category')); ?>" class="featured-btn"><?php echo e(__('messages.view_all')); ?></a>
+                <a href="<?php echo e(route('products.index')); ?>" class="featured-btn"><?php echo e(__('messages.view_all')); ?></a>
                 <div class="featured-arrows">
                     <button class="featured-arrow" data-prev type="button" aria-label="<?php echo e(__('messages.previous')); ?>">
                         <svg width="20" height="20" viewBox="0 0 24 24">

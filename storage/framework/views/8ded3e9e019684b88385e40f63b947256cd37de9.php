@@ -4,7 +4,7 @@
     $nav = [
         ['name'=> __('front.home'),'route'=>'home'],
         ['name'=> __('front.about'),'route'=>'about'],
-        ['name'=> __('front.products'),'route'=>'products.category'],
+        ['name'=> __('front.products'),'route'=>'products.index'],
         ['name'=> __('front.consumable'),'route'=>'consumable'],
         ['name'=> __('front.service'),'route'=>'service'],
         ['name'=> __('front.news_update'),'route'=>'news'],

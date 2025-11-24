@@ -91,67 +91,53 @@
                     </span>
                 </div>
 
-                <div class="prod-panels">
-                @foreach($categories as $category)
-                <div class="prod-panel {{ $selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : '' }}"
-                    data-panel="category-{{ $category->id }}">
+             <div class="prod-panels">
+    @foreach($categories as $category)
+    <div class="prod-panel {{ $selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : '' }}"
+        data-panel="category-{{ $category->id }}">
 
-                    @if($category->children->count() > 0)
-                        @foreach($category->children as $subcategory)
-                        <div class="prod-section">
-                            <div class="prod-subheading">
-                                <span class="prod-heading-mark">//</span>
-                                <span>{{ $subcategory->name }}</span>
-                            </div>
-                            <div class="prod-grid">
-                                @php
-                                    $products = $subcategory->products->where('is_active', true);
-                                    if($selectedBrand) {
-                                        $products = $products->where('brand_id', $selectedBrand->id);
-                                    }
-                                @endphp
-
-                                @forelse($products as $product)
-                                <article class="prod-card">
-                                    <a href="{{ route('product.details', $product->slug) }}">
-                                        <div class="prod-card-img">
-                                            <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" alt="{{ $product->name }}">
-                                        </div>
-                                        <div class="prod-card-foot">{{ $product->name }}</div>
-                                    </a>
-                                </article>
-                                @empty
-                                <p class="no-products">{{ __('front.no_products_found') }}</p>
-                                @endforelse
-                            </div>
-                        </div>
-                        @endforeach
-                    @else
-                        <div class="prod-grid">
-                            @php
-                                $products = $category->products->where('is_active', true);
-                                if($selectedBrand) {
-                                    $products = $products->where('brand_id', $selectedBrand->id);
-                                }
-                            @endphp
-
-                            @forelse($products as $product)
-                            <article class="prod-card">
-                                <a href="{{ route('product.details', $product->slug) }}">
-                                    <div class="prod-card-img">
-                                        <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" alt="{{ $product->name }}">
-                                    </div>
-                                    <div class="prod-card-foot">{{ $product->name }}</div>
-                                </a>
-                            </article>
-                            @empty
-                            <p class="no-products">{{ __('front.no_products_found') }}</p>
-                            @endforelse
-                        </div>
-                    @endif
+        @if($category->children->count() > 0)
+            @foreach($category->children as $subcategory)
+            <div class="prod-section">
+                <div class="prod-subheading">
+                    <span class="prod-heading-mark">//</span>
+                    <span>{{ $subcategory->name }}</span>
                 </div>
-                @endforeach
+                <div class="prod-grid">
+                    @forelse($subcategory->filteredProducts ?? [] as $product)
+                    <article class="prod-card">
+                        <a href="{{ route('product.details', $product->slug) }}">
+                            <div class="prod-card-img">
+                                <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+                            </div>
+                            <div class="prod-card-foot">{{ $product->name }}</div>
+                        </a>
+                    </article>
+                    @empty
+                    <p class="no-products">{{ __('front.no_products_found') }}</p>
+                    @endforelse
+                </div>
             </div>
+            @endforeach
+        @else
+            <div class="prod-grid">
+                @forelse($category->filteredProducts ?? [] as $product)
+                <article class="prod-card">
+                    <a href="{{ route('product.details', $product->slug) }}">
+                        <div class="prod-card-img">
+                            <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+                        </div>
+                        <div class="prod-card-foot">{{ $product->name }}</div>
+                    </a>
+                </article>
+                @empty
+                <p class="no-products">{{ __('front.no_products_found') }}</p>
+                @endforelse
+            </div>
+        @endif
+    </div>
+    @endforeach
+</div>
             </div>
         </div>
     </div>

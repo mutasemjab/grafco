@@ -17,7 +17,7 @@
                     </span>
 
                     <div class="hero-cta">
-                        <a href="{{ route('products.category') }}" class="btn-cta">{{ __('front.our_products') }}
+                        <a href="{{ route('products.index') }}" class="btn-cta">{{ __('front.our_products') }}
                             <svg width="18" height="18" viewBox="0 0 24 24">
                                 <path d="M5 12h12M13 6l6 6-6 6" stroke="#fff" stroke-width="2" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round" />
@@ -48,7 +48,7 @@
         <div class="container featured-grid">
             <div class="featured-left">
                 <h2 class="featured-title">{{ __('messages.featured') }}<br>{{ __('messages.products') }}</h2>
-                <a href="{{ route('products.category') }}" class="featured-btn">{{ __('messages.view_all') }}</a>
+                <a href="{{ route('products.index') }}" class="featured-btn">{{ __('messages.view_all') }}</a>
                 <div class="featured-arrows">
                     <button class="featured-arrow" data-prev type="button" aria-label="{{ __('messages.previous') }}">
                         <svg width="20" height="20" viewBox="0 0 24 24">

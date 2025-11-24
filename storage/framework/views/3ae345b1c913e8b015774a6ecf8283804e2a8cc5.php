@@ -93,67 +93,53 @@
                     </span>
                 </div>
 
-                <div class="prod-panels">
-                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="prod-panel <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
-                    data-panel="category-<?php echo e($category->id); ?>">
+             <div class="prod-panels">
+    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="prod-panel <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
+        data-panel="category-<?php echo e($category->id); ?>">
 
-                    <?php if($category->children->count() > 0): ?>
-                        <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="prod-section">
-                            <div class="prod-subheading">
-                                <span class="prod-heading-mark">//</span>
-                                <span><?php echo e($subcategory->name); ?></span>
+        <?php if($category->children->count() > 0): ?>
+            <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="prod-section">
+                <div class="prod-subheading">
+                    <span class="prod-heading-mark">//</span>
+                    <span><?php echo e($subcategory->name); ?></span>
+                </div>
+                <div class="prod-grid">
+                    <?php $__empty_1 = true; $__currentLoopData = $subcategory->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <article class="prod-card">
+                        <a href="<?php echo e(route('product.details', $product->slug)); ?>">
+                            <div class="prod-card-img">
+                                <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
                             </div>
-                            <div class="prod-grid">
-                                <?php
-                                    $products = $subcategory->products->where('is_active', true);
-                                    if($selectedBrand) {
-                                        $products = $products->where('brand_id', $selectedBrand->id);
-                                    }
-                                ?>
-
-                                <?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <article class="prod-card">
-                                    <a href="<?php echo e(route('product.details', $product->slug)); ?>">
-                                        <div class="prod-card-img">
-                                            <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
-                                        </div>
-                                        <div class="prod-card-foot"><?php echo e($product->name); ?></div>
-                                    </a>
-                                </article>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php else: ?>
-                        <div class="prod-grid">
-                            <?php
-                                $products = $category->products->where('is_active', true);
-                                if($selectedBrand) {
-                                    $products = $products->where('brand_id', $selectedBrand->id);
-                                }
-                            ?>
-
-                            <?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <article class="prod-card">
-                                <a href="<?php echo e(route('product.details', $product->slug)); ?>">
-                                    <div class="prod-card-img">
-                                        <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
-                                    </div>
-                                    <div class="prod-card-foot"><?php echo e($product->name); ?></div>
-                                </a>
-                            </article>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
-                            <?php endif; ?>
-                        </div>
+                            <div class="prod-card-foot"><?php echo e($product->name); ?></div>
+                        </a>
+                    </article>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                    <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
                     <?php endif; ?>
                 </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php else: ?>
+            <div class="prod-grid">
+                <?php $__empty_1 = true; $__currentLoopData = $category->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <article class="prod-card">
+                    <a href="<?php echo e(route('product.details', $product->slug)); ?>">
+                        <div class="prod-card-img">
+                            <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
+                        </div>
+                        <div class="prod-card-foot"><?php echo e($product->name); ?></div>
+                    </a>
+                </article>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</div>
             </div>
         </div>
     </div>

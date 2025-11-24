@@ -41,12 +41,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
     Route::get('/career', [CareerController::class, 'index'])->name('career');
 
-    // routes/web.php
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/products/brand/{id}', [ProductController::class, 'index'])->name('products.brand');
-    Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.category');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
     Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
+    
+    Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.index');
+
+    
+    
     Route::post('/career/apply', [CareerController::class, 'apply'])->name('career.apply');
 
     // Frontend Page Routes

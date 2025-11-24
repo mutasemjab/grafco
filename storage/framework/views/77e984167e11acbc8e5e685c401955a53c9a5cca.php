@@ -27,7 +27,7 @@
         <div class="footer-links-col">
             <h3 class="footer-title"><?php echo e(__('front.quick_links')); ?></h3>
             <ul class="footer-links">
-                <li><a href="<?php echo e(route('products.category')); ?>"><?php echo e(__('front.products')); ?></a></li>
+                <li><a href="<?php echo e(route('products.index')); ?>"><?php echo e(__('front.products')); ?></a></li>
                 <li><a href="#"><?php echo e(__('front.applications')); ?></a></li>
                 <li><a href="#"><?php echo e(__('front.brands')); ?></a></li>
                 <li><a href="<?php echo e(route('service')); ?>"><?php echo e(__('front.services')); ?></a></li>
