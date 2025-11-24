@@ -14,7 +14,7 @@ return [
    'close' => 'Close',
    'search' => 'Search',
    'search_placeholder' => 'Search...',
-   'footer_tagline' => 'Your trusted partner for print, cut, and finishing equipment across the Middle East.',
+   'footer_tagline' => 'The past, present and future of the printing world in Jordan.',
    'facebook' => 'Facebook',
    'linkedin' => 'LinkedIn',
    'instagram' => 'Instagram',

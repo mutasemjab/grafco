@@ -40,8 +40,8 @@ html,body{overflow-x:hidden}
 
 /* Header */
 .site-header{position:sticky;top:0;background:#fff;z-index:70}
-.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand img{height:44px;display:block}
+.nav-inner{height:92px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand img{height:85px;display:block}
 .nav{flex:1 1 auto;min-width:0;display:flex;justify-content:center}
 .nav-list{list-style:none;margin:0;padding:0;display:flex;gap:30px;min-width:0}
 .nav-item{flex:0 0 auto}
@@ -102,7 +102,7 @@ html,body{overflow-x:hidden}
 }
 .footer-grid{position:relative;z-index:1}
 .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;padding:48px 0}
-.footer-logo img{height:56px;display:block}
+.footer-logo img{height:90px;display:block}
 .footer-tag{margin:16px 0 22px;color:var(--neutral);max-width:460px}
 .footer-social{display:flex;gap:16px;list-style:none;margin:0 0 20px;padding:0}
 .footer-social a{display:inline-flex;width:38px;height:38px;border:1px solid #d2d6db;border-radius:999px;align-items:center;justify-content:center;color:#0b1220;text-decoration:none}

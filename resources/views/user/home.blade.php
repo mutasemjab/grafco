@@ -162,13 +162,9 @@
                     <h2 class="about-hero__title">
                         {{ $locale === 'ar' ? $bottomSection->name_ar : $bottomSection->name_en }}</h2>
                     <p class="about-hero__kicker">{!! $locale === 'ar' ? $bottomSection->short_description_ar : $bottomSection->short_description_en !!}</p>
+                    <p class="about-hero__kicker">{!! $locale === 'ar' ? $bottomSection->tall_description_ar : $bottomSection->tall_description_en !!}</p>
                 </div>
-                <div class="about-hero__right">
-                    <div class="about-hero__rule"></div>
-                    <p class="about-hero__text">
-                        {!! $locale === 'ar' ? $bottomSection->tall_description_ar : $bottomSection->tall_description_en !!}
-                    </p>
-                </div>
+               
             </div>
         </section>
     @endif
@@ -200,14 +196,33 @@
         if (!track || !prevBtn || !nextBtn || brandItems.length === 0) return;
         
         let currentIndex = 0;
-        const itemWidth = brandItems[0].offsetWidth;
-        const gap = 20; // Adjust this based on your CSS gap
-        const slideWidth = itemWidth + gap;
-        const visibleItems = Math.floor(track.parentElement.offsetWidth / slideWidth);
-        const maxIndex = Math.max(0, brandItems.length - visibleItems);
+        let autoplayInterval;
+        let isHovered = false;
+        const autoplayDelay = 1000; // 3 seconds - غير الرقم لو بدك أسرع أو أبطأ
+        
+        function getItemWidth() {
+            return brandItems[0].offsetWidth;
+        }
+        
+        function getGap() {
+            return 20; // Adjust based on your CSS gap
+        }
+        
+        function getSlideWidth() {
+            return getItemWidth() + getGap();
+        }
+        
+        function getVisibleItems() {
+            return Math.floor(track.parentElement.offsetWidth / getSlideWidth());
+        }
+        
+        function getMaxIndex() {
+            return Math.max(0, brandItems.length - getVisibleItems());
+        }
         
         // Update button states
         function updateButtons() {
+            const maxIndex = getMaxIndex();
             prevBtn.disabled = currentIndex === 0;
             nextBtn.disabled = currentIndex >= maxIndex;
             
@@ -217,20 +232,69 @@
         
         // Slide to position
         function slideTo(index) {
+            const maxIndex = getMaxIndex();
             currentIndex = Math.max(0, Math.min(index, maxIndex));
-            const offset = -(currentIndex * slideWidth);
+            const offset = -(currentIndex * getSlideWidth());
             track.style.transform = `translateX(${offset}px)`;
             updateButtons();
         }
         
+        // Move to next slide
+        function goNext() {
+            const maxIndex = getMaxIndex();
+            if (currentIndex >= maxIndex) {
+                // إذا وصلنا للآخر، نرجع للأول
+                slideTo(0);
+            } else {
+                slideTo(currentIndex + 1);
+            }
+        }
+        
+        // Move to previous slide
+        function goPrev() {
+            slideTo(currentIndex - 1);
+        }
+        
+        // Start autoplay
+        function startAutoplay() {
+            stopAutoplay(); // Clear any existing interval
+            autoplayInterval = setInterval(function() {
+                if (!isHovered) {
+                    goNext();
+                }
+            }, autoplayDelay);
+        }
+        
+        // Stop autoplay
+        function stopAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+        }
+        
         // Next button
         nextBtn.addEventListener('click', function() {
-            slideTo(currentIndex + 1);
+            goNext();
+            startAutoplay(); // Restart autoplay after manual click
         });
         
         // Previous button
         prevBtn.addEventListener('click', function() {
-            slideTo(currentIndex - 1);
+            goPrev();
+            startAutoplay(); // Restart autoplay after manual click
+        });
+        
+        // Pause autoplay on hover
+        brandsSection.addEventListener('mouseenter', function() {
+            isHovered = true;
+            stopAutoplay();
+        });
+        
+        // Resume autoplay when mouse leaves
+        brandsSection.addEventListener('mouseleave', function() {
+            isHovered = false;
+            startAutoplay();
         });
         
         // Handle window resize
@@ -240,11 +304,22 @@
             resizeTimer = setTimeout(function() {
                 currentIndex = 0;
                 slideTo(0);
+                startAutoplay();
             }, 250);
+        });
+        
+        // Handle visibility change (pause when tab is not visible)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopAutoplay();
+            } else if (!isHovered) {
+                startAutoplay();
+            }
         });
         
         // Initial state
         updateButtons();
+        startAutoplay(); // Start autoplay on load
     }
 })();
 </script>
