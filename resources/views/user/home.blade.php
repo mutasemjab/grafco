@@ -102,9 +102,9 @@
 
     <section class="brands" data-brands>
         <div class="container brands-head">
-            <h2 class="brands-title">{{ __('front.Product Lines') }}</h2>
+            <h2 class="brands-title">{{ __('front.Our Partners') }}</h2>
         </div>
-
+<br>
 
         <div class="brands-wrap">
             <button class="brands-nav" data-prev type="button">

@@ -105,12 +105,9 @@
 
     <section class="brands" data-brands>
         <div class="container brands-head">
-            <span class="brands-kicker"><?php echo e(__('front.products')); ?></span>
-            <h2 class="brands-title"><?php echo e(__('front.Product Lines')); ?></h2>
-            <p class="brands-sub">Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi,
-                adipiscing mauris non purus parturient.</p>
+            <h2 class="brands-title"><?php echo e(__('front.Our Partners')); ?></h2>
         </div>
-
+<br>
 
         <div class="brands-wrap">
             <button class="brands-nav" data-prev type="button">
