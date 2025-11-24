@@ -172,23 +172,7 @@
                     </div>
                     @endif
 
-                    @if($product->description)
-                    <div class="pdetail-download-bottom">
-                        <div class="pdetail-download-textblock">
-                            <div class="pdetail-block-kicker">{{ __('front.your_trusted_partner') }}</div>
-                            <h2 class="pdetail-block-title">{{ $product->name }}</h2>
-                            <div class="pdetail-download-paragraph">
-                                {!! $product->description !!}
-                            </div>
-                            <p class="pdetail-download-paragraph">
-                                {{ __('front.visit_for_info') }}: <a href="#" class="pdetail-link">www.graphicsuppliesco.com</a>
-                            </p>
-                        </div>
-                        <div class="pdetail-download-image">
-                            <img src="{{ asset('assets/admin/uploads/' . $product->main_image) }}" alt="{{ $product->name }}">
-                        </div>
-                    </div>
-                    @endif
+                  
                 </div>
 
                 <div class="pdetail-panel" data-panel="request">
