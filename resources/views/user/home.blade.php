@@ -102,10 +102,7 @@
 
     <section class="brands" data-brands>
         <div class="container brands-head">
-            <span class="brands-kicker">{{ __('front.products') }}</span>
             <h2 class="brands-title">{{ __('front.Product Lines') }}</h2>
-            <p class="brands-sub">Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi,
-                adipiscing mauris non purus parturient.</p>
         </div>
 
 

@@ -37,7 +37,7 @@ return [
    'factory_trained' => 'Factory Trained Engineers',
    'our_products' => 'Our Products',
    'our_service' => 'Our Service',
-   'Product Lines' => 'Product Lines',
+   'Our Partners' => 'Our Partners',
    'graphco_services' => 'Graphco Services',
    'services_headline' => 'The company offers a lot of services such as',
    'graphco_full_name' => 'Graphic Supplies Co.',

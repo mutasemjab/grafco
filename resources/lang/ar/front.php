@@ -37,7 +37,7 @@ return [
   'factory_trained' => 'مهندسون مدربون من المصنع',
   'our_products' => 'منتجاتنا',
   'our_service' => 'خدماتنا',
-  'Product Lines' => 'خطوط الإنتاج',
+  'Our Partners' => 'شركاؤنا',
   'graphco_services' => 'خدمات جرافكو',
   'services_headline' => 'تقدم الشركة العديد من الخدمات مثل',
   'graphco_full_name' => 'شركة جرافيك للمستلزمات',
