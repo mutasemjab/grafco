@@ -123,7 +123,7 @@
                                 <option value="">{{ __('messages.select_category') }}</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}" 
-                                        {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
                                         {{ $category->parent_id ? '-- ' : '' }}{{ $category->name_en }}
                                     </option>
                                 @endforeach
@@ -144,7 +144,7 @@
                                 <option value="">{{ __('messages.select_brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}" 
-                                        {{ old('brand_id', $product->brand_id) == $brand->id ? 'selected' : '' }}>
+                                            {{ old('brand_id', $product->brand_id) == $brand->id ? 'selected' : '' }}>
                                         {{ $brand->name }}
                                     </option>
                                 @endforeach
@@ -196,14 +196,6 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="main_image" class="form-label">{{ __('messages.main_image') }}</label>
-                            @if($product->main_image)
-                                <div class="mb-2">
-                                    <img src="{{ asset('assets/admin/uploads/'.$product->main_image)}}" 
-                                         alt="{{ $product->name_en }}" 
-                                         class="img-thumbnail" 
-                                         style="max-width: 200px;">
-                                </div>
-                            @endif
                             <input type="file" 
                                    class="form-control @error('main_image') is-invalid @enderror" 
                                    id="main_image" 
@@ -213,20 +205,21 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             <small class="text-muted">{{ __('messages.leave_empty_keep_current') }}</small>
+                            
+                            @if($product->main_image)
+                            <div class="mt-2">
+                                <img src="{{ asset('assets/admin/uploads/' . $product->main_image) }}" 
+                                     alt="Main Image" 
+                                     class="img-thumbnail" 
+                                     style="max-width: 200px;">
+                            </div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label">{{ __('messages.thumbnail') }}</label>
-                            @if($product->thumbnail)
-                                <div class="mb-2">
-                                    <img src="{{ asset('assets/admin/uploads/'.$product->thumbnail) }}" 
-                                         alt="{{ $product->name_en }}" 
-                                         class="img-thumbnail" 
-                                         style="max-width: 150px;">
-                                </div>
-                            @endif
                             <input type="file" 
                                    class="form-control @error('thumbnail') is-invalid @enderror" 
                                    id="thumbnail" 
@@ -236,6 +229,15 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             <small class="text-muted">{{ __('messages.leave_empty_keep_current') }}</small>
+                            
+                            @if($product->thumbnail)
+                            <div class="mt-2">
+                                <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" 
+                                     alt="Thumbnail" 
+                                     class="img-thumbnail" 
+                                     style="max-width: 150px;">
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -282,6 +284,171 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ __('messages.features') }}</h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addFeature()">
+                    <i class="fas fa-plus"></i> {{ __('messages.add_feature') }}
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="features-container">
+                    @foreach($product->features as $index => $feature)
+                    <div class="feature-item border rounded p-3 mb-3">
+                        <input type="hidden" name="features[{{ $index }}][id]" value="{{ $feature->id }}">
+                        <div class="row align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label">{{ __('messages.feature_en') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="features[{{ $index }}][feature_en]" 
+                                       value="{{ $feature->feature_en }}">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">{{ __('messages.feature_ar') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="features[{{ $index }}][feature_ar]" 
+                                       value="{{ $feature->feature_ar }}" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">{{ __('messages.order') }}</label>
+                                <input type="number" class="form-control" 
+                                       name="features[{{ $index }}][sort_order]" 
+                                       value="{{ $feature->sort_order }}">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeFeature(this, {{ $feature->id }})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <input type="hidden" id="deleted_features" name="deleted_features" value="">
+            </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ __('messages.specifications') }}</h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addSpecification()">
+                    <i class="fas fa-plus"></i> {{ __('messages.add_specification') }}
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="specifications-container">
+                    @foreach($product->specifications as $index => $spec)
+                    <div class="specification-item border rounded p-3 mb-3">
+                        <input type="hidden" name="specifications[{{ $index }}][id]" value="{{ $spec->id }}">
+                        <div class="row align-items-end">
+                            <div class="col-md-2">
+                                <label class="form-label">{{ __('messages.label_en') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[{{ $index }}][label_en]" 
+                                       value="{{ $spec->label_en }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">{{ __('messages.label_ar') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[{{ $index }}][label_ar]" 
+                                       value="{{ $spec->label_ar }}" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ __('messages.value_en') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[{{ $index }}][value_en]" 
+                                       value="{{ $spec->value_en }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ __('messages.value_ar') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[{{ $index }}][value_ar]" 
+                                       value="{{ $spec->value_ar }}" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">{{ __('messages.order') }}</label>
+                                <input type="number" class="form-control" 
+                                       name="specifications[{{ $index }}][sort_order]" 
+                                       value="{{ $spec->sort_order }}">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeSpecification(this, {{ $spec->id }})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <input type="hidden" id="deleted_specifications" name="deleted_specifications" value="">
+            </div>
+        </div>
+
+        <!-- Downloads -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">{{ __('messages.downloads') }}</h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addDownload()">
+                    <i class="fas fa-plus"></i> {{ __('messages.add_download') }}
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="downloads-container">
+                    @foreach($product->downloads as $index => $download)
+                    <div class="download-item border rounded p-3 mb-3">
+                        <input type="hidden" name="downloads[{{ $index }}][id]" value="{{ $download->id }}">
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label">{{ __('messages.title_en') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="downloads[{{ $index }}][title_en]" 
+                                       value="{{ $download->title_en }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ __('messages.title_ar') }}</label>
+                                <input type="text" class="form-control" 
+                                       name="downloads[{{ $index }}][title_ar]" 
+                                       value="{{ $download->title_ar }}" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ __('messages.file') }}</label>
+                                <input type="file" class="form-control" 
+                                       name="downloads[{{ $index }}][file]" 
+                                       accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                @if($download->file_path)
+                                <small class="text-muted d-block mt-1">
+                                    {{ __('messages.current') }}: {{ basename($download->file_path) }}
+                                </small>
+                                @endif
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">{{ __('messages.date') }}</label>
+                                <input type="date" class="form-control" 
+                                       name="downloads[{{ $index }}][updated_date]" 
+                                       value="{{ $download->updated_date ? date('Y-m-d', strtotime($download->updated_date)) : '' }}">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeDownload(this, {{ $download->id }})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <input type="hidden" id="deleted_downloads" name="deleted_downloads" value="">
             </div>
         </div>
 
@@ -341,11 +508,6 @@
             </div>
         </div>
 
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> 
-            {{ __('messages.manage_features_specs_separately') }}
-        </div>
-
         <div class="d-flex gap-2 mb-4">
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-save"></i> {{ __('messages.update') }}
@@ -356,4 +518,144 @@
         </div>
     </form>
 </div>
+
+<script>
+let featureIndex = {{ $product->features->count() }};
+let specificationIndex = {{ $product->specifications->count() }};
+let downloadIndex = {{ $product->downloads->count() }};
+let deletedFeatures = [];
+let deletedSpecifications = [];
+let deletedDownloads = [];
+
+// Auto-generate slug
+document.getElementById('name_en').addEventListener('input', function() {
+    const slug = this.value.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    document.getElementById('slug').value = slug;
+});
+
+function addFeature() {
+    const container = document.getElementById('features-container');
+    const html = `
+        <div class="feature-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label">{{ __('messages.feature_en') }}</label>
+                    <input type="text" class="form-control" name="features[${featureIndex}][feature_en]">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">{{ __('messages.feature_ar') }}</label>
+                    <input type="text" class="form-control" name="features[${featureIndex}][feature_ar]" dir="rtl">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">{{ __('messages.order') }}</label>
+                    <input type="number" class="form-control" name="features[${featureIndex}][sort_order]" value="${featureIndex}">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.feature-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    featureIndex++;
+}
+
+function removeFeature(button, id) {
+    if (id) {
+        deletedFeatures.push(id);
+        document.getElementById('deleted_features').value = deletedFeatures.join(',');
+    }
+    button.closest('.feature-item').remove();
+}
+
+function addSpecification() {
+    const container = document.getElementById('specifications-container');
+    const html = `
+        <div class="specification-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label">{{ __('messages.label_en') }}</label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_en]">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">{{ __('messages.label_ar') }}</label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_ar]" dir="rtl">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('messages.value_en') }}</label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_en]">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('messages.value_ar') }}</label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_ar]" dir="rtl">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">{{ __('messages.order') }}</label>
+                    <input type="number" class="form-control" name="specifications[${specificationIndex}][sort_order]" value="${specificationIndex}">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.specification-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    specificationIndex++;
+}
+
+function removeSpecification(button, id) {
+    if (id) {
+        deletedSpecifications.push(id);
+        document.getElementById('deleted_specifications').value = deletedSpecifications.join(',');
+    }
+    button.closest('.specification-item').remove();
+}
+
+function addDownload() {
+    const container = document.getElementById('downloads-container');
+    const html = `
+        <div class="download-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('messages.title_en') }}</label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_en]">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('messages.title_ar') }}</label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_ar]" dir="rtl">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('messages.file') }}</label>
+                    <input type="file" class="form-control" name="downloads[${downloadIndex}][file]" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">{{ __('messages.date') }}</label>
+                    <input type="date" class="form-control" name="downloads[${downloadIndex}][updated_date]">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.download-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    downloadIndex++;
+}
+
+function removeDownload(button, id) {
+    if (id) {
+        deletedDownloads.push(id);
+        document.getElementById('deleted_downloads').value = deletedDownloads.join(',');
+    }
+    button.closest('.download-item').remove();
+}
+</script>
 @endsection

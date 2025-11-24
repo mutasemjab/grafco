@@ -213,7 +213,7 @@ unset($__errorArgs, $__bag); ?>"
                                 <option value=""><?php echo e(__('messages.select_category')); ?></option>
                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($category->id); ?>" 
-                                        <?php echo e(old('category_id', $product->category_id) == $category->id ? 'selected' : ''); ?>>
+                                            <?php echo e(old('category_id', $product->category_id) == $category->id ? 'selected' : ''); ?>>
                                         <?php echo e($category->parent_id ? '-- ' : ''); ?><?php echo e($category->name_en); ?>
 
                                     </option>
@@ -249,7 +249,7 @@ unset($__errorArgs, $__bag); ?>"
                                 <option value=""><?php echo e(__('messages.select_brand')); ?></option>
                                 <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($brand->id); ?>" 
-                                        <?php echo e(old('brand_id', $product->brand_id) == $brand->id ? 'selected' : ''); ?>>
+                                            <?php echo e(old('brand_id', $product->brand_id) == $brand->id ? 'selected' : ''); ?>>
                                         <?php echo e($brand->name); ?>
 
                                     </option>
@@ -337,14 +337,6 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="main_image" class="form-label"><?php echo e(__('messages.main_image')); ?></label>
-                            <?php if($product->main_image): ?>
-                                <div class="mb-2">
-                                    <img src="<?php echo e(asset('assets/admin/uploads/'.$product->main_image)); ?>" 
-                                         alt="<?php echo e($product->name_en); ?>" 
-                                         class="img-thumbnail" 
-                                         style="max-width: 200px;">
-                                </div>
-                            <?php endif; ?>
                             <input type="file" 
                                    class="form-control <?php $__errorArgs = ['main_image'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -368,20 +360,21 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             <small class="text-muted"><?php echo e(__('messages.leave_empty_keep_current')); ?></small>
+                            
+                            <?php if($product->main_image): ?>
+                            <div class="mt-2">
+                                <img src="<?php echo e(asset('assets/admin/uploads/' . $product->main_image)); ?>" 
+                                     alt="Main Image" 
+                                     class="img-thumbnail" 
+                                     style="max-width: 200px;">
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label"><?php echo e(__('messages.thumbnail')); ?></label>
-                            <?php if($product->thumbnail): ?>
-                                <div class="mb-2">
-                                    <img src="<?php echo e(asset('assets/admin/uploads/'.$product->thumbnail)); ?>" 
-                                         alt="<?php echo e($product->name_en); ?>" 
-                                         class="img-thumbnail" 
-                                         style="max-width: 150px;">
-                                </div>
-                            <?php endif; ?>
                             <input type="file" 
                                    class="form-control <?php $__errorArgs = ['thumbnail'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -405,6 +398,15 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             <small class="text-muted"><?php echo e(__('messages.leave_empty_keep_current')); ?></small>
+                            
+                            <?php if($product->thumbnail): ?>
+                            <div class="mt-2">
+                                <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" 
+                                     alt="Thumbnail" 
+                                     class="img-thumbnail" 
+                                     style="max-width: 150px;">
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -469,6 +471,175 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
+        <!-- Features -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><?php echo e(__('messages.features')); ?></h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addFeature()">
+                    <i class="fas fa-plus"></i> <?php echo e(__('messages.add_feature')); ?>
+
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="features-container">
+                    <?php $__currentLoopData = $product->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="feature-item border rounded p-3 mb-3">
+                        <input type="hidden" name="features[<?php echo e($index); ?>][id]" value="<?php echo e($feature->id); ?>">
+                        <div class="row align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label"><?php echo e(__('messages.feature_en')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="features[<?php echo e($index); ?>][feature_en]" 
+                                       value="<?php echo e($feature->feature_en); ?>">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label"><?php echo e(__('messages.feature_ar')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="features[<?php echo e($index); ?>][feature_ar]" 
+                                       value="<?php echo e($feature->feature_ar); ?>" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label"><?php echo e(__('messages.order')); ?></label>
+                                <input type="number" class="form-control" 
+                                       name="features[<?php echo e($index); ?>][sort_order]" 
+                                       value="<?php echo e($feature->sort_order); ?>">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeFeature(this, <?php echo e($feature->id); ?>)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+                <input type="hidden" id="deleted_features" name="deleted_features" value="">
+            </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><?php echo e(__('messages.specifications')); ?></h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addSpecification()">
+                    <i class="fas fa-plus"></i> <?php echo e(__('messages.add_specification')); ?>
+
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="specifications-container">
+                    <?php $__currentLoopData = $product->specifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $spec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="specification-item border rounded p-3 mb-3">
+                        <input type="hidden" name="specifications[<?php echo e($index); ?>][id]" value="<?php echo e($spec->id); ?>">
+                        <div class="row align-items-end">
+                            <div class="col-md-2">
+                                <label class="form-label"><?php echo e(__('messages.label_en')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[<?php echo e($index); ?>][label_en]" 
+                                       value="<?php echo e($spec->label_en); ?>">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label"><?php echo e(__('messages.label_ar')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[<?php echo e($index); ?>][label_ar]" 
+                                       value="<?php echo e($spec->label_ar); ?>" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"><?php echo e(__('messages.value_en')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[<?php echo e($index); ?>][value_en]" 
+                                       value="<?php echo e($spec->value_en); ?>">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"><?php echo e(__('messages.value_ar')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="specifications[<?php echo e($index); ?>][value_ar]" 
+                                       value="<?php echo e($spec->value_ar); ?>" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label"><?php echo e(__('messages.order')); ?></label>
+                                <input type="number" class="form-control" 
+                                       name="specifications[<?php echo e($index); ?>][sort_order]" 
+                                       value="<?php echo e($spec->sort_order); ?>">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeSpecification(this, <?php echo e($spec->id); ?>)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+                <input type="hidden" id="deleted_specifications" name="deleted_specifications" value="">
+            </div>
+        </div>
+
+        <!-- Downloads -->
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><?php echo e(__('messages.downloads')); ?></h5>
+                <button type="button" class="btn btn-sm btn-success" onclick="addDownload()">
+                    <i class="fas fa-plus"></i> <?php echo e(__('messages.add_download')); ?>
+
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="downloads-container">
+                    <?php $__currentLoopData = $product->downloads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $download): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="download-item border rounded p-3 mb-3">
+                        <input type="hidden" name="downloads[<?php echo e($index); ?>][id]" value="<?php echo e($download->id); ?>">
+                        <div class="row align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label"><?php echo e(__('messages.title_en')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="downloads[<?php echo e($index); ?>][title_en]" 
+                                       value="<?php echo e($download->title_en); ?>">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"><?php echo e(__('messages.title_ar')); ?></label>
+                                <input type="text" class="form-control" 
+                                       name="downloads[<?php echo e($index); ?>][title_ar]" 
+                                       value="<?php echo e($download->title_ar); ?>" 
+                                       dir="rtl">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"><?php echo e(__('messages.file')); ?></label>
+                                <input type="file" class="form-control" 
+                                       name="downloads[<?php echo e($index); ?>][file]" 
+                                       accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                <?php if($download->file_path): ?>
+                                <small class="text-muted d-block mt-1">
+                                    <?php echo e(__('messages.current')); ?>: <?php echo e(basename($download->file_path)); ?>
+
+                                </small>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label"><?php echo e(__('messages.date')); ?></label>
+                                <input type="date" class="form-control" 
+                                       name="downloads[<?php echo e($index); ?>][updated_date]" 
+                                       value="<?php echo e($download->updated_date ? date('Y-m-d', strtotime($download->updated_date)) : ''); ?>">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger w-100" 
+                                        onclick="removeDownload(this, <?php echo e($download->id); ?>)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+                <input type="hidden" id="deleted_downloads" name="deleted_downloads" value="">
+            </div>
+        </div>
+
         <!-- Settings -->
         <div class="card mb-3">
             <div class="card-header">
@@ -527,12 +698,6 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> 
-            <?php echo e(__('messages.manage_features_specs_separately')); ?>
-
-        </div>
-
         <div class="d-flex gap-2 mb-4">
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-save"></i> <?php echo e(__('messages.update')); ?>
@@ -545,5 +710,145 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </form>
 </div>
+
+<script>
+let featureIndex = <?php echo e($product->features->count()); ?>;
+let specificationIndex = <?php echo e($product->specifications->count()); ?>;
+let downloadIndex = <?php echo e($product->downloads->count()); ?>;
+let deletedFeatures = [];
+let deletedSpecifications = [];
+let deletedDownloads = [];
+
+// Auto-generate slug
+document.getElementById('name_en').addEventListener('input', function() {
+    const slug = this.value.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    document.getElementById('slug').value = slug;
+});
+
+function addFeature() {
+    const container = document.getElementById('features-container');
+    const html = `
+        <div class="feature-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label"><?php echo e(__('messages.feature_en')); ?></label>
+                    <input type="text" class="form-control" name="features[${featureIndex}][feature_en]">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label"><?php echo e(__('messages.feature_ar')); ?></label>
+                    <input type="text" class="form-control" name="features[${featureIndex}][feature_ar]" dir="rtl">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label"><?php echo e(__('messages.order')); ?></label>
+                    <input type="number" class="form-control" name="features[${featureIndex}][sort_order]" value="${featureIndex}">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.feature-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    featureIndex++;
+}
+
+function removeFeature(button, id) {
+    if (id) {
+        deletedFeatures.push(id);
+        document.getElementById('deleted_features').value = deletedFeatures.join(',');
+    }
+    button.closest('.feature-item').remove();
+}
+
+function addSpecification() {
+    const container = document.getElementById('specifications-container');
+    const html = `
+        <div class="specification-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-2">
+                    <label class="form-label"><?php echo e(__('messages.label_en')); ?></label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_en]">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label"><?php echo e(__('messages.label_ar')); ?></label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_ar]" dir="rtl">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label"><?php echo e(__('messages.value_en')); ?></label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_en]">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label"><?php echo e(__('messages.value_ar')); ?></label>
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_ar]" dir="rtl">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label"><?php echo e(__('messages.order')); ?></label>
+                    <input type="number" class="form-control" name="specifications[${specificationIndex}][sort_order]" value="${specificationIndex}">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.specification-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    specificationIndex++;
+}
+
+function removeSpecification(button, id) {
+    if (id) {
+        deletedSpecifications.push(id);
+        document.getElementById('deleted_specifications').value = deletedSpecifications.join(',');
+    }
+    button.closest('.specification-item').remove();
+}
+
+function addDownload() {
+    const container = document.getElementById('downloads-container');
+    const html = `
+        <div class="download-item border rounded p-3 mb-3">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label"><?php echo e(__('messages.title_en')); ?></label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_en]">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label"><?php echo e(__('messages.title_ar')); ?></label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_ar]" dir="rtl">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label"><?php echo e(__('messages.file')); ?></label>
+                    <input type="file" class="form-control" name="downloads[${downloadIndex}][file]" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label"><?php echo e(__('messages.date')); ?></label>
+                    <input type="date" class="form-control" name="downloads[${downloadIndex}][updated_date]">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger w-100" onclick="this.closest('.download-item').remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+    downloadIndex++;
+}
+
+function removeDownload(button, id) {
+    if (id) {
+        deletedDownloads.push(id);
+        document.getElementById('deleted_downloads').value = deletedDownloads.join(',');
+    }
+    button.closest('.download-item').remove();
+}
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\grafco\resources\views/admin/products/edit.blade.php ENDPATH**/ ?>
