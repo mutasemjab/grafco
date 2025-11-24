@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Contact;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -12,8 +13,9 @@ class ContactController extends Controller
     {
         $locale = app()->getLocale();
         $setting = Setting::first();
+        $brands = Brand::get();
         
-        return view('user.contact', compact('locale', 'setting'));
+        return view('user.contact', compact('locale', 'setting','brands'));
     }
 
     public function store(Request $request)

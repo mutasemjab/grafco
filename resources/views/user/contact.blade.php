@@ -95,9 +95,11 @@
                                 <label class="contact-label">{{ __('front.product_category') }}*</label>
                                 <select class="contact-input" name="product_category">
                                     <option value="">{{ __('front.select_category') }}</option>
-                                    <option value="Printers" {{ old('product_category') == 'Printers' ? 'selected' : '' }}>{{ __('front.printers') }}</option>
-                                    <option value="Cutters" {{ old('product_category') == 'Cutters' ? 'selected' : '' }}>{{ __('front.cutters') }}</option>
-                                    <option value="Finishing" {{ old('product_category') == 'Finishing' ? 'selected' : '' }}>{{ __('front.finishing') }}</option>
+                                    @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                        {{ $brand->name }}
+                                    </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
