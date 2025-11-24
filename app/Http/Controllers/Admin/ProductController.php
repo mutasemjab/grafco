@@ -81,19 +81,36 @@ class ProductController extends Controller
             'downloads.*.sort_order' => 'nullable|integer',
         ]);
 
-        $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name_en']);
+        // Extract only product-related data (exclude nested arrays)
+        $productData = [
+            'name_en' => $validated['name_en'],
+            'name_ar' => $validated['name_ar'],
+            'slug' => $validated['slug'] ?? Str::slug($validated['name_en']),
+            'subtitle_en' => $validated['subtitle_en'] ?? null,
+            'subtitle_ar' => $validated['subtitle_ar'] ?? null,
+            'description_en' => $validated['description_en'] ?? null,
+            'description_ar' => $validated['description_ar'] ?? null,
+            'model' => $validated['model'] ?? null,
+            'price' => $validated['price'] ?? null,
+            'show_price' => $validated['show_price'] ?? false,
+            'category_id' => $validated['category_id'],
+            'brand_id' => $validated['brand_id'],
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
+        ];
 
         // Handle main image upload
         if ($request->hasFile('main_image')) {
-            $validated['main_image'] = uploadImage('assets/admin/uploads', $request->main_image);
+            $productData['main_image'] = uploadImage('assets/admin/uploads', $request->main_image);
         }
 
         // Handle thumbnail upload
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = uploadImage('assets/admin/uploads', $request->thumbnail);
+            $productData['thumbnail'] = uploadImage('assets/admin/uploads', $request->thumbnail);
         }
 
-        $product = Product::create($validated);
+        $product = Product::create($productData);
 
         // Save Features
         if ($request->has('features')) {
@@ -137,7 +154,7 @@ class ProductController extends Controller
                         'title_ar' => $download['title_ar'] ?? $download['title_en'],
                         'file_path' => $filePath,
                         'file_type' => strtoupper($file->getClientOriginalExtension()),
-                        'file_size' => $this->formatBytes($file->getSize()),
+                        'file_size' => null,
                         'updated_date' => $download['updated_date'] ?? now(),
                         'sort_order' => $download['sort_order'] ?? $index,
                     ]);

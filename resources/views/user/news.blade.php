@@ -51,7 +51,7 @@
                             <span class="news-item-date">{{ $formattedDate }}</span>
                         </div>
                         <p class="news-item-text">
-                            {{ Str::limit($locale === 'ar' ? $item->description_ar : $item->description_en, 150) }}
+                            {!! Str::limit($locale === 'ar' ? $item->description_ar : $item->description_en, 150) !!}
                         </p>
                     </div>
                 </article>
