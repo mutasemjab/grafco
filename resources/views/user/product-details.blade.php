@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="pdetail-tabs" data-pdetail-tabs>
+           <div class="pdetail-tabs {{ app()->getLocale() == 'ar' ? 'pdetail-tabs--rtl' : '' }}" data-pdetail-tabs>
                 <button class="pdetail-tab is-active" data-tab="spec">{{ __('front.specifications') }}</button>
                 <button class="pdetail-tab" data-tab="features">{{ __('front.features') }}</button>
                 <button class="pdetail-tab" data-tab="download">{{ __('front.downloads') }}</button>
@@ -264,4 +264,14 @@
         </div>
     </div>
 </section>
+<style>
+    .pdetail-tabs--rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.pdetail-tabs--rtl .pdetail-tab {
+    text-align: right;
+}
+    </style>
 @endsection
