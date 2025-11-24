@@ -35,6 +35,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::post('/parts-requests', [PartsRequestController::class, 'store'])->name('parts-requests.store');
     Route::get('/consumable', [ConsumableController::class, 'index'])->name('consumable');
+    Route::get('/consumable-product/{id}', [ConsumableController::class, 'show'])->name('consumable_product.show');
     Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::get('/news', [NewsController::class, 'index'])->name('news');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');

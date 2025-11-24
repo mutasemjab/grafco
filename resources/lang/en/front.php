@@ -168,7 +168,7 @@ return [
     'application_submitted_success' => 'Your application has been submitted successfully! We will contact you soon.',
     'apply_online' => 'Apply Online',
     'available_positions' => 'Available Positions',
-   '' => '',
+   'featured_products' => 'Featured Products',
    '' => '',
    '' => '',
    '' => '',

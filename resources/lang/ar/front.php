@@ -168,7 +168,7 @@ return [
     'application_submitted_success' => 'تم إرسال طلبك بنجاح! سنتواصل معك قريباً.',
     'apply_online' => 'التقديم عبر الإنترنت',
     'available_positions' => 'الوظائف المتاحة',
-'' => '',
+'featured_products' => 'المنتجات المميزة',
   '' => '',
   '' => '',
   '' => '',

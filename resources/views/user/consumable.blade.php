@@ -91,17 +91,19 @@
                         </div>
                         @endif
 
-                        @if($consumable->products->count() > 0)
-                        <div class="cons-products">
-                            @foreach($consumable->products as $product)
-                            <article class="cons-prod-card">
-                                <div class="cons-prod-img">
-                                    <img src="{{ asset('assets/admin/uploads/' . $product->photo) }}" alt="{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}">
-                                </div>
-                                <div class="cons-prod-foot">{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}</div>
-                            </article>
-                            @endforeach
-                        </div>
+                       @if($consumable->products->count() > 0)
+                            <div class="cons-products">
+                                @foreach($consumable->products as $product)
+                                <article class="cons-prod-card">
+                                    <a href="{{ route('consumable_product.show', $product->id) }}" class="cons-prod-link">
+                                        <div class="cons-prod-img">
+                                            <img src="{{ asset('assets/admin/uploads/' . $product->photo) }}" alt="{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}">
+                                        </div>
+                                        <div class="cons-prod-foot">{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}</div>
+                                    </a>
+                                </article>
+                                @endforeach
+                            </div>
                         @endif
                     </div>
                     @endforeach

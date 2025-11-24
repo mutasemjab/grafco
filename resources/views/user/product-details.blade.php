@@ -72,14 +72,9 @@
                     <h1 class="pdetail-title">{{ $product->name }}</h1>
                     <div class="pdetail-subtitle">{{ $product->subtitle }}</div>
 
-                    @if($product->features->count() > 0)
-                    <div class="pdetail-small-title">{{ __('front.key_features') }}</div>
-                    <ul class="pdetail-features">
-                        @foreach($product->features as $feature)
-                        <li>{{ $feature->feature }}</li>
-                        @endforeach
-                    </ul>
-                    @endif
+                    <div class="pdetail-download-paragraph">
+                                {!! $product->description !!}
+                    </div>
 
                     <div class="pdetail-price-card">
                         <div class="pdetail-price-label">{{ __('front.price') }}</div>

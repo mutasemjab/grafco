@@ -47,7 +47,7 @@
     <section class="featured" data-featured>
         <div class="container featured-grid">
             <div class="featured-left">
-                <h2 class="featured-title">{{ __('messages.featured') }}<br>{{ __('messages.products') }}</h2>
+                <h2 class="featured-title">{{ __('front.featured_products') }}</h2>
                 <a href="{{ route('products.index') }}" class="featured-btn">{{ __('messages.view_all') }}</a>
                 <div class="featured-arrows">
                     <button class="featured-arrow" data-prev type="button" aria-label="{{ __('messages.previous') }}">
@@ -99,6 +99,8 @@
             </div>
         </div>
     </section>
+    <br>
+    <br>
 
     <section class="brands" data-brands>
         <div class="container brands-head">

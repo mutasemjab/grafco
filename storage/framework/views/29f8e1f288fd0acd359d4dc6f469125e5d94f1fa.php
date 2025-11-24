@@ -93,17 +93,19 @@
                         </div>
                         <?php endif; ?>
 
-                        <?php if($consumable->products->count() > 0): ?>
-                        <div class="cons-products">
-                            <?php $__currentLoopData = $consumable->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <article class="cons-prod-card">
-                                <div class="cons-prod-img">
-                                    <img src="<?php echo e(asset('assets/admin/uploads/' . $product->photo)); ?>" alt="<?php echo e($locale === 'ar' ? $product->name_ar : $product->name_en); ?>">
-                                </div>
-                                <div class="cons-prod-foot"><?php echo e($locale === 'ar' ? $product->name_ar : $product->name_en); ?></div>
-                            </article>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
+                       <?php if($consumable->products->count() > 0): ?>
+                            <div class="cons-products">
+                                <?php $__currentLoopData = $consumable->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <article class="cons-prod-card">
+                                    <a href="<?php echo e(route('consumable_product.show', $product->id)); ?>" class="cons-prod-link">
+                                        <div class="cons-prod-img">
+                                            <img src="<?php echo e(asset('assets/admin/uploads/' . $product->photo)); ?>" alt="<?php echo e($locale === 'ar' ? $product->name_ar : $product->name_en); ?>">
+                                        </div>
+                                        <div class="cons-prod-foot"><?php echo e($locale === 'ar' ? $product->name_ar : $product->name_en); ?></div>
+                                    </a>
+                                </article>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
                         <?php endif; ?>
                     </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

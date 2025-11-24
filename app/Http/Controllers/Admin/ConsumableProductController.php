@@ -27,11 +27,23 @@ class ConsumableProductController extends Controller
         $data = $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+            'key_features_en' => 'nullable|array',
+            'key_features_ar' => 'nullable|array',
             'consumable_id' => 'required|exists:consumables,id',
             'photo' => 'required|image',
         ]);
 
         $data['photo'] = uploadImage('assets/admin/uploads', $request->photo);
+        
+        // Convert key_features to JSON
+        if (isset($data['key_features_en'])) {
+            $data['key_features_en'] = json_encode(array_filter($data['key_features_en']));
+        }
+        if (isset($data['key_features_ar'])) {
+            $data['key_features_ar'] = json_encode(array_filter($data['key_features_ar']));
+        }
 
         ConsumableProduct::create($data);
 
@@ -52,12 +64,24 @@ class ConsumableProductController extends Controller
         $data = $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+            'key_features_en' => 'nullable|array',
+            'key_features_ar' => 'nullable|array',
             'consumable_id' => 'required|exists:consumables,id',
             'photo' => 'nullable|image',
         ]);
 
         if($request->hasFile('photo')){
             $data['photo'] = uploadImage('assets/admin/uploads', $request->photo);
+        }
+
+        // Convert key_features to JSON
+        if (isset($data['key_features_en'])) {
+            $data['key_features_en'] = json_encode(array_filter($data['key_features_en']));
+        }
+        if (isset($data['key_features_ar'])) {
+            $data['key_features_ar'] = json_encode(array_filter($data['key_features_ar']));
         }
 
         $item->update($data);
@@ -71,4 +95,3 @@ class ConsumableProductController extends Controller
         return redirect()->route('consumable_products.index')->with('success', __('deleted_successfully'));
     }
 }
-

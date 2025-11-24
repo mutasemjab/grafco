@@ -10,6 +10,11 @@ class ConsumableProduct extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+    'key_features_en' => 'array',
+    'key_features_ar' => 'array',
+    ];
     
      public function consumable()
     {

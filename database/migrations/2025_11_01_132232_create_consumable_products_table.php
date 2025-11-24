@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('photo');
             $table->string('name_en');
             $table->string('name_ar');
+            $table->text('description_en');
+            $table->text('description_ar');
+            $table->json('key_features_en')->nullable();
+            $table->json('key_features_ar')->nullable();
             $table->unsignedBigInteger('consumable_id');
             $table->foreign('consumable_id')->references('id')->on('consumables')->onDelete('cascade');
             $table->timestamps();

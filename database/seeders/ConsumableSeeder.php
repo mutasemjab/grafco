@@ -37,6 +37,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/prod1.png',
             'name_en' => '720HP Hydraulic Guillotine',
             'name_ar' => 'مقصلة هيدروليكية 720HP',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $hdSaphira->id,
         ]);
 
@@ -44,6 +58,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/prod2.png',
             'name_en' => '520HP Hydraulic Guillotine',
             'name_ar' => 'مقصلة هيدروليكية 520HP',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $hdSaphira->id,
         ]);
 
@@ -51,6 +79,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/prod3.png',
             'name_en' => 'LM-650N Roll Laminator',
             'name_ar' => 'لامينيتر رول LM-650N',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $hdSaphira->id,
         ]);
 
@@ -81,6 +123,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/starflex-prod1.jpg',
             'name_en' => 'Starflex Frontlit 440gsm',
             'name_ar' => 'ستارفليكس إضاءة أمامية 440gsm',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $starflex->id,
         ]);
 
@@ -88,6 +144,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/starflex-prod2.jpg',
             'name_en' => 'Starflex Backlit 510gsm',
             'name_ar' => 'ستارفليكس إضاءة خلفية 510gsm',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $starflex->id,
         ]);
 
@@ -95,6 +165,20 @@ class ConsumableSeeder extends Seeder
             'photo' => 'consumables/products/starflex-prod3.jpg',
             'name_en' => 'Starflex Mesh Banner',
             'name_ar' => 'لافتة شبكية ستارفليكس',
+               'description_en' => 'Other variants like Saphira 80x or 80c use a "medium ground surface finish" intended to balance ink lay–down and dot sharpness. The Blanket Premier version is a conventional offset blanket of thickness ~1.96 mm, 4 layers, with excellent release and dot sharpness.',
+            'description_ar' => 'المتغيرات الأخرى مثل Saphira 80x أو 80c تستخدم "تشطيب سطح أرضي متوسط" يهدف إلى موازنة وضع الحبر وحدة النقطة. نسخة Blanket Premier هي بطانية أوفست تقليدية بسمك ~1.96 مم، 4 طبقات، مع إطلاق ممتاز وحدة نقطة.',
+            'key_features_en' => [
+                'Thickness: Approx. 1.95 mm (nominal, per ISO 12636)',
+                'Layers: 4 plies of fabric in the blanket\'s internal structure',
+                'Elongation: < 0.70 % at 500 N / 50 mm',
+                'Color (surface): Blue'
+            ],
+            'key_features_ar' => [
+                'السماكة: تقريبًا 1.95 مم (اسمي، وفقًا لـ ISO 12636)',
+                'الطبقات: 4 طبقات من القماش في الهيكل الداخلي للبطانية',
+                'الاستطالة: < 0.70% عند 500 نيوتن / 50 مم',
+                'اللون (السطح): أزرق'
+            ],
             'consumable_id' => $starflex->id,
         ]);
     }

@@ -48,7 +48,7 @@
     <section class="featured" data-featured>
         <div class="container featured-grid">
             <div class="featured-left">
-                <h2 class="featured-title"><?php echo e(__('messages.featured')); ?><br><?php echo e(__('messages.products')); ?></h2>
+                <h2 class="featured-title"><?php echo e(__('front.featured_products')); ?></h2>
                 <a href="<?php echo e(route('products.index')); ?>" class="featured-btn"><?php echo e(__('messages.view_all')); ?></a>
                 <div class="featured-arrows">
                     <button class="featured-arrow" data-prev type="button" aria-label="<?php echo e(__('messages.previous')); ?>">
@@ -102,6 +102,8 @@
             </div>
         </div>
     </section>
+    <br>
+    <br>
 
     <section class="brands" data-brands>
         <div class="container brands-head">
