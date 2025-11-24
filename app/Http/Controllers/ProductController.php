@@ -11,39 +11,40 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index($categorySlug = null)
+   public function index($categorySlug = null)
     {
+        // Eager load categories with their brands (from the pivot table)
         $categories = Category::mainCategories()
-            ->with(['children.products' => function($query) {
-                $query->where('is_active', true);
-            }, 'products' => function($query) {
-                $query->where('is_active', true);
-            }])
+            ->with([
+                'children.products' => function($query) {
+                    $query->where('is_active', true);
+                },
+                'children.brands', // Load brands for subcategories
+                'products' => function($query) {
+                    $query->where('is_active', true);
+                },
+                'brands' // Load brands for main categories
+            ])
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
 
         $selectedCategory = null;
         $selectedBrand = null;
-        $selectedBrands = collect();
+
+        // Check if filtering by category
+        if ($categorySlug) {
+            $selectedCategory = Category::where('slug', $categorySlug)
+                                        ->with('brands')
+                                        ->firstOrFail();
+        }
 
         // Check if filtering by brand
         if (request()->has('brand')) {
             $selectedBrand = Brand::findOrFail(request('brand'));
-            $selectedBrands = Brand::all();
-        }
-        // Check if filtering by category
-        elseif ($categorySlug) {
-            $selectedCategory = Category::where('slug', $categorySlug)->firstOrFail();
-            $selectedBrands = Brand::whereHas('products', function($q) use ($selectedCategory) {
-                $q->where('category_id', $selectedCategory->id);
-            })->get();
-        }
-        else {
-            $selectedBrands = Brand::all();
         }
 
-        return view('user.products', compact('categories', 'selectedCategory', 'selectedBrands', 'selectedBrand'));
+        return view('user.products', compact('categories', 'selectedCategory', 'selectedBrand'));
     }
 
     public function show($slug)

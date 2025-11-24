@@ -47,7 +47,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.category');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
     Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
-
+    Route::post('/career/apply', [CareerController::class, 'apply'])->name('career.apply');
 
     // Frontend Page Routes
     Route::get('/terms-and-conditions', function () {

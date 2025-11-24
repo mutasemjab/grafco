@@ -33,6 +33,8 @@
 
     <!-- Section: Scripts -->
     <script src="<?php echo e(asset('assets_front/js/app.js')); ?>"></script>
+    <?php echo $__env->yieldPushContent('scripts'); ?>
+    <?php echo $__env->yieldContent('script'); ?>
 </body>
 
 </html>

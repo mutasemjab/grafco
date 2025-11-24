@@ -33,6 +33,8 @@
 
     <!-- Section: Scripts -->
     <script src="{{ asset('assets_front/js/app.js') }}"></script>
+    @stack('scripts')
+    @yield('script')
 </body>
 
 </html>

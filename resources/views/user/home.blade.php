@@ -179,3 +179,76 @@
 
 
 @endsection
+@section('script')
+<script>
+(function() {
+    'use strict';
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBrandsCarousel);
+    } else {
+        initBrandsCarousel();
+    }
+    
+    function initBrandsCarousel() {
+        const brandsSection = document.querySelector('[data-brands]');
+        if (!brandsSection) return;
+        
+        const track = brandsSection.querySelector('[data-track]');
+        const prevBtn = brandsSection.querySelector('[data-prev]');
+        const nextBtn = brandsSection.querySelector('[data-next]');
+        const brandItems = track.querySelectorAll('.brand-item');
+        
+        if (!track || !prevBtn || !nextBtn || brandItems.length === 0) return;
+        
+        let currentIndex = 0;
+        const itemWidth = brandItems[0].offsetWidth;
+        const gap = 20; // Adjust this based on your CSS gap
+        const slideWidth = itemWidth + gap;
+        const visibleItems = Math.floor(track.parentElement.offsetWidth / slideWidth);
+        const maxIndex = Math.max(0, brandItems.length - visibleItems);
+        
+        // Update button states
+        function updateButtons() {
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
+            
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+        }
+        
+        // Slide to position
+        function slideTo(index) {
+            currentIndex = Math.max(0, Math.min(index, maxIndex));
+            const offset = -(currentIndex * slideWidth);
+            track.style.transform = `translateX(${offset}px)`;
+            updateButtons();
+        }
+        
+        // Next button
+        nextBtn.addEventListener('click', function() {
+            slideTo(currentIndex + 1);
+        });
+        
+        // Previous button
+        prevBtn.addEventListener('click', function() {
+            slideTo(currentIndex - 1);
+        });
+        
+        // Handle window resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                currentIndex = 0;
+                slideTo(0);
+            }, 250);
+        });
+        
+        // Initial state
+        updateButtons();
+    }
+})();
+</script>
+@endsection
