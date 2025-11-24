@@ -200,7 +200,7 @@
                             <span>🇵🇸</span>
                             <span>{{ __('front.palestine') }}</span>
                         </div>
-                        <div class="region-phone">+0(822) 378 9146</div>
+                        <div class="region-phone">{{ $setting->phone }}</div>
                     </div>
                 </div>
             </aside>
