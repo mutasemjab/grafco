@@ -236,72 +236,120 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Script loaded');
+(function() {
+    'use strict';
     
-    const categoryButtons = document.querySelectorAll('[data-prod-category]');
-    console.log('Found buttons:', categoryButtons.length);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
     
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Button clicked');
-            
-            const categoryId = this.getAttribute('data-category-id');
-            console.log('Category ID:', categoryId);
-            
-            const brandsSection = document.querySelector(`[data-brands-for="category-${categoryId}"]`);
-            const panel = document.querySelector(`[data-panel="category-${categoryId}"].prod-panel`);
-            
-            console.log('Brands section found:', !!brandsSection);
-            console.log('Panel found:', !!panel);
-            
-            // Check if clicking the same category (toggle behavior)
-            const isCurrentlyActive = this.classList.contains('is-active');
-            
-            // Remove active class from all categories
-            categoryButtons.forEach(btn => {
-                btn.classList.remove('is-active');
-            });
-            
-            // Hide all brand sections
-            document.querySelectorAll('.prod-brands-list').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Hide all panels
-            document.querySelectorAll('.prod-panel').forEach(p => {
-                p.classList.remove('is-active');
-            });
-            
-            // If it wasn't active, make it active (toggle behavior)
-            if (!isCurrentlyActive) {
-                this.classList.add('is-active');
-                
-                if (brandsSection) {
-                    brandsSection.style.display = 'block';
-                    console.log('Brands section displayed');
-                }
-                
-                if (panel) {
-                    panel.classList.add('is-active');
-                    console.log('Panel activated');
-                }
-                
-                // Update heading and breadcrumb
-                const heading = document.querySelector('[data-prod-heading]');
-                const breadcrumb = document.querySelector('[data-prod-current]');
-                const title = this.getAttribute('data-title');
-                
-                if (heading) heading.textContent = title;
-                if (breadcrumb) breadcrumb.textContent = title;
-            }
+    function init() {
+        const categoryButtons = document.querySelectorAll('[data-prod-category]');
+        
+        categoryButtons.forEach(function(button) {
+            button.addEventListener('click', handleCategoryClick);
         });
-    });
-});
+        
+        // Handle brand clicks to keep category open
+        const brandLinks = document.querySelectorAll('.prod-brand-item');
+        brandLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                // Let the link work normally, just mark that we clicked a brand
+                sessionStorage.setItem('brandClicked', 'true');
+                sessionStorage.setItem('activeCategoryId', this.closest('.prod-nav-group').querySelector('[data-category-id]').getAttribute('data-category-id'));
+            });
+        });
+        
+        // On page load, check if we came from a brand click
+        const brandClicked = sessionStorage.getItem('brandClicked');
+        const activeCategoryId = sessionStorage.getItem('activeCategoryId');
+        
+        if (brandClicked === 'true' && activeCategoryId) {
+            // Keep the category open
+            const categoryButton = document.querySelector(`[data-category-id="${activeCategoryId}"]`);
+            const brandsSection = document.querySelector(`[data-brands-for="category-${activeCategoryId}"]`);
+            const panel = document.querySelector(`[data-panel="category-${activeCategoryId}"]`);
+            
+            if (categoryButton) {
+                categoryButton.classList.add('is-active');
+            }
+            if (brandsSection) {
+                brandsSection.style.display = 'block';
+            }
+            if (panel) {
+                panel.classList.add('is-active');
+            }
+            
+            // Clear the session storage
+            sessionStorage.removeItem('brandClicked');
+        }
+    }
+    
+    function handleCategoryClick(event) {
+        event.preventDefault();
+        
+        const button = this;
+        const categoryId = button.getAttribute('data-category-id');
+        const brandsSelector = '[data-brands-for="category-' + categoryId + '"]';
+        const brandsSection = document.querySelector(brandsSelector);
+        
+        // Toggle behavior
+        const isActive = button.classList.contains('is-active');
+        
+        // Close all
+        closeAllCategories();
+        
+        // Open clicked category if it wasn't active
+        if (!isActive && brandsSection) {
+            button.classList.add('is-active');
+            brandsSection.style.display = 'block';
+            
+            // Show corresponding panel
+            const panel = document.querySelector('[data-panel="category-' + categoryId + '"]');
+            if (panel) {
+                panel.classList.add('is-active');
+            }
+            
+            // Update breadcrumb
+            updateBreadcrumb(button.getAttribute('data-title'));
+            
+            // Store active category
+            sessionStorage.setItem('activeCategoryId', categoryId);
+        } else {
+            sessionStorage.removeItem('activeCategoryId');
+        }
+    }
+    
+    function closeAllCategories() {
+        // Remove all active states
+        document.querySelectorAll('[data-prod-category]').forEach(function(btn) {
+            btn.classList.remove('is-active');
+        });
+        
+        // Hide all brand lists
+        document.querySelectorAll('.prod-brands-list').forEach(function(section) {
+            section.style.display = 'none';
+        });
+        
+        // Hide all panels
+        document.querySelectorAll('.prod-panel').forEach(function(panel) {
+            panel.classList.remove('is-active');
+        });
+    }
+    
+    function updateBreadcrumb(title) {
+        const heading = document.querySelector('[data-prod-heading]');
+        const breadcrumb = document.querySelector('[data-prod-current]');
+        
+        if (heading) heading.textContent = title;
+        if (breadcrumb) breadcrumb.textContent = title;
+    }
+})();
 </script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\grafco\resources\views/user/products.blade.php ENDPATH**/ ?>

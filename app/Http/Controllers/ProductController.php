@@ -32,16 +32,22 @@ class ProductController extends Controller
         $selectedCategory = null;
         $selectedBrand = null;
 
-        // Check if filtering by category
-        if ($categorySlug) {
+        // Check if filtering by brand first
+        if (request()->has('brand')) {
+            $selectedBrand = Brand::findOrFail(request('brand'));
+            
+            // If brand is selected but no category, find the category from URL or brand's products
+            if ($categorySlug) {
+                $selectedCategory = Category::where('slug', $categorySlug)
+                                            ->with('brands')
+                                            ->firstOrFail();
+            }
+        }
+        // Check if filtering by category only
+        elseif ($categorySlug) {
             $selectedCategory = Category::where('slug', $categorySlug)
                                         ->with('brands')
                                         ->firstOrFail();
-        }
-
-        // Check if filtering by brand
-        if (request()->has('brand')) {
-            $selectedBrand = Brand::findOrFail(request('brand'));
         }
 
         return view('user.products', compact('categories', 'selectedCategory', 'selectedBrand'));
