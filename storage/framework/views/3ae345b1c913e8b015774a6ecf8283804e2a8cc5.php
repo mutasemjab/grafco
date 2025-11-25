@@ -1,228 +1,345 @@
 <?php $__env->startSection('title', __('front.title') . ' | graphco'); ?>
 
 <?php $__env->startSection('content'); ?>
-<section class="page-hero about-banner" style="background-image:url('<?php echo e(asset('assets_front/img/about-banner.jpg')); ?>')">
-    <div class="about-banner__overlay"></div>
-    <div class="container about-banner__inner">
-        <h1 class="about-banner__title">Graphic Supplies Co.</h1>
-    </div>
-</section>
-
-<section class="products-shell">
-    <div class="container products-shell__inner">
-        <aside class="prod-sidebar">
-    <div class="prod-side-top">
-        <div class="prod-side-main">
-            <span class="prod-side-caret">
-                <svg width="14" height="14" viewBox="0 0 24 24">
-                    <path d="M7 10l5 5 5-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </span>
-            <span class="prod-side-label"><?php echo e($selectedCategory ? $selectedCategory->name : __('front.all_categories')); ?></span>
+    <section class="page-hero about-banner" style="background-image:url('<?php echo e(asset('assets_front/img/about-banner.jpg')); ?>')">
+        <div class="about-banner__overlay"></div>
+        <div class="container about-banner__inner">
+            <h1 class="about-banner__title">Graphic Supplies Co.</h1>
         </div>
-    </div>
+    </section>
 
-    <div class="prod-nav" data-prod-nav>
-        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="prod-nav-group">
-          <button class="prod-nav-item <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
-                    data-prod-category
-                    data-category-id="<?php echo e($category->id); ?>"
-                    data-panel="category-<?php echo e($category->id); ?>"
-                    data-title="<?php echo e($category->name); ?>"
-                    type="button">
-                <span class="prod-nav-arrow">
-                    <svg width="10" height="10" viewBox="0 0 24 24">
-                        <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                <span><?php echo e($category->name); ?></span>
-            </button>
+    <section class="products-shell">
+        <div class="container products-shell__inner">
+            <aside class="prod-sidebar">
+                <div class="prod-side-top">
+                    <div class="prod-side-main">
+                        <span class="prod-side-caret">
+                            <svg width="14" height="14" viewBox="0 0 24 24">
+                                <path d="M7 10l5 5 5-5" fill="none" stroke="#fff" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        <span class="prod-side-label">
+                            <?php if($selectedBrand): ?>
+                                <?php echo e($selectedBrand->name); ?>
 
-            
-            <?php if($category->brands->count() > 0): ?>
-            <div class="prod-brands-list" 
-                 data-brands-for="category-<?php echo e($category->id); ?>"
-                 style="display: <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'block' : 'none'); ?>">
-                <?php $__currentLoopData = $category->brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e(route('products.index', ['category' => $category->slug, 'brand' => $brand->id])); ?>"
-                   class="prod-brand-item <?php echo e($selectedBrand && $selectedBrand->id == $brand->id ? 'is-active' : ''); ?>">
-                    <img src="<?php echo e(asset('assets/admin/uploads/' . $brand->photo)); ?>"
-                         alt="<?php echo e($brand->name); ?>"
-                         title="<?php echo e($brand->name); ?>">
-                    <span><?php echo e($brand->name); ?></span>
-                </a>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
+                            <?php elseif($selectedSubcategory): ?>
+                                <?php echo e($selectedSubcategory->name); ?>
+
+                            <?php elseif($selectedCategory): ?>
+                                <?php echo e($selectedCategory->name); ?>
+
+                            <?php else: ?>
+                                <?php echo e(__('front.all_categories')); ?>
+
+                            <?php endif; ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="prod-nav" data-prod-nav>
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="prod-nav-group">
+                            
+                            <button
+                                class="prod-nav-item <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
+                                data-prod-category data-category-id="<?php echo e($category->id); ?>"
+                                data-panel="category-<?php echo e($category->id); ?>" data-title="<?php echo e($category->name); ?>" type="button">
+                                <span class="prod-nav-arrow">
+                                    <svg width="10" height="10" viewBox="0 0 24 24">
+                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span><?php echo e($category->name); ?></span>
+                            </button>
+
+                            
+                            <?php if($category->children->count() > 0): ?>
+                                <div class="prod-subcategories-list" data-subcategories-for="category-<?php echo e($category->id); ?>"
+                                    style="display: <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'block' : 'none'); ?>">
+
+                                    <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <div class="prod-subcategory-group">
+                                            
+                                            <button
+                                                class="prod-subcategory-item <?php echo e($selectedSubcategory && $selectedSubcategory->id == $subcategory->id ? 'is-active' : ''); ?>"
+                                                data-prod-subcategory data-subcategory-id="<?php echo e($subcategory->id); ?>"
+                                                data-category-id="<?php echo e($category->id); ?>"
+                                                data-panel="subcategory-<?php echo e($subcategory->id); ?>"
+                                                data-title="<?php echo e($subcategory->name); ?>" type="button">
+                                                <span class="prod-nav-arrow">
+                                                    <svg width="8" height="8" viewBox="0 0 24 24">
+                                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                </span>
+                                                <span><?php echo e($subcategory->name); ?></span>
+                                            </button>
+
+                                            
+                                            <?php if($subcategory->brands->count() > 0): ?>
+                                                <div class="prod-brands-list"
+                                                    data-brands-for="subcategory-<?php echo e($subcategory->id); ?>"
+                                                    style="display: <?php echo e($selectedSubcategory && $selectedSubcategory->id == $subcategory->id ? 'block' : 'none'); ?>">
+                                                    <?php $__currentLoopData = $subcategory->brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <a href="<?php echo e(route('products.index', ['category' => $category->slug, 'subcategory' => $subcategory->slug, 'brand' => $brand->id])); ?>"
+                                                            class="prod-brand-item <?php echo e($selectedBrand && $selectedBrand->id == $brand->id ? 'is-active' : ''); ?>">
+                                                            <img src="<?php echo e(asset('assets/admin/uploads/' . $brand->photo)); ?>"
+                                                                alt="<?php echo e($brand->name); ?>" title="<?php echo e($brand->name); ?>">
+                                                            <span><?php echo e($brand->name); ?></span>
+                                                        </a>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </aside>
+
+            <div class="prod-main">
+                <div class="prod-headbar">
+                    <div class="prod-breadcrumb">
+                        <span><?php echo e(__('front.home')); ?></span>
+                        <span class="prod-sep">›</span>
+                        <span><?php echo e(__('front.products')); ?></span>
+                        <?php if($selectedCategory): ?>
+                        <span class="prod-sep">›</span>
+                        <span><?php echo e($selectedCategory->name); ?></span>
+                        <?php endif; ?>
+                        <?php if($selectedSubcategory): ?>
+                        <span class="prod-sep">›</span>
+                        <span><?php echo e($selectedSubcategory->name); ?></span>
+                        <?php endif; ?>
+                        <?php if($selectedBrand): ?>
+                        <span class="prod-sep">›</span>
+                        <span class="prod-current"><?php echo e($selectedBrand->name); ?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="prod-body">
+                    <div class="prod-heading">
+                        <span class="prod-heading-mark">//</span>
+                        <span class="prod-heading-tag" data-prod-heading>
+                            <?php if($selectedBrand): ?>
+                                <?php echo e($selectedBrand->name); ?> <?php echo e(__('front.products')); ?>
+
+                            <?php elseif($selectedCategory): ?>
+                                <?php echo e($selectedCategory->name); ?>
+
+                            <?php else: ?>
+                                <?php echo e(__('front.all_products')); ?>
+
+                            <?php endif; ?>
+                        </span>
+                    </div>
+
+                    <div class="prod-panels">
+    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="prod-panel <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
+            data-panel="category-<?php echo e($category->id); ?>">
+
+            <?php if($category->children->count() > 0): ?>
+                
+                <?php if(!$selectedSubcategory || $selectedSubcategory->parent_id == $category->id): ?>
+                    <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="prod-section <?php echo e($selectedSubcategory && $selectedSubcategory->id == $subcategory->id ? 'is-visible' : ($selectedSubcategory ? 'is-hidden' : '')); ?>"
+                            data-subcategory-section="<?php echo e($subcategory->id); ?>">
+                            <div class="prod-subheading">
+                                <span class="prod-heading-mark">//</span>
+                                <span><?php echo e($subcategory->name); ?></span>
+                            </div>
+                            <div class="prod-grid">
+                                <?php $__empty_1 = true; $__currentLoopData = $subcategory->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    <article class="prod-card">
+                                        <a href="<?php echo e(route('product.details', $product->slug)); ?>">
+                                            <div class="prod-card-img">
+                                                <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>"
+                                                    alt="<?php echo e($product->name); ?>">
+                                            </div>
+                                            <div class="prod-card-foot"><?php echo e($product->name); ?></div>
+                                        </a>
+                                    </article>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                    <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
+            <?php else: ?>
+                
+                <div class="prod-grid">
+                    <?php $__empty_1 = true; $__currentLoopData = $category->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <article class="prod-card">
+                            <a href="<?php echo e(route('product.details', $product->slug)); ?>">
+                                <div class="prod-card-img">
+                                    <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>"
+                                        alt="<?php echo e($product->name); ?>">
+                                </div>
+                                <div class="prod-card-foot"><?php echo e($product->name); ?></div>
+                            </a>
+                        </article>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
         </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
-</aside>
-
-        <div class="prod-main">
-            <div class="prod-headbar">
-                <div class="prod-breadcrumb">
-                    <span><?php echo e(__('front.home')); ?></span>
-                    <span class="prod-sep">›</span>
-                    <span><?php echo e(__('front.products')); ?></span>
-                    <?php if($selectedBrand): ?>
-                    <span class="prod-sep">›</span>
-                    <span class="prod-current"><?php echo e($selectedBrand->name); ?></span>
-                    <?php elseif($selectedCategory): ?>
-                    <span class="prod-sep">›</span>
-                    <span class="prod-current" data-prod-current><?php echo e($selectedCategory->name); ?></span>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <div class="prod-body">
-              <div class="prod-heading">
-                    <span class="prod-heading-mark">//</span>
-                    <span class="prod-heading-tag" data-prod-heading>
-                        <?php if($selectedBrand): ?>
-                            <?php echo e($selectedBrand->name); ?> <?php echo e(__('front.products')); ?>
-
-                        <?php elseif($selectedCategory): ?>
-                            <?php echo e($selectedCategory->name); ?>
-
-                        <?php else: ?>
-                            <?php echo e(__('front.all_products')); ?>
-
-                        <?php endif; ?>
-                    </span>
-                </div>
-
-             <div class="prod-panels">
-    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-    <div class="prod-panel <?php echo e($selectedCategory && $selectedCategory->id == $category->id ? 'is-active' : ''); ?>"
-        data-panel="category-<?php echo e($category->id); ?>">
-
-        <?php if($category->children->count() > 0): ?>
-            <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="prod-section">
-                <div class="prod-subheading">
-                    <span class="prod-heading-mark">//</span>
-                    <span><?php echo e($subcategory->name); ?></span>
-                </div>
-                <div class="prod-grid">
-                    <?php $__empty_1 = true; $__currentLoopData = $subcategory->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <article class="prod-card">
-                        <a href="<?php echo e(route('product.details', $product->slug)); ?>">
-                            <div class="prod-card-img">
-                                <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
-                            </div>
-                            <div class="prod-card-foot"><?php echo e($product->name); ?></div>
-                        </a>
-                    </article>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                    <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php else: ?>
-            <div class="prod-grid">
-                <?php $__empty_1 = true; $__currentLoopData = $category->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <article class="prod-card">
-                    <a href="<?php echo e(route('product.details', $product->slug)); ?>">
-                        <div class="prod-card-img">
-                            <img src="<?php echo e(asset('assets/admin/uploads/' . $product->thumbnail)); ?>" alt="<?php echo e($product->name); ?>">
-                        </div>
-                        <div class="prod-card-foot"><?php echo e($product->name); ?></div>
-                    </a>
-                </article>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                <p class="no-products"><?php echo e(__('front.no_products_found')); ?></p>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
-    </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<style>
-    .prod-nav-group {
-    border-bottom: 1px solid rgba(102, 93, 153, 0.1);
+    <style>
+
+        .prod-section.is-hidden {
+    display: none;
 }
 
-.prod-nav-item {
+.prod-section.is-visible {
+    display: block;
+}
+
+.prod-panel {
+    display: none;
+}
+
+.prod-panel.is-active {
+    display: block;
+}
+        .prod-subcategories-list {
+    padding-left: 15px;
+    background-color: rgba(102, 93, 153, 0.02);
+}
+
+.prod-subcategory-group {
+    border-bottom: 1px solid rgba(102, 93, 153, 0.05);
+}
+
+.prod-subcategory-group:last-child {
+    border-bottom: none;
+}
+
+.prod-subcategory-item {
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    padding: 10px 15px;
     background: none;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
+    font-size: 14px;
 }
 
-.prod-nav-item:hover {
-    background-color: rgba(102, 93, 153, 0.05);
+.prod-subcategory-item:hover {
+    background-color: rgba(102, 93, 153, 0.08);
 }
 
-.prod-nav-item.is-active {
-    background-color: rgba(102, 93, 153, 0.1);
+.prod-subcategory-item.is-active {
+    background-color: rgba(102, 93, 153, 0.15);
     font-weight: 600;
 }
 
-.prod-nav-arrow {
+.prod-subcategory-item .prod-nav-arrow {
     display: inline-flex;
-    margin-right: 8px;
+    margin-right: 6px;
     transition: transform 0.3s ease;
 }
 
-.prod-nav-item.is-active .prod-nav-arrow {
+.prod-subcategory-item.is-active .prod-nav-arrow {
     transform: rotate(90deg);
 }
 
-.prod-brands-list {
-    padding-left: 25px;
-    padding-bottom: 10px;
-    background-color: rgba(102, 93, 153, 0.02);
+.prod-subcategory-group .prod-brands-list {
+    padding-left: 35px;
 }
+        .prod-nav-group {
+            border-bottom: 1px solid rgba(102, 93, 153, 0.1);
+        }
 
-.prod-brand-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 15px;
-    text-decoration: none;
-    color: #333;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
-}
+        .prod-nav-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-.prod-brand-item:hover {
-    background-color: rgba(102, 93, 153, 0.05);
-    border-left-color: #665D99;
-}
+        .prod-nav-item:hover {
+            background-color: rgba(102, 93, 153, 0.05);
+        }
 
-.prod-brand-item.is-active {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-left-color: #665D99;
-    font-weight: 600;
-}
+        .prod-nav-item.is-active {
+            background-color: rgba(102, 93, 153, 0.1);
+            font-weight: 600;
+        }
 
-.prod-brand-item img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    margin-right: 10px;
-}
+        .prod-nav-arrow {
+            display: inline-flex;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
 
-.prod-brand-item span {
-    font-size: 14px;
-}
+        .prod-nav-item.is-active .prod-nav-arrow {
+            transform: rotate(90deg);
+        }
+
+        .prod-brands-list {
+            padding-left: 25px;
+            padding-bottom: 10px;
+            background-color: rgba(102, 93, 153, 0.02);
+        }
+
+        .prod-brand-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .prod-brand-item:hover {
+            background-color: rgba(102, 93, 153, 0.05);
+            border-left-color: #665D99;
+        }
+
+        .prod-brand-item.is-active {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-left-color: #665D99;
+            font-weight: 600;
+        }
+
+        .prod-brand-item img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .prod-brand-item span {
+            font-size: 14px;
+        }
     </style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
-<script>
+ <script>
 (function() {
     'use strict';
     
@@ -234,44 +351,36 @@
     
     function init() {
         const categoryButtons = document.querySelectorAll('[data-prod-category]');
+        const subcategoryButtons = document.querySelectorAll('[data-prod-subcategory]');
         
         categoryButtons.forEach(function(button) {
             button.addEventListener('click', handleCategoryClick);
         });
         
-        // Handle brand clicks to keep category open
+        subcategoryButtons.forEach(function(button) {
+            button.addEventListener('click', handleSubcategoryClick);
+        });
+        
+        // Handle brand clicks
         const brandLinks = document.querySelectorAll('.prod-brand-item');
         brandLinks.forEach(function(link) {
             link.addEventListener('click', function(e) {
-                // Let the link work normally, just mark that we clicked a brand
                 sessionStorage.setItem('brandClicked', 'true');
-                sessionStorage.setItem('activeCategoryId', this.closest('.prod-nav-group').querySelector('[data-category-id]').getAttribute('data-category-id'));
+                const brandsListDiv = this.closest('.prod-brands-list');
+                if (brandsListDiv) {
+                    const subcategoryId = brandsListDiv.getAttribute('data-brands-for').replace('subcategory-', '');
+                    sessionStorage.setItem('activeSubcategoryId', subcategoryId);
+                }
+                const categoryButton = this.closest('.prod-nav-group').querySelector('[data-category-id]');
+                if (categoryButton) {
+                    const categoryId = categoryButton.getAttribute('data-category-id');
+                    sessionStorage.setItem('activeCategoryId', categoryId);
+                }
             });
         });
         
-        // On page load, check if we came from a brand click
-        const brandClicked = sessionStorage.getItem('brandClicked');
-        const activeCategoryId = sessionStorage.getItem('activeCategoryId');
-        
-        if (brandClicked === 'true' && activeCategoryId) {
-            // Keep the category open
-            const categoryButton = document.querySelector(`[data-category-id="${activeCategoryId}"]`);
-            const brandsSection = document.querySelector(`[data-brands-for="category-${activeCategoryId}"]`);
-            const panel = document.querySelector(`[data-panel="category-${activeCategoryId}"]`);
-            
-            if (categoryButton) {
-                categoryButton.classList.add('is-active');
-            }
-            if (brandsSection) {
-                brandsSection.style.display = 'block';
-            }
-            if (panel) {
-                panel.classList.add('is-active');
-            }
-            
-            // Clear the session storage
-            sessionStorage.removeItem('brandClicked');
-        }
+        // Restore state on page load
+        restoreNavigationState();
     }
     
     function handleCategoryClick(event) {
@@ -279,46 +388,129 @@
         
         const button = this;
         const categoryId = button.getAttribute('data-category-id');
-        const brandsSelector = '[data-brands-for="category-' + categoryId + '"]';
-        const brandsSection = document.querySelector(brandsSelector);
+        const subcategoriesSelector = '[data-subcategories-for="category-' + categoryId + '"]';
+        const subcategoriesSection = document.querySelector(subcategoriesSelector);
         
-        // Toggle behavior
         const isActive = button.classList.contains('is-active');
         
-        // Close all
+        // Close all categories and panels
         closeAllCategories();
         
         // Open clicked category if it wasn't active
-        if (!isActive && brandsSection) {
+        if (!isActive) {
             button.classList.add('is-active');
-            brandsSection.style.display = 'block';
+            
+            // Show subcategories if they exist
+            if (subcategoriesSection) {
+                subcategoriesSection.style.display = 'block';
+            }
             
             // Show corresponding panel
             const panel = document.querySelector('[data-panel="category-' + categoryId + '"]');
             if (panel) {
                 panel.classList.add('is-active');
+                
+                // Show all subcategory sections within this panel
+                const subcategorySections = panel.querySelectorAll('[data-subcategory-section]');
+                subcategorySections.forEach(function(section) {
+                    section.classList.remove('is-hidden');
+                    section.classList.add('is-visible');
+                });
             }
             
-            // Update breadcrumb
             updateBreadcrumb(button.getAttribute('data-title'));
-            
-            // Store active category
             sessionStorage.setItem('activeCategoryId', categoryId);
         } else {
+            // If clicking active category, close everything
             sessionStorage.removeItem('activeCategoryId');
+            sessionStorage.removeItem('activeSubcategoryId');
+        }
+    }
+    
+    function handleSubcategoryClick(event) {
+        event.preventDefault();
+        
+        const button = this;
+        const subcategoryId = button.getAttribute('data-subcategory-id');
+        const categoryId = button.getAttribute('data-category-id');
+        const brandsSelector = '[data-brands-for="subcategory-' + subcategoryId + '"]';
+        const brandsSection = document.querySelector(brandsSelector);
+        
+        const isActive = button.classList.contains('is-active');
+        
+        // Close all subcategories and brands within this category
+        const parentGroup = button.closest('.prod-subcategories-list');
+        if (parentGroup) {
+            parentGroup.querySelectorAll('[data-prod-subcategory]').forEach(function(btn) {
+                btn.classList.remove('is-active');
+            });
+            parentGroup.querySelectorAll('.prod-brands-list').forEach(function(section) {
+                section.style.display = 'none';
+            });
+        }
+        
+        // Hide all subcategory sections in the panel
+        const panel = document.querySelector('[data-panel="category-' + categoryId + '"]');
+        if (panel) {
+            const allSubcategorySections = panel.querySelectorAll('[data-subcategory-section]');
+            allSubcategorySections.forEach(function(section) {
+                section.classList.add('is-hidden');
+                section.classList.remove('is-visible');
+            });
+        }
+        
+        // Open clicked subcategory if it wasn't active
+        if (!isActive) {
+            button.classList.add('is-active');
+            
+            // Show brands if they exist
+            if (brandsSection) {
+                brandsSection.style.display = 'block';
+            }
+            
+            // Show only the selected subcategory section
+            const selectedSection = document.querySelector('[data-subcategory-section="' + subcategoryId + '"]');
+            if (selectedSection) {
+                selectedSection.classList.remove('is-hidden');
+                selectedSection.classList.add('is-visible');
+            }
+            
+            updateBreadcrumb(button.getAttribute('data-title'));
+            sessionStorage.setItem('activeSubcategoryId', subcategoryId);
+            sessionStorage.setItem('activeCategoryId', categoryId);
+        } else {
+            // If clicking active subcategory, show all subcategories again
+            if (panel) {
+                const allSubcategorySections = panel.querySelectorAll('[data-subcategory-section]');
+                allSubcategorySections.forEach(function(section) {
+                    section.classList.remove('is-hidden');
+                    section.classList.add('is-visible');
+                });
+            }
+            
+            sessionStorage.removeItem('activeSubcategoryId');
+            
+            // Update breadcrumb to category name
+            const categoryButton = document.querySelector('[data-category-id="' + categoryId + '"]');
+            if (categoryButton) {
+                updateBreadcrumb(categoryButton.getAttribute('data-title'));
+            }
         }
     }
     
     function closeAllCategories() {
-        // Remove all active states
+        // Remove all active states from categories
         document.querySelectorAll('[data-prod-category]').forEach(function(btn) {
             btn.classList.remove('is-active');
         });
         
-        // Hide all brand lists
-        document.querySelectorAll('.prod-brands-list').forEach(function(section) {
+        // Hide all subcategories lists
+        document.querySelectorAll('.prod-subcategories-list').forEach(function(section) {
             section.style.display = 'none';
         });
+        
+        // Close all subcategories and brands
+        closeAllSubcategories();
         
         // Hide all panels
         document.querySelectorAll('.prod-panel').forEach(function(panel) {
@@ -326,12 +518,74 @@
         });
     }
     
+    function closeAllSubcategories() {
+        document.querySelectorAll('[data-prod-subcategory]').forEach(function(btn) {
+            btn.classList.remove('is-active');
+        });
+        
+        document.querySelectorAll('.prod-brands-list').forEach(function(section) {
+            section.style.display = 'none';
+        });
+    }
+    
+    function restoreNavigationState() {
+        const brandClicked = sessionStorage.getItem('brandClicked');
+        const activeCategoryId = sessionStorage.getItem('activeCategoryId');
+        const activeSubcategoryId = sessionStorage.getItem('activeSubcategoryId');
+        
+        if (brandClicked === 'true' && activeCategoryId) {
+            const categoryButton = document.querySelector('[data-category-id="' + activeCategoryId + '"]');
+            const subcategoriesSection = document.querySelector('[data-subcategories-for="category-' + activeCategoryId + '"]');
+            
+            if (categoryButton) {
+                categoryButton.classList.add('is-active');
+            }
+            if (subcategoriesSection) {
+                subcategoriesSection.style.display = 'block';
+            }
+            
+            // Show the category panel
+            const panel = document.querySelector('[data-panel="category-' + activeCategoryId + '"]');
+            if (panel) {
+                panel.classList.add('is-active');
+            }
+            
+            if (activeSubcategoryId) {
+                const subcategoryButton = document.querySelector('[data-subcategory-id="' + activeSubcategoryId + '"]');
+                const brandsSection = document.querySelector('[data-brands-for="subcategory-' + activeSubcategoryId + '"]');
+                
+                if (subcategoryButton) {
+                    subcategoryButton.classList.add('is-active');
+                }
+                if (brandsSection) {
+                    brandsSection.style.display = 'block';
+                }
+                
+                // Hide all subcategory sections except the active one
+                if (panel) {
+                    const allSubcategorySections = panel.querySelectorAll('[data-subcategory-section]');
+                    allSubcategorySections.forEach(function(section) {
+                        const sectionId = section.getAttribute('data-subcategory-section');
+                        if (sectionId === activeSubcategoryId) {
+                            section.classList.remove('is-hidden');
+                            section.classList.add('is-visible');
+                        } else {
+                            section.classList.add('is-hidden');
+                            section.classList.remove('is-visible');
+                        }
+                    });
+                }
+            }
+            
+            sessionStorage.removeItem('brandClicked');
+        }
+    }
+    
     function updateBreadcrumb(title) {
         const heading = document.querySelector('[data-prod-heading]');
-        const breadcrumb = document.querySelector('[data-prod-current]');
-        
-        if (heading) heading.textContent = title;
-        if (breadcrumb) breadcrumb.textContent = title;
+        if (heading) {
+            heading.textContent = title;
+        }
     }
 })();
 </script>

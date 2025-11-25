@@ -49,10 +49,10 @@
                 @enderror
             </div>
               <div class="mb-3">
-                <label for="twitter" class="form-label">{{ __('messages.twitter') }}</label>
-                <input type="text" class="form-control @error('twitter') is-invalid @enderror" 
-                       id="twitter" name="twitter" value="{{ old('twitter', $setting->twitter) }}" required>
-                @error('twitter')
+                <label for="linkedin" class="form-label">{{ __('messages.linkedin') }}</label>
+                <input type="text" class="form-control @error('linkedin') is-invalid @enderror" 
+                       id="linkedin" name="linkedin" value="{{ old('linkedin', $setting->linkedin) }}" required>
+                @error('linkedin')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

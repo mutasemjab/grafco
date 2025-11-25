@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('address');
             $table->text('google_map');
-            $table->text('twitter');
+            $table->text('linkedin');
             $table->text('instagram');
             $table->text('facebook');
             $table->timestamps();

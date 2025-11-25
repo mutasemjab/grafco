@@ -11,43 +11,55 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-   public function index($categorySlug = null)
-    {
-        $selectedCategory = null;
-        $selectedBrand = null;
+   public function index($categorySlug = null, $subcategorySlug = null)
+{
+    $selectedCategory = null;
+    $selectedSubcategory = null;
+    $selectedBrand = null;
 
-        // Check if filtering by brand (from query parameter)
-        if (request()->has('brand')) {
-            $selectedBrand = Brand::findOrFail(request('brand'));
-        }
+    // Check if filtering by brand (from query parameter)
+    if (request()->has('brand')) {
+        $selectedBrand = Brand::findOrFail(request('brand'));
+    }
 
-        // Check if filtering by category (from URL path)
-        if ($categorySlug) {
-            $selectedCategory = Category::where('slug', $categorySlug)
-                                        ->with('brands')
-                                        ->firstOrFail();
-        }
+    // Check if filtering by subcategory
+    if ($subcategorySlug) {
+        $selectedSubcategory = Category::where('slug', $subcategorySlug)
+                                    ->whereNotNull('parent_id')
+                                    ->with('brands')
+                                    ->firstOrFail();
+        $selectedCategory = $selectedSubcategory->parent;
+    }
+    // Check if filtering by category (from URL path)
+    elseif ($categorySlug) {
+        $selectedCategory = Category::where('slug', $categorySlug)
+                                    ->whereNull('parent_id')
+                                    ->with('brands')
+                                    ->firstOrFail();
+    }
 
-        // Load categories with their relationships
-        $categories = Category::mainCategories()
-            ->with([
-                'children' => function($query) {
-                    $query->where('is_active', true);
-                },
-                'children.brands',
-                'brands'
-            ])
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
+    // Load categories with their relationships
+    $categories = Category::mainCategories()
+        ->with([
+            'children' => function($query) {
+                $query->where('is_active', true)
+                      ->orderBy('sort_order')
+                      ->with('brands');
+            },
+            'brands'
+        ])
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get();
 
-        // Load products for each category based on filters
-        foreach ($categories as $category) {
-            // Check if this category should be filtered
-            $shouldFilterThisCategory = !$selectedCategory || $selectedCategory->id == $category->id;
+    // Load products for each category/subcategory based on filters
+    foreach ($categories as $category) {
+        // Check if this category should be filtered
+        $shouldFilterThisCategory = !$selectedCategory || $selectedCategory->id == $category->id;
 
-            if ($shouldFilterThisCategory) {
-                // Load products for main category
+        if ($shouldFilterThisCategory) {
+            // Load products for main category (only if no children)
+            if ($category->children->count() == 0) {
                 $categoryProductsQuery = Product::where('category_id', $category->id)
                                                 ->where('is_active', true);
                 
@@ -56,10 +68,17 @@ class ProductController extends Controller
                 }
                 
                 $category->filteredProducts = $categoryProductsQuery->get();
+            } else {
+                $category->filteredProducts = collect();
+            }
 
-                // Load products for subcategories
-                if ($category->children->count() > 0) {
-                    foreach ($category->children as $subcategory) {
+            // Load products for subcategories
+            if ($category->children->count() > 0) {
+                foreach ($category->children as $subcategory) {
+                    $shouldFilterThisSubcategory = !$selectedSubcategory || 
+                                                   $selectedSubcategory->id == $subcategory->id;
+                    
+                    if ($shouldFilterThisSubcategory) {
                         $subProductsQuery = Product::where('category_id', $subcategory->id)
                                                    ->where('is_active', true);
                         
@@ -68,22 +87,25 @@ class ProductController extends Controller
                         }
                         
                         $subcategory->filteredProducts = $subProductsQuery->get();
-                    }
-                }
-            } else {
-                // Don't load products for other categories
-                $category->filteredProducts = collect();
-                
-                if ($category->children->count() > 0) {
-                    foreach ($category->children as $subcategory) {
+                    } else {
                         $subcategory->filteredProducts = collect();
                     }
                 }
             }
+        } else {
+            // Don't load products for other categories
+            $category->filteredProducts = collect();
+            
+            if ($category->children->count() > 0) {
+                foreach ($category->children as $subcategory) {
+                    $subcategory->filteredProducts = collect();
+                }
+            }
         }
-
-        return view('user.products', compact('categories', 'selectedCategory', 'selectedBrand'));
     }
+
+    return view('user.products', compact('categories', 'selectedCategory', 'selectedSubcategory', 'selectedBrand'));
+}
 
     
     public function show($slug)

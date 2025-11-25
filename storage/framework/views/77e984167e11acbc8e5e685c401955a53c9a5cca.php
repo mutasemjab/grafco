@@ -17,9 +17,14 @@
                 <li><a href="<?php echo e($setting->instagram); ?>" target="_blank" aria-label="<?php echo e(__('front.instagram')); ?>">
                     <svg width="22" height="22" viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7Zm5 3.5A4.5 4.5 0 1 1 7.5 13 4.5 4.5 0 0 1 12 8.5Zm0 2a2.5 2.5 0 1 0 2.5 2.5A2.5 2.5 0 0 0 12 10.5Zm4.8-3.3a.9.9 0 1 1-.9.9.9.9 0 0 1 .9-.9Z" fill="currentColor"/></svg>
                 </a></li>
-                <li><a href="<?php echo e($setting->twitter); ?>" target="_blank" aria-label="<?php echo e(__('front.twitter')); ?>">
-                    <svg width="22" height="22" viewBox="0 0 24 24"><path d="M21 6.5c-.6.3-1.3.5-2 .6.7-.4 1.2-1 1.4-1.8-.7.4-1.4.7-2.2.9a3.2 3.2 0 0 0-5.6 2.2c0 .3 0 .6.1.8-2.7-.1-5.1-1.4-6.7-3.4a3.3 3.3 0 0 0 .4 3.3c.5.6 1.1 1 1.9 1.2-.6 0-1.2-.2-1.7-.5 0 1.5 1 2.8 2.5 3.1-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.7 2.3 3.2 2.3A6.5 6.5 0 0 1 3 18.8a9.2 9.2 0 0 0 5 1.5c6 0 9.4-5 9.4-9.4v-.4c.6-.4 1.2-1 1.6-1.6Z" fill="currentColor"/></svg>
-                </a></li>
+            <li>
+                <a href="<?php echo e($setting->linkedin); ?>" target="_blank" aria-label="<?php echo e(__('front.linkedin')); ?>">
+                    <svg width="22" height="22" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19 3A2.94 2.94 0 0 1 22 6v12a2.94 2.94 0 0 1-3 3H5a2.94 2.94 0 0 1-3-3V6a2.94 2.94 0 0 1 3-3h14M8.53 17v-7H5.77v7h2.76m-1.38-8.16A1.6 1.6 0 1 0 5.55 7.3a1.6 1.6 0 0 0 1.6 1.54h.01M19 17v-4.1c0-2.22-1.18-3.25-2.76-3.25a2.39 2.39 0 0 0-2.16 1.19h-.03V10H11v7h2.9v-3.82c0-1.01.19-1.98 1.44-1.98 1.23 0 1.25 1.15 1.25 2.04V17H19Z"/>
+                    </svg>
+                </a>
+            </li>
+
             </ul>
             <div class="footer-copy"><?php echo e(__('front.copyright', ['year' => $year])); ?></div>
         </div>

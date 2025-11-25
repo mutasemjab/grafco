@@ -142,7 +142,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="description_en" class="form-label"><?php echo e(__('messages.description_en')); ?></label>
-                            <textarea class="form-control <?php $__errorArgs = ['description_en'];
+                            <textarea class="form-control rich-text <?php $__errorArgs = ['description_en'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -169,7 +169,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="description_ar" class="form-label"><?php echo e(__('messages.description_ar')); ?></label>
-                            <textarea class="form-control <?php $__errorArgs = ['description_ar'];
+                            <textarea class="form-control rich-text <?php $__errorArgs = ['description_ar'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

@@ -141,23 +141,7 @@
                                 </div>
                             </div>
 
-                            <div class="svc-region-card">
-                                <div class="svc-region-head">
-                                    <div class="svc-region-title"><?php echo e(__('front.regional_coverage')); ?></div>
-                                    <div class="svc-region-sub"><?php echo e(__('front.regional_coverage_desc')); ?></div>
-                                </div>
-                                <div class="svc-region-list">
-                                    <div class="svc-region-item">
-                                        <span class="svc-region-flag">🇯🇴</span>
-                                        <span><?php echo e(__('front.jordan')); ?></span>
-                                    </div>
-                                    <div class="svc-region-item">
-                                        <span class="svc-region-flag">🇵🇸</span>
-                                        <span><?php echo e(__('front.palestine')); ?></span>
-                                    </div>
-                                </div>
-                                <button class="svc-region-btn"><?php echo e(__('front.find_local_office')); ?></button>
-                            </div>
+                           
                         </div>
                         <?php endif; ?>
                     </div>

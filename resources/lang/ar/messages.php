@@ -242,6 +242,10 @@ return [
     'label_ar' => 'التسمية (عربي)',
     'value_en' => 'القيمة (إنجليزي)',
     'value_ar' => 'القيمة (عربي)',
+    'type' => 'النوع',
+'select_type' => 'اختر النوع',
+'offset' => 'أوفست',
+'digital' => 'رقمي',
     
     // Downloads
     'downloads' => 'التحميلات',

@@ -18,7 +18,7 @@ return [
    'facebook' => 'Facebook',
    'linkedin' => 'LinkedIn',
    'instagram' => 'Instagram',
-   'twitter' => 'Twitter',
+   'linkedin' => 'Linkedin',
    'copyright' => '© Copyright :year Graphic Supplies Co.',
    'quick_links' => 'Quick Links',
    'applications' => 'Applications',

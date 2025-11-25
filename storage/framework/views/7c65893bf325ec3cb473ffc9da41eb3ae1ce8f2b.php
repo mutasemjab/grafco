@@ -15,7 +15,7 @@
                 <th><?php echo e(__('messages.photo')); ?></th>
                 <th><?php echo e(__('messages.name_en')); ?></th>
                 <th><?php echo e(__('messages.name_ar')); ?></th>
-                <th><?php echo e(__('messages.order')); ?></th>
+                <th><?php echo e(__('messages.type')); ?></th>
                 <th><?php echo e(__('messages.actions')); ?></th>
             </tr>
         </thead>
@@ -26,7 +26,7 @@
                 <td><img src="<?php echo e(asset('assets/admin/uploads/'.$item->photo)); ?>" width="60"></td>
                 <td><?php echo e($item->name_en); ?></td>
                 <td><?php echo e($item->name_ar); ?></td>
-                <td><?php echo e($item->order); ?></td>
+                <td><?php echo e($item->type); ?></td>
                 <td>
                     <a href="<?php echo e(route('consumables.edit',$item->id)); ?>" class="btn btn-sm btn-success">
                         <?php echo e(__('messages.edit')); ?>

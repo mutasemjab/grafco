@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description_ar');
             $table->json('key_features_en')->nullable();
             $table->json('key_features_ar')->nullable();
+            $table->enum('type',['offset','digital'])->default('offset');
             $table->integer('order')->default(0);
             $table->timestamps();
         });

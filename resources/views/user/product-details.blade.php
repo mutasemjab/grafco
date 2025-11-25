@@ -116,21 +116,20 @@
                     <button class="pdetail-tab" data-tab="request">{{ __('front.request_product') }}</button>
                 </div>
 
-                <div class="pdetail-panels">
-                  <div class="pdetail-panel is-active" data-panel="spec">
-                    @if ($product->specifications->count() > 0)
-                        <div class="pdetail-spec-table {{ app()->getLocale() == 'ar' ? 'rtl' : '' }}">
-                            @foreach ($product->specifications as $spec)
-                                <div class="pdetail-spec-row">
-                                    <div class="pdetail-spec-label">{{ $spec->label }}</div>
-                                    <div class="pdetail-spec-value">{{ $spec->value }}</div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p>{{ __('front.no_specifications') }}</p>
-                    @endif
-                </div>
+               <div class="pdetail-panel is-active" data-panel="spec">
+                @if ($product->specifications->count() > 0)
+                    <div class="pdetail-spec-table {{ app()->getLocale() == 'ar' ? 'rtl' : '' }}">
+                        @foreach ($product->specifications as $spec)
+                            <div class="pdetail-spec-row">
+                                <div class="pdetail-spec-label">{{ $spec->label }}</div>
+                                <div class="pdetail-spec-value">{{ $spec->value }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>{{ __('front.no_specifications') }}</p>
+                @endif
+            </div>
 
                     <div class="pdetail-panel" data-panel="features">
                         <div class="pdetail-features-block">
@@ -277,33 +276,97 @@
             </div>
         </div>
     </section>
-    <style>
-        .pdetail-tabs--rtl {
-            direction: rtl;
-            text-align: right;
-        }
+   <style>
+.pdetail-tabs--rtl {
+    direction: rtl;
+    text-align: right;
+}
 
-        .pdetail-tabs--rtl .pdetail-tab {
-            text-align: right;
-        }
-        [dir="rtl"] .pdetail-spec-table,
-        .pdetail-spec-table.rtl {
-            direction: rtl;
-        }
+.pdetail-tabs--rtl .pdetail-tab {
+    text-align: right;
+}
 
-        [dir="rtl"] .pdetail-spec-row,
-        .pdetail-spec-table.rtl .pdetail-spec-row {
-            flex-direction: row-reverse;
-        }
+/* RTL Specifications Table */
+.pdetail-spec-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background-color: #e5e5e5;
+    border: 1px solid #e5e5e5;
+}
 
-        [dir="rtl"] .pdetail-spec-label,
-        .pdetail-spec-table.rtl .pdetail-spec-label {
-            text-align: right;
-        }
+.pdetail-spec-row {
+    display: flex;
+    background-color: #fff;
+}
 
-        [dir="rtl"] .pdetail-spec-value,
-        .pdetail-spec-table.rtl .pdetail-spec-value {
-            text-align: left;
-        }
-    </style>
+.pdetail-spec-label,
+.pdetail-spec-value {
+    padding: 12px 16px;
+    flex: 1;
+}
+
+.pdetail-spec-label {
+    background-color: #f8f8f8;
+    font-weight: 500;
+    color: #333;
+}
+
+.pdetail-spec-value {
+    background-color: #fff;
+    color: #666;
+}
+
+/* RTL Specific Styles */
+[dir="rtl"] .pdetail-spec-table,
+.pdetail-spec-table.rtl {
+    direction: rtl;
+}
+
+[dir="rtl"] .pdetail-spec-row,
+.pdetail-spec-table.rtl .pdetail-spec-row {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .pdetail-spec-label,
+.pdetail-spec-table.rtl .pdetail-spec-label {
+    text-align: right;
+    border-left: 1px solid #e5e5e5;
+    border-right: none;
+}
+
+[dir="rtl"] .pdetail-spec-value,
+.pdetail-spec-table.rtl .pdetail-spec-value {
+    text-align: right;
+    border-right: none;
+}
+
+/* LTR Specific Styles */
+.pdetail-spec-table:not(.rtl) .pdetail-spec-label {
+    text-align: left;
+    border-right: 1px solid #e5e5e5;
+}
+
+.pdetail-spec-table:not(.rtl) .pdetail-spec-value {
+    text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pdetail-spec-row {
+        flex-direction: column;
+    }
+    
+    [dir="rtl"] .pdetail-spec-row,
+    .pdetail-spec-table.rtl .pdetail-spec-row {
+        flex-direction: column;
+    }
+    
+    .pdetail-spec-label {
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #e5e5e5;
+    }
+}
+</style>
 @endsection

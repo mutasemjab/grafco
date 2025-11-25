@@ -254,6 +254,10 @@ return [
     'service_pages' => 'Service Page',
     'service_page_section' => 'Service Page Section',
     'view_all' => 'View all',
+    'type' => 'Type',
+'select_type' => 'Select Type',
+'offset' => 'Offset',
+'digital' => 'Digital',
     
     // Settings
     'settings' => 'Settings',

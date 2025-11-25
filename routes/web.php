@@ -45,8 +45,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
     Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
     
-    Route::get('/products/{category?}', [ProductController::class, 'index'])->name('products.index');
-
+    Route::get('/products/{category?}/{subcategory?}', [ProductController::class, 'index'])
+        ->name('products.index');
     
     
     Route::post('/career/apply', [CareerController::class, 'apply'])->name('career.apply');

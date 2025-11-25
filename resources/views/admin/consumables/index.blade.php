@@ -16,7 +16,7 @@
                 <th>{{ __('messages.photo') }}</th>
                 <th>{{ __('messages.name_en') }}</th>
                 <th>{{ __('messages.name_ar') }}</th>
-                <th>{{ __('messages.order') }}</th>
+                <th>{{ __('messages.type') }}</th>
                 <th>{{ __('messages.actions') }}</th>
             </tr>
         </thead>
@@ -27,7 +27,7 @@
                 <td><img src="{{ asset('assets/admin/uploads/'.$item->photo) }}" width="60"></td>
                 <td>{{ $item->name_en }}</td>
                 <td>{{ $item->name_ar }}</td>
-                <td>{{ $item->order }}</td>
+                <td>{{ $item->type }}</td>
                 <td>
                     <a href="{{ route('consumables.edit',$item->id) }}" class="btn btn-sm btn-success">
                         {{ __('messages.edit') }}

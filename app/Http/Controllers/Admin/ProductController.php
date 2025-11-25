@@ -35,7 +35,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('is_active', true)
-            ->orderBy('sort_order')
+            ->where('parent_id','!=',null)
             ->get();
 
         $brands = Brand::get();
@@ -172,7 +172,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::where('is_active', true)
-            ->orderBy('sort_order')
+            ->where('parent_id','!=',null)
             ->get();
 
         $brands = Brand::get();

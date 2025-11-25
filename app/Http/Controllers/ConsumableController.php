@@ -9,13 +9,22 @@ class ConsumableController extends Controller
 {
     public function index()
     {
-        $consumables = Consumable::with('products')->orderBy('order')->get();
+        // Get consumables grouped by type
+        $offsetConsumables = Consumable::with('products')
+            ->where('type', 'offset')
+            ->orderBy('order')
+            ->get();
+        
+        $digitalConsumables = Consumable::with('products')
+            ->where('type', 'digital')
+            ->orderBy('order')
+            ->get();
+        
         $locale = app()->getLocale();
         $setting = Setting::first();
         
-        return view('user.consumable', compact('consumables', 'locale', 'setting'));
+        return view('user.consumable', compact('offsetConsumables', 'digitalConsumables', 'locale', 'setting'));
     }
-    
    
 
       public function show($id)

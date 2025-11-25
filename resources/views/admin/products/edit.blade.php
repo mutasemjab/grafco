@@ -87,7 +87,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="description_en" class="form-label">{{ __('messages.description_en') }}</label>
-                            <textarea class="form-control @error('description_en') is-invalid @enderror" 
+                            <textarea class="form-control rich-text @error('description_en') is-invalid @enderror" 
                                       id="description_en" 
                                       name="description_en" 
                                       rows="4">{{ old('description_en', $product->description_en) }}</textarea>
@@ -100,7 +100,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="description_ar" class="form-label">{{ __('messages.description_ar') }}</label>
-                            <textarea class="form-control @error('description_ar') is-invalid @enderror" 
+                            <textarea class="form-control rich-text @error('description_ar') is-invalid @enderror" 
                                       id="description_ar" 
                                       name="description_ar" 
                                       rows="4" 

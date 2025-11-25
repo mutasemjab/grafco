@@ -54,6 +54,29 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
+                    <label>{{ __('messages.type') }}</label>
+                    <select name="type" class="form-control @error('type') is-invalid @enderror">
+                        <option value="">{{ __('messages.select_type') }}</option>
+                        <option value="offset" {{ old('type', $item->type) == 'offset' ? 'selected' : '' }}>{{ __('messages.offset') }}</option>
+                        <option value="digital" {{ old('type', $item->type) == 'digital' ? 'selected' : '' }}>{{ __('messages.digital') }}</option>
+                    </select>
+                    @error('type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>{{ __('messages.order') }}</label>
+                    <input type="number" name="order" class="form-control" value="{{ old('order', $item->order) }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
                     <label>{{ __('messages.key_features_en') }}</label>
                     <div id="features-en-container">
                         @if($item->key_features_en)
@@ -102,13 +125,6 @@
                     @error('photo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ __('messages.order') }}</label>
-                    <input type="number" name="order" class="form-control" value="{{ old('order', $item->order) }}">
                 </div>
             </div>
         </div>

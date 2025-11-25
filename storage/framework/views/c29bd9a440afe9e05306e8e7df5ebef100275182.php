@@ -1,9 +1,9 @@
 <?php $__env->startSection('content'); ?>
 <div class="container">
-    <h3 class="mb-4"><?php echo e(__('messages.edit_consumable')); ?></h3>
+    <h3 class="mb-4"><?php echo e(__('messages.create_consumable')); ?></h3>
 
-    <form action="<?php echo e(route('consumables.update',$item->id)); ?>" method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
-        <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+    <form action="<?php echo e(route('consumables.store')); ?>" method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        <?php echo csrf_field(); ?>
 
         <div class="row">
             <div class="col-md-6">
@@ -16,7 +16,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('name_en',$item->name_en)); ?>">
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('name_en')); ?>">
                     <?php $__errorArgs = ['name_en'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -40,7 +40,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('name_ar',$item->name_ar)); ?>">
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('name_ar')); ?>">
                     <?php $__errorArgs = ['name_ar'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -66,7 +66,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" rows="5"><?php echo e(old('description_en',$item->description_en)); ?></textarea>
+unset($__errorArgs, $__bag); ?>" rows="5"><?php echo e(old('description_en')); ?></textarea>
                     <?php $__errorArgs = ['description_en'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -90,7 +90,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" rows="5"><?php echo e(old('description_ar',$item->description_ar)); ?></textarea>
+unset($__errorArgs, $__bag); ?>" rows="5"><?php echo e(old('description_ar')); ?></textarea>
                     <?php $__errorArgs = ['description_ar'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -118,8 +118,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
                         <option value=""><?php echo e(__('messages.select_type')); ?></option>
-                        <option value="offset" <?php echo e(old('type', $item->type) == 'offset' ? 'selected' : ''); ?>><?php echo e(__('messages.offset')); ?></option>
-                        <option value="digital" <?php echo e(old('type', $item->type) == 'digital' ? 'selected' : ''); ?>><?php echo e(__('messages.digital')); ?></option>
+                        <option value="offset" <?php echo e(old('type') == 'offset' ? 'selected' : ''); ?>><?php echo e(__('messages.offset')); ?></option>
+                        <option value="digital" <?php echo e(old('type') == 'digital' ? 'selected' : ''); ?>><?php echo e(__('messages.digital')); ?></option>
                     </select>
                     <?php $__errorArgs = ['type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -137,7 +137,7 @@ unset($__errorArgs, $__bag); ?>
             <div class="col-md-6">
                 <div class="form-group">
                     <label><?php echo e(__('messages.order')); ?></label>
-                    <input type="number" name="order" class="form-control" value="<?php echo e(old('order', $item->order)); ?>">
+                    <input type="number" name="order" class="form-control" value="<?php echo e(old('order', 0)); ?>">
                 </div>
             </div>
         </div>
@@ -147,14 +147,6 @@ unset($__errorArgs, $__bag); ?>
                 <div class="form-group">
                     <label><?php echo e(__('messages.key_features_en')); ?></label>
                     <div id="features-en-container">
-                        <?php if($item->key_features_en): ?>
-                            <?php $__currentLoopData = $item->key_features_en; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="input-group mb-2">
-                                <input type="text" name="key_features_en[]" class="form-control" value="<?php echo e($feature); ?>">
-                                <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">-</button>
-                            </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
                         <div class="input-group mb-2">
                             <input type="text" name="key_features_en[]" class="form-control" placeholder="<?php echo e(__('messages.feature')); ?>">
                             <button type="button" class="btn btn-success" onclick="addFeature('en')">+</button>
@@ -167,14 +159,6 @@ unset($__errorArgs, $__bag); ?>
                 <div class="form-group">
                     <label><?php echo e(__('messages.key_features_ar')); ?></label>
                     <div id="features-ar-container">
-                        <?php if($item->key_features_ar): ?>
-                            <?php $__currentLoopData = $item->key_features_ar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="input-group mb-2">
-                                <input type="text" name="key_features_ar[]" class="form-control" value="<?php echo e($feature); ?>">
-                                <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">-</button>
-                            </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
                         <div class="input-group mb-2">
                             <input type="text" name="key_features_ar[]" class="form-control" placeholder="<?php echo e(__('messages.feature')); ?>">
                             <button type="button" class="btn btn-success" onclick="addFeature('ar')">+</button>
@@ -187,8 +171,7 @@ unset($__errorArgs, $__bag); ?>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label><?php echo e(__('messages.photo')); ?></label><br>
-                    <img src="<?php echo e(asset('assets/admin/uploads/'.$item->photo)); ?>" width="80" class="mb-2"><br>
+                    <label><?php echo e(__('messages.photo')); ?></label>
                     <input type="file" name="photo" class="form-control <?php $__errorArgs = ['photo'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -229,4 +212,4 @@ function addFeature(lang) {
 }
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\grafco\resources\views/admin/consumables/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\grafco\resources\views/admin/consumables/create.blade.php ENDPATH**/ ?>

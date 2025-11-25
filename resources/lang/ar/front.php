@@ -18,7 +18,7 @@ return [
   'facebook' => 'فيسبوك',
   'linkedin' => 'لينكد إن',
   'instagram' => 'إنستغرام',
-  'twitter' => 'تويتر',
+  'linkedin' => 'linkedin',
   'copyright' => '© جميع الحقوق محفوظة :year شركة جرافيك للمستلزمات.',
   'quick_links' => 'روابط سريعة',
   'applications' => 'التطبيقات',
