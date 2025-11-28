@@ -19,6 +19,8 @@ return [
   'linkedin' => 'لينكد إن',
   'instagram' => 'إنستغرام',
   'linkedin' => 'linkedin',
+  'find_us' => 'موقعنا',
+  'related_news' => 'أخبار ذات صلة',
   'copyright' => '© جميع الحقوق محفوظة :year شركة جرافيك للمستلزمات.',
   'quick_links' => 'روابط سريعة',
   'applications' => 'التطبيقات',

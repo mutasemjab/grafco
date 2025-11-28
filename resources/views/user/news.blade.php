@@ -41,6 +41,8 @@
                     $year = \Carbon\Carbon::parse($item->date_of_news)->year;
                     $formattedDate = \Carbon\Carbon::parse($item->date_of_news)->format('M d, Y');
                 @endphp
+                                    <a href="{{route('new.details',$item->id)}}" style=" color: inherit; text-decoration: none;">
+
                 <article class="news-item" data-year="{{ $year }}" data-index="{{ $index }}">
                     <div class="news-item-image">
                         <img src="{{ asset('assets/admin/uploads/' . $item->photo) }}" alt="{{ $locale === 'ar' ? $item->name_ar : $item->name_en }}">
@@ -54,7 +56,9 @@
                             {!! Str::limit($locale === 'ar' ? $item->description_ar : $item->description_en, 150) !!}
                         </p>
                     </div>
+                     
                 </article>
+               </a>
             @endforeach
         </div>
 

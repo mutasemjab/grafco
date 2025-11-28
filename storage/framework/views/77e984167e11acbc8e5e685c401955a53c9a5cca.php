@@ -82,14 +82,6 @@
             </ul>
         </div>
 
-        <div class="footer-cert-col">
-            <h3 class="footer-title"><?php echo e(__('front.certifications')); ?></h3>
-            <ul class="cert-list">
-                <li><?php echo e(__('front.iso_9001')); ?></li>
-                <li><?php echo e(__('front.iso_14001')); ?></li>
-                <li><?php echo e(__('front.authorized_service')); ?></li>
-                <li><?php echo e(__('front.factory_trained')); ?></li>
-            </ul>
-        </div>
+      
     </div>
 </footer><?php /**PATH C:\xampp\htdocs\grafco\resources\views/user/includes/footer.blade.php ENDPATH**/ ?>

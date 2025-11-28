@@ -30,6 +30,7 @@ class SettingController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'email_technical_issue' => 'required|email|max:255',
             'address' => 'required|string|max:255',
             'google_map' => 'required|string',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -40,6 +41,7 @@ class SettingController extends Controller
         DB::table('settings')->insert([
             'phone' => $request->phone,
             'email' => $request->email,
+            'email_technical_issue' => $request->email_technical_issue,
             'address' => $request->address,
             'google_map' => $request->google_map,
             'linkedin' => $request->linkedin,
@@ -67,6 +69,7 @@ class SettingController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'email_technical_issue' => 'required|email|max:255',
             'address' => 'required|string|max:255',
             'google_map' => 'required|string',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -80,6 +83,7 @@ class SettingController extends Controller
         $updateData = [
             'phone' => $request->phone,
             'email' => $request->email,
+            'email_technical_issue' => $request->email_technical_issue,
             'address' => $request->address,
             'linkedin' => $request->linkedin,
             'instagram' => $request->instagram,

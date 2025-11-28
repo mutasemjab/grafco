@@ -34,7 +34,7 @@
                             </span>
                             <div class="chip-txt">
                                 <span><?php echo e(__('front.our_service')); ?></span>
-                                <a href="tel:<?php echo e($setting->phone); ?>"><?php echo e($setting->phone); ?></a>
+                                <a dir="ltr" href="tel:<?php echo e($setting->phone); ?>"><?php echo e($setting->phone); ?></a>
                             </div>
                         </div>
                     </div>
@@ -71,6 +71,7 @@
                     <div class="feat-viewport">
                         <div class="feat-track" data-track>
                             <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                             <a href="<?php echo e(route('product.details', $product->slug)); ?>" style="color: inherit;text-decoration: none;">
                                 <article class="feat-card">
                                     <h3 class="feat-card-title">
                                         <?php echo e(app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en); ?>
@@ -87,6 +88,7 @@
                                             loading="lazy">
                                     </div>
                                 </article>
+                             </a>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
@@ -173,160 +175,6 @@
             </div>
         </section>
     <?php endif; ?>
-
-
-
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('script'); ?>
-<script>
-(function() {
-    'use strict';
-    
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBrandsCarousel);
-    } else {
-        initBrandsCarousel();
-    }
-    
-    function initBrandsCarousel() {
-        const brandsSection = document.querySelector('[data-brands]');
-        if (!brandsSection) return;
-        
-        const track = brandsSection.querySelector('[data-track]');
-        const prevBtn = brandsSection.querySelector('[data-prev]');
-        const nextBtn = brandsSection.querySelector('[data-next]');
-        const brandItems = track.querySelectorAll('.brand-item');
-        
-        if (!track || !prevBtn || !nextBtn || brandItems.length === 0) return;
-        
-        let currentIndex = 0;
-        let autoplayInterval;
-        let isHovered = false;
-        const autoplayDelay = 1000; // 3 seconds - غير الرقم لو بدك أسرع أو أبطأ
-        
-        function getItemWidth() {
-            return brandItems[0].offsetWidth;
-        }
-        
-        function getGap() {
-            return 20; // Adjust based on your CSS gap
-        }
-        
-        function getSlideWidth() {
-            return getItemWidth() + getGap();
-        }
-        
-        function getVisibleItems() {
-            return Math.floor(track.parentElement.offsetWidth / getSlideWidth());
-        }
-        
-        function getMaxIndex() {
-            return Math.max(0, brandItems.length - getVisibleItems());
-        }
-        
-        // Update button states
-        function updateButtons() {
-            const maxIndex = getMaxIndex();
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= maxIndex;
-            
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-        }
-        
-        // Slide to position
-        function slideTo(index) {
-            const maxIndex = getMaxIndex();
-            currentIndex = Math.max(0, Math.min(index, maxIndex));
-            const offset = -(currentIndex * getSlideWidth());
-            track.style.transform = `translateX(${offset}px)`;
-            updateButtons();
-        }
-        
-        // Move to next slide
-        function goNext() {
-            const maxIndex = getMaxIndex();
-            if (currentIndex >= maxIndex) {
-                // إذا وصلنا للآخر، نرجع للأول
-                slideTo(0);
-            } else {
-                slideTo(currentIndex + 1);
-            }
-        }
-        
-        // Move to previous slide
-        function goPrev() {
-            slideTo(currentIndex - 1);
-        }
-        
-        // Start autoplay
-        function startAutoplay() {
-            stopAutoplay(); // Clear any existing interval
-            autoplayInterval = setInterval(function() {
-                if (!isHovered) {
-                    goNext();
-                }
-            }, autoplayDelay);
-        }
-        
-        // Stop autoplay
-        function stopAutoplay() {
-            if (autoplayInterval) {
-                clearInterval(autoplayInterval);
-                autoplayInterval = null;
-            }
-        }
-        
-        // Next button
-        nextBtn.addEventListener('click', function() {
-            goNext();
-            startAutoplay(); // Restart autoplay after manual click
-        });
-        
-        // Previous button
-        prevBtn.addEventListener('click', function() {
-            goPrev();
-            startAutoplay(); // Restart autoplay after manual click
-        });
-        
-        // Pause autoplay on hover
-        brandsSection.addEventListener('mouseenter', function() {
-            isHovered = true;
-            stopAutoplay();
-        });
-        
-        // Resume autoplay when mouse leaves
-        brandsSection.addEventListener('mouseleave', function() {
-            isHovered = false;
-            startAutoplay();
-        });
-        
-        // Handle window resize
-        let resizeTimer;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                currentIndex = 0;
-                slideTo(0);
-                startAutoplay();
-            }, 250);
-        });
-        
-        // Handle visibility change (pause when tab is not visible)
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                stopAutoplay();
-            } else if (!isHovered) {
-                startAutoplay();
-            }
-        });
-        
-        // Initial state
-        updateButtons();
-        startAutoplay(); // Start autoplay on load
-    }
-})();
-</script>
-<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\grafco\resources\views/user/home.blade.php ENDPATH**/ ?>

@@ -16,7 +16,7 @@
             @csrf
             
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="phone" class="form-label">{{ __('messages.phone') }}</label>
                         <input type="text" class="form-control @error('phone') is-invalid @enderror" 
@@ -27,12 +27,22 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="email" class="form-label">{{ __('messages.email') }}</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" 
                                id="email" name="email" value="{{ old('email') }}" required>
                         @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">{{ __('messages.email_technical_issue') }}</label>
+                        <input type="email" class="form-control @error('email_technical_issue') is-invalid @enderror" 
+                               id="email_technical_issue" name="email_technical_issue" value="{{ old('email_technical_issue') }}" required>
+                        @error('email_technical_issue')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

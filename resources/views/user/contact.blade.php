@@ -158,13 +158,13 @@
                             </span>
                             <a href="tel:{{ $setting->phone }}">{{ $setting->phone }}</a>
                         </li>
-                        <li>
+                       <li>
                             <span class="contact-info-ico">
                                 <svg width="16" height="16" viewBox="0 0 24 24">
                                     <path d="M4 6h16v12H4V6Zm8 6L4 6h16l-8 6Z" fill="#01AD5E"/>
                                 </svg>
                             </span>
-                            <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
+                            <a href="mailto:{{ $setting->email }}" data-email-display>{{ $setting->email }}</a>
                         </li>
                     </ul>
                 </div>
@@ -203,17 +203,36 @@
                         <div class="region-phone">{{ $setting->phone }}</div>
                     </div>
                 </div>
+                <div class="contact-card contact-map-card">
+                    <h3 class="contact-card-title">{{ __('front.find_us') }}</h3>
+                    <div class="contact-map-wrapper">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3384.972838092734!2d35.963302524575276!3d31.96163357401495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b5e3292a5d023%3A0x2170c882727fef78!2z2LTYsdmD2Kkg2KrYrNmH2YrYstin2Kog2KfZhNmF2LfYp9io2LkgLyDZg9ix2KfZgdmD2YggLCBHcmFwaGljIFN1cHBsaWVzIENvLiBcIEdSQVBIQ08!5e0!3m2!1sar!2sjo!4v1764342779309!5m2!1sar!2sjo" 
+                            width="100%" 
+                            height="120" 
+                            style="border:0; border-radius: 8px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
             </aside>
         </div>
     </div>
 </section>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.contact-tab');
     const typeInput = document.querySelector('input[name="type"]');
     const submitBtn = document.querySelector('[data-contact-btn] .contact-submit-text');
     const productRow = document.querySelector('[data-extra="product"]');
+    const emailDisplay = document.querySelector('[data-email-display]');
+    
+    const emails = {
+        sales: '{{ $setting->email }}',
+        tech: '{{ $setting->email_technical_issue }}'
+    };
     
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -229,6 +248,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update button text
             submitBtn.textContent = this.dataset.btn;
+            
+            // Update email display
+            const selectedEmail = emails[formType];
+            emailDisplay.textContent = selectedEmail;
+            emailDisplay.href = 'mailto:' + selectedEmail;
             
             // Show/hide product field
             if (this.dataset.product === '1') {

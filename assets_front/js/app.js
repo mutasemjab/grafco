@@ -121,83 +121,111 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 
 (function(){
-  var root=document.querySelector('[data-brands]'); if(!root) return;
+  var root=document.querySelector('[data-brands]'); 
+  if(!root) return;
+  
   var track=root.querySelector('[data-track]');
   var prev=root.querySelector('[data-prev]');
   var next=root.querySelector('[data-next]');
-  var rtl=document.documentElement.getAttribute('dir')==='rtl';
-  var items=[].slice.call(track.children);
-  var perView=6, i=0, timer=null, dur=3200, animating=false;
-
-  function calcPerView(){
-    var w=window.innerWidth;
-    if(w<=680) perView=2;
-    else if(w<=1200) perView=4;
-    else perView=6;
+  var originalItems=Array.from(track.children);
+  
+  if(!track || !prev || !next || originalItems.length === 0) return;
+  
+  var rtl = document.documentElement.getAttribute('dir') === 'rtl';
+  var currentIndex = 0;
+  var timer = null;
+  var dur = 3000;
+  var isTransitioning = false;
+  
+  // Clone items twice for infinite loop
+  for(let i = 0; i < 2; i++) {
+    originalItems.forEach(function(item) {
+      track.appendChild(item.cloneNode(true));
+    });
   }
-
-  function cloneEdges(){
-    track.innerHTML='';
-    var need=perView;
-    var head=items.slice(0,need).map(n=>n.cloneNode(true));
-    var tail=items.slice(-need).map(n=>n.cloneNode(true));
-    tail.forEach(n=>track.appendChild(n));
-    items.forEach(n=>track.appendChild(n));
-    head.forEach(n=>track.appendChild(n));
-    items=[].slice.call(track.children);
-    i=need;
-    track.style.transition='none';
-    translate();
-    requestAnimationFrame(function(){ track.style.transition='transform .45s ease'; });
+  
+  var allItems = Array.from(track.children);
+  var totalOriginal = originalItems.length;
+  
+  function getItemWidth() {
+    return originalItems[0].offsetWidth;
   }
-
-  function translate(){
-    var step=100/perView;
-    var dir=rtl?-1:1;
-    track.style.transform='translateX(' + (-i*step*dir) + '%)';
+  
+  function getGap() {
+    return 20;
   }
-
-  function go(n){
-    if(animating) return;
-    animating=true;
-    i=n;
-    translate();
+  
+  function getSlideWidth() {
+    return getItemWidth() + getGap();
   }
-
-  function onEnd(){
-    var need=perView;
-    if(i>=items.length-need){ i=need; track.style.transition='none'; translate(); requestAnimationFrame(function(){ track.style.transition='transform .45s ease'; }); }
-    if(i<need){ i=items.length-need-1; track.style.transition='none'; translate(); requestAnimationFrame(function(){ track.style.transition='transform .45s ease'; }); }
-    animating=false;
+  
+  function slideTo(index, instant) {
+    var offset = index * getSlideWidth();
+    
+    if(instant) {
+      track.style.transition = 'none';
+    } else {
+      track.style.transition = 'transform 0.5s ease-in-out';
+    }
+    
+    // ALWAYS use negative translateX (move left) regardless of RTL/LTR
+    track.style.transform = 'translateX(-' + offset + 'px)';
+    
+    if(instant) {
+      track.offsetHeight; // force reflow
+    }
   }
-
-  function autoplay(){
-    stop();
-    timer=setInterval(function(){ go(i+(rtl?-1:1)); }, dur);
+  
+  function handleTransitionEnd() {
+    if(currentIndex >= totalOriginal) {
+      currentIndex = currentIndex - totalOriginal;
+      slideTo(currentIndex, true);
+    } else if(currentIndex < 0) {
+      currentIndex = totalOriginal + currentIndex;
+      slideTo(currentIndex, true);
+    }
+    isTransitioning = false;
   }
-
-  function stop(){ if(timer) clearInterval(timer); timer=null; }
-
-  function init(){
-    calcPerView();
-    cloneEdges();
-    autoplay();
+  
+  function goNext() {
+    if(isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    slideTo(currentIndex, false);
   }
-
-  prev.addEventListener('click', function(){ go(i+(rtl?1:-1)); });
-  next.addEventListener('click', function(){ go(i+(rtl?-1:1)); });
-  track.addEventListener('transitionend', onEnd);
-  root.addEventListener('mouseenter', stop);
-  root.addEventListener('mouseleave', autoplay);
-  window.addEventListener('resize', function(){
-    var old=perView;
-    calcPerView();
-    if(old!==perView){ cloneEdges(); autoplay(); }
+  
+  function goPrev() {
+    if(isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    slideTo(currentIndex, false);
+  }
+  
+  function startAutoplay() {
+    stopAutoplay();
+    timer = setInterval(function() {
+      goNext();
+    }, dur);
+  }
+  
+  function stopAutoplay() {
+    if(timer) clearInterval(timer);
+    timer = null;
+  }
+  
+  track.addEventListener('transitionend', handleTransitionEnd);
+  prev.addEventListener('click', function() { stopAutoplay(); goPrev(); startAutoplay(); });
+  next.addEventListener('click', function() { stopAutoplay(); goNext(); startAutoplay(); });
+  root.addEventListener('mouseenter', stopAutoplay);
+  root.addEventListener('mouseleave', startAutoplay);
+  
+  window.addEventListener('resize', function() {
+    slideTo(currentIndex, true);
   });
-
-  init();
-}
-)();
+  
+  slideTo(0, true);
+  startAutoplay();
+})();
 
 (function(){
   var tabs=document.querySelectorAll('.about-tab');

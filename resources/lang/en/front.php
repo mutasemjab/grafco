@@ -19,6 +19,8 @@ return [
    'linkedin' => 'LinkedIn',
    'instagram' => 'Instagram',
    'linkedin' => 'Linkedin',
+   'related_news' => 'Related News',
+    'find_us' => 'Find Us',
    'copyright' => '© Copyright :year Graphic Supplies Co.',
    'quick_links' => 'Quick Links',
    'applications' => 'Applications',

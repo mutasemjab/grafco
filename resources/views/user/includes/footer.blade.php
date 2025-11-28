@@ -82,14 +82,6 @@
             </ul>
         </div>
 
-        <div class="footer-cert-col">
-            <h3 class="footer-title">{{ __('front.certifications') }}</h3>
-            <ul class="cert-list">
-                <li>{{ __('front.iso_9001') }}</li>
-                <li>{{ __('front.iso_14001') }}</li>
-                <li>{{ __('front.authorized_service') }}</li>
-                <li>{{ __('front.factory_trained') }}</li>
-            </ul>
-        </div>
+      
     </div>
 </footer>
