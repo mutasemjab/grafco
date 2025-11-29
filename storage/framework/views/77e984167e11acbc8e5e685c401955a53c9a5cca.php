@@ -40,14 +40,10 @@
             $locale = app()->getLocale();
             $dir = $locale === 'ar' ? 'rtl' : 'ltr';
             $nav = [
-                ['name' => __('front.home'), 'route' => 'home'],
                 ['name' => __('front.about'), 'route' => 'about'],
                 ['name' => __('front.products'), 'route' => 'products.index'],
                 ['name' => __('front.consumable'), 'route' => 'consumable'],
-                ['name' => __('front.service'), 'route' => 'service'],
-                ['name' => __('front.news_update'), 'route' => 'news'],
                 ['name' => __('front.contact'), 'route' => 'contact'],
-                ['name' => __('front.career'), 'route' => 'career'],
             ];
 
             $setting = App\Models\Setting::first();
@@ -67,9 +63,9 @@
             </ul>
         </div>
 
-        <div class="footer-contact-col">
+        <div  class="footer-contact-col">
             <h3 class="footer-title"><?php echo e(__('front.contact_us')); ?></h3>
-            <ul class="footer-contact">
+            <ul dir="ltr" class="footer-contact">
                 <li>
                     <span class="ico">
                         <svg width="18" height="18" viewBox="0 0 24 24">
@@ -78,7 +74,7 @@
                                 fill="currentColor" />
                         </svg>
                     </span>
-                    <span><?php echo e($setting->address); ?></span>
+                    <span><?php echo e(app()->getLocale() == 'ar' ? $setting->address_ar : $setting->address); ?></span>
                 </li>
                 <li>
                     <span class="ico">
@@ -88,7 +84,7 @@
                                 fill="currentColor" />
                         </svg>
                     </span>
-                    <a href="tel:+08505447514"><?php echo e($setting->phone); ?></a>
+                    <a dir="ltr" href="tel:+08505447514"><?php echo e($setting->phone); ?></a>
                 </li>
                 <li>
                     <span class="ico">

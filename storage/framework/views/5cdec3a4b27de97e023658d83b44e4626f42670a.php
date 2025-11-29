@@ -250,7 +250,7 @@ unset($__errorArgs, $__bag); ?>
                                     <path d="M12 2a7 7 0 0 0-7 7c0 4.4 7 13 7 13s7-8.6 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="#01AD5E"/>
                                 </svg>
                             </span>
-                            <span><?php echo e($setting->address); ?></span>
+                            <span><?php echo e(app()->getLocale() == 'ar' ? $setting->address_ar : $setting->address); ?></span>
                         </li>
                         <li>
                             <span class="contact-info-ico">
@@ -258,7 +258,7 @@ unset($__errorArgs, $__bag); ?>
                                     <path d="M6.6 10.8c1.3 2.5 3.3 4.5 5.8 5.8l2-2c.3-.3.8-.4 1.1-.2 1.2.4 2.5.6 3.9.6.5 0 .9.4.9.9v3.4c0 .5-.4.9-.9.9C10.6 21.9 2.1 13.4 2.1 2.9c0-.5.4-.9.9-.9H7c.5 0 .9.4.9.9 0 1.3.2 2.6.6 3.9.1.4 0 .8-.3 1.1l-1.6 1.6Z" fill="#01AD5E"/>
                                 </svg>
                             </span>
-                            <a href="tel:<?php echo e($setting->phone); ?>"><?php echo e($setting->phone); ?></a>
+                            <a dir="ltr" href="tel:<?php echo e($setting->phone); ?>"><?php echo e($setting->phone); ?></a>
                         </li>
                        <li>
                             <span class="contact-info-ico">
@@ -295,14 +295,14 @@ unset($__errorArgs, $__bag); ?>
                             <span>🇯🇴</span>
                             <span><?php echo e(__('front.jordan')); ?></span>
                         </div>
-                        <div class="region-phone"><?php echo e($setting->phone); ?></div>
+                        <div dir="ltr" class="region-phone"><?php echo e($setting->phone); ?></div>
                     </div>
                     <div class="region-item">
                         <div class="region-flag">
                             <span>🇵🇸</span>
                             <span><?php echo e(__('front.palestine')); ?></span>
                         </div>
-                        <div class="region-phone"><?php echo e($setting->phone); ?></div>
+                        <div dir="ltr" class="region-phone"><?php echo e($setting->phone); ?></div>
                     </div>
                 </div>
                 <div class="contact-card contact-map-card">
