@@ -74,50 +74,97 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 
 (function(){
-  var wrap=document.querySelector('[data-featured]'); if(!wrap) return;
+  var wrap=document.querySelector('[data-featured]'); 
+  if(!wrap) return;
+  
   var track=wrap.querySelector('[data-track]');
   var prev=wrap.querySelector('[data-prev]');
   var next=wrap.querySelector('[data-next]');
-  var cards=[].slice.call(track.children);
-  var i=0, perView=3;
-
-  function calcPerView(){
-    var w=wrap.clientWidth;
-    if(window.innerWidth<=680){ perView=1; }
-    else if(window.innerWidth<=1200){ perView=2; }
-    else { perView=3; }
+  var originalCards=Array.from(track.children);
+  
+  if(!track || !prev || !next || originalCards.length === 0) return;
+  
+  var currentIndex = 0;
+  var isTransitioning = false;
+  
+  // Clone items twice for infinite loop
+  for(let i = 0; i < 2; i++) {
+    originalCards.forEach(function(card) {
+      track.appendChild(card.cloneNode(true));
+    });
   }
-  function update(){
-    var step = 100 / perView;
-    var offset = -(i * step);
-    track.style.transform='translateX('+offset+'%)';
+  
+  var totalOriginal = originalCards.length;
+  
+  function getPerView(){
+    if(window.innerWidth <= 680) return 1;
+    else if(window.innerWidth <= 1200) return 2;
+    else return 3;
   }
-  function maxIndex(){
-    return Math.max(0, cards.length - perView);
+  
+  function getCardWidth() {
+    return originalCards[0].offsetWidth;
   }
-  function go(n){
-    i=n;
-    if(i<0) i=maxIndex();
-    if(i>maxIndex()) i=0;
-    update();
+  
+  function getGap() {
+    return 22; // gap between cards
   }
-
-  function onResize(){
-    var old=perView;
-    calcPerView();
-    if(perView!==old){
-      i=Math.min(i, maxIndex());
-      update();
+  
+  function getSlideWidth() {
+    return getCardWidth() + getGap();
+  }
+  
+  function slideTo(index, instant) {
+    var offset = index * getSlideWidth();
+    
+    if(instant) {
+      track.style.transition = 'none';
+    } else {
+      track.style.transition = 'transform 0.45s ease';
+    }
+    
+    // Always move left regardless of RTL/LTR
+    track.style.transform = 'translateX(-' + offset + 'px)';
+    
+    if(instant) {
+      track.offsetHeight; // force reflow
     }
   }
-
-  calcPerView();
-  cards.forEach(function(c){ c.style.scrollSnapAlign='start'; });
-  update();
-
-  prev.addEventListener('click', function(){ go(i-1); });
-  next.addEventListener('click', function(){ go(i+1); });
-  window.addEventListener('resize', onResize);
+  
+  function handleTransitionEnd() {
+    if(currentIndex >= totalOriginal) {
+      currentIndex = currentIndex - totalOriginal;
+      slideTo(currentIndex, true);
+    } else if(currentIndex < 0) {
+      currentIndex = totalOriginal + currentIndex;
+      slideTo(currentIndex, true);
+    }
+    isTransitioning = false;
+  }
+  
+  function goNext() {
+    if(isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    slideTo(currentIndex, false);
+  }
+  
+  function goPrev() {
+    if(isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    slideTo(currentIndex, false);
+  }
+  
+  track.addEventListener('transitionend', handleTransitionEnd);
+  prev.addEventListener('click', function() { goPrev(); });
+  next.addEventListener('click', function() { goNext(); });
+  
+  window.addEventListener('resize', function() {
+    slideTo(currentIndex, true);
+  });
+  
+  slideTo(0, true);
 })();
 
 (function(){

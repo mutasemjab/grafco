@@ -76,8 +76,8 @@
                                         {{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}
                                     </h3>
                                     <div class="feat-sep"></div>
-                                    <p class="feat-card-text">
-                                        {{ Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 150) }}
+                                   <p class="feat-card-text">
+                                        {!! Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 100) !!}
                                     </p>
                                     <div class="feat-card-img">
                                         <img src="{{ asset('assets/admin/uploads/' . $product->main_image) }}"

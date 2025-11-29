@@ -20,6 +20,7 @@ return [
    'instagram' => 'Instagram',
    'linkedin' => 'Linkedin',
    'related_news' => 'Related News',
+   'Graphic Supplies' => 'Graphic Supplies Co. (GRAPHCO)',
     'find_us' => 'Find Us',
    'copyright' => '© Copyright :year Graphic Supplies Co.',
    'quick_links' => 'Quick Links',

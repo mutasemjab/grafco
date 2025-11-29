@@ -78,8 +78,8 @@
 
                                     </h3>
                                     <div class="feat-sep"></div>
-                                    <p class="feat-card-text">
-                                        <?php echo e(Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 150)); ?>
+                                   <p class="feat-card-text">
+                                        <?php echo Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 100); ?>
 
                                     </p>
                                     <div class="feat-card-img">

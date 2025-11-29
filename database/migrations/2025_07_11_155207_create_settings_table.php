@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('email_technical_issue');
+            $table->string('address_ar');
             $table->string('address');
             $table->text('google_map');
             $table->text('linkedin');

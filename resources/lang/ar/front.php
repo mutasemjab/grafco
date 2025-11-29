@@ -19,6 +19,7 @@ return [
   'linkedin' => 'لينكد إن',
   'instagram' => 'إنستغرام',
   'linkedin' => 'linkedin',
+  'Graphic Supplies' => 'شركة تجهيزات المطابع (كرافكو)',
   'find_us' => 'موقعنا',
   'related_news' => 'أخبار ذات صلة',
   'copyright' => '© جميع الحقوق محفوظة :year شركة جرافيك للمستلزمات.',

@@ -58,6 +58,14 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">{{ __('messages.address_ar') }}</label>
+                <input type="text" class="form-control @error('address_ar') is-invalid @enderror" 
+                       id="address_ar" name="address_ar" value="{{ old('address_ar', $setting->address_ar) }}" required>
+                @error('address_ar')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
               <div class="mb-3">
                 <label for="linkedin" class="form-label">{{ __('messages.linkedin') }}</label>
                 <input type="text" class="form-control @error('linkedin') is-invalid @enderror" 

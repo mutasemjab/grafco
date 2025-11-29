@@ -4,7 +4,7 @@
     <section class="page-hero about-banner" style="background-image:url('<?php echo e(asset('assets_front/img/about-banner.jpg')); ?>')">
         <div class="about-banner__overlay"></div>
         <div class="container about-banner__inner">
-            <h1 class="about-banner__title">Graphic Supplies Co.</h1>
+            <h1 class="about-banner__title"><?php echo e(__('front.Graphic Supplies')); ?></h1>
         </div>
     </section>
 
@@ -88,7 +88,7 @@
                                                             class="prod-brand-item <?php echo e($selectedBrand && $selectedBrand->id == $brand->id ? 'is-active' : ''); ?>">
                                                             <img src="<?php echo e(asset('assets/admin/uploads/' . $brand->photo)); ?>"
                                                                 alt="<?php echo e($brand->name); ?>" title="<?php echo e($brand->name); ?>">
-                                                            <span><?php echo e($brand->name); ?></span>
+                                                            
                                                         </a>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </div>
@@ -216,7 +216,7 @@
 .prod-panel.is-active {
     display: block;
 }
-        .prod-subcategories-list {
+.prod-subcategories-list {
     padding-left: 15px;
     background-color: rgba(102, 93, 153, 0.02);
 }
@@ -326,7 +326,7 @@
         }
 
         .prod-brand-item img {
-            width: 30px;
+            width: 50px;
             height: 30px;
             object-fit: contain;
             margin-right: 10px;
