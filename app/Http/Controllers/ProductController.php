@@ -11,15 +11,21 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-   public function index($categorySlug = null, $subcategorySlug = null)
+  public function index($categorySlug = null, $subcategorySlug = null)
 {
     $selectedCategory = null;
     $selectedSubcategory = null;
     $selectedBrand = null;
+    $showAllBrandProducts = false;
 
     // Check if filtering by brand (from query parameter)
     if (request()->has('brand')) {
         $selectedBrand = Brand::findOrFail(request('brand'));
+        
+        // If coming from home (no category selected), show all brand products
+        if (!$categorySlug && !$subcategorySlug) {
+            $showAllBrandProducts = true;
+        }
     }
 
     // Check if filtering by subcategory
@@ -54,8 +60,8 @@ class ProductController extends Controller
 
     // Load products for each category/subcategory based on filters
     foreach ($categories as $category) {
-        // Check if this category should be filtered
-        $shouldFilterThisCategory = !$selectedCategory || $selectedCategory->id == $category->id;
+        // If showing all brand products, load products for ALL categories
+        $shouldFilterThisCategory = $showAllBrandProducts || !$selectedCategory || $selectedCategory->id == $category->id;
 
         if ($shouldFilterThisCategory) {
             // Load products for main category (only if no children)
@@ -75,7 +81,8 @@ class ProductController extends Controller
             // Load products for subcategories
             if ($category->children->count() > 0) {
                 foreach ($category->children as $subcategory) {
-                    $shouldFilterThisSubcategory = !$selectedSubcategory || 
+                    // If showing all brand products, load for all subcategories
+                    $shouldFilterThisSubcategory = $showAllBrandProducts || !$selectedSubcategory || 
                                                    $selectedSubcategory->id == $subcategory->id;
                     
                     if ($shouldFilterThisSubcategory) {
@@ -104,7 +111,7 @@ class ProductController extends Controller
         }
     }
 
-    return view('user.products', compact('categories', 'selectedCategory', 'selectedSubcategory', 'selectedBrand'));
+    return view('user.products', compact('categories', 'selectedCategory', 'selectedSubcategory', 'selectedBrand', 'showAllBrandProducts'));
 }
 
     
