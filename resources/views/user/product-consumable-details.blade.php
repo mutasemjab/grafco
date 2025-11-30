@@ -5,7 +5,7 @@
 <section class="page-hero about-banner" style="background-image:url('{{ asset('assets_front/img/about-banner.jpg') }}')">
     <div class="about-banner__overlay"></div>
     <div class="container about-banner__inner">
-        <h1 class="about-banner__title">Graphic Supplies Co.</h1>
+        <h1 class="about-banner__title">{{ __('front.Graphic Supplies') }}</h1>
     </div>
 </section>
 
