@@ -44,63 +44,73 @@
         <div class="hero-dots" data-dots></div>
     </section>
 
-    <section class="featured" data-featured>
-        <div class="container featured-grid">
-            <div class="featured-left">
-                <h2 class="featured-title">{{ __('front.featured_products') }}</h2>
-                <a href="{{ route('products.index') }}" class="featured-btn">{{ __('messages.view_all') }}</a>
-                <div class="featured-arrows">
-                    <button class="featured-arrow" data-prev type="button" aria-label="{{ __('messages.previous') }}">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M15 6l-6 6 6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <button class="featured-arrow" data-next type="button" aria-label="{{ __('messages.next') }}">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
+   <section class="featured" data-featured>
+    <div class="container featured-grid">
+        <div class="featured-left">
+            <h2 class="featured-title">{{ __('front.featured_products') }}</h2>
+            <a href="{{ route('products.index') }}" class="featured-btn">{{ __('messages.view_all') }}</a>
+            <div class="featured-arrows">
+                <button class="featured-arrow" data-prev type="button" aria-label="{{ __('messages.previous') }}">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M15 6l-6 6 6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="featured-arrow" data-next type="button" aria-label="{{ __('messages.next') }}">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <div class="featured-right">
-                @if ($featuredProducts->count() > 0)
-                    <div class="feat-viewport">
-                        <div class="feat-track" data-track>
-                            @foreach ($featuredProducts as $product)
-                             <a href="{{ route('product.details', $product->slug) }}" style="color: inherit;text-decoration: none;">
+        <div class="featured-right">
+            @if ($featuredProducts->count() > 0)
+                <div class="feat-viewport">
+                    <div class="feat-track" data-track>
+                        @foreach ($featuredProducts as $product)
+                            <a href="{{ route('product.details', $product->slug) }}" style="color: inherit; text-decoration: none;">
                                 <article class="feat-card">
-                                    <h3 class="feat-card-title">
-                                        {{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}
-                                    </h3>
-                                    <div class="feat-sep"></div>
-                                   <p class="feat-card-text">
-                                        {!! Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 100) !!}
-                                    </p>
                                     <div class="feat-card-img">
                                         <img src="{{ asset('assets/admin/uploads/' . $product->main_image) }}"
                                             alt="{{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}"
                                             loading="lazy">
                                     </div>
+                                    <div class="feat-card-content">
+                                        <h3 class="feat-card-title">
+                                            {{ app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en }}
+                                        </h3>
+                                        <div class="feat-sep"></div>
+                                        <p class="feat-card-text">
+                                            {!! Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 120) !!}
+                                        </p>
+                                    </div>
                                 </article>
-                             </a>
-                            @endforeach
-                        </div>
+                            </a>
+                        @endforeach
                     </div>
-                @else
-                    <div class="feat-viewport">
-                        <div class="feat-track">
-                            <div class="text-center py-5">
-                                <p class="text-muted">{{ __('messages.no_featured_products') }}</p>
+                </div>
+            @else
+                <div class="feat-viewport">
+                    <div class="feat-track">
+                        <div class="feat-empty">
+                            <div class="feat-empty-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9b51e0" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
                             </div>
+                            <p class="feat-empty-text">{{ __('messages.no_featured_products') }}</p>
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
-    </section>
+    </div>
+</section>
+
     <br>
     <br>
 
