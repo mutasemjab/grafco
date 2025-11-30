@@ -74,25 +74,24 @@ document.addEventListener('DOMContentLoaded', function(){
   start();
 })();
 
-// Featured Products Carousel - FIXED VERSION
+// Featured Products Carousel - CLEAN VERSION WITH RTL FIX
 (function(){
-  var wrap=document.querySelector('[data-featured]'); 
+  var wrap = document.querySelector('[data-featured]'); 
   if(!wrap) return;
   
-  var track=wrap.querySelector('[data-track]');
-  var prev=wrap.querySelector('[data-prev]');
-  var next=wrap.querySelector('[data-next]');
-  var originalCards=Array.from(track.children);
+  var track = wrap.querySelector('[data-track]');
+  var prevBtn = wrap.querySelector('[data-prev]');
+  var nextBtn = wrap.querySelector('[data-next]');
+  var originalCards = Array.from(track.children);
   
-  if(!track || !prev || !next || originalCards.length === 0) return;
+  if(!track || !prevBtn || !nextBtn || originalCards.length === 0) return;
   
-  var rtl = document.documentElement.getAttribute('dir') === 'rtl';
   var currentIndex = 0;
   var timer = null;
-  var dur = 4000; // autoplay duration (4 seconds)
+  var dur = 4000;
   var isTransitioning = false;
   
-  // Clone items twice for infinite loop
+  // Clone cards for infinite loop
   for(let i = 0; i < 2; i++) {
     originalCards.forEach(function(card) {
       track.appendChild(card.cloneNode(true));
@@ -102,13 +101,14 @@ document.addEventListener('DOMContentLoaded', function(){
   var totalOriginal = originalCards.length;
   
   function getCardWidth() {
-    return originalCards[0].offsetWidth;
+    if(originalCards[0]) {
+      return originalCards[0].offsetWidth;
+    }
+    return 0;
   }
   
   function getGap() {
-    // FIXED: Use correct gap value
-    if(window.innerWidth <= 680) return 16;
-    else return 22;
+    return window.innerWidth <= 680 ? 16 : 22;
   }
   
   function getSlideWidth() {
@@ -118,17 +118,11 @@ document.addEventListener('DOMContentLoaded', function(){
   function slideTo(index, instant) {
     var offset = index * getSlideWidth();
     
-    if(instant) {
-      track.style.transition = 'none';
-    } else {
-      track.style.transition = 'transform 0.45s ease';
-    }
-    
-    // ALWAYS use negative translateX (move left) regardless of RTL/LTR
+    track.style.transition = instant ? 'none' : 'transform 0.45s ease';
     track.style.transform = 'translateX(-' + offset + 'px)';
     
     if(instant) {
-      track.offsetHeight; // force reflow
+      void track.offsetHeight; // force reflow
     }
   }
   
@@ -157,80 +151,86 @@ document.addEventListener('DOMContentLoaded', function(){
     slideTo(currentIndex, false);
   }
   
-  // ADDED: Autoplay functions (like brands section)
   function startAutoplay() {
     stopAutoplay();
-    timer = setInterval(function() {
-      goNext();
-    }, dur);
+    timer = setInterval(goNext, dur);
   }
   
   function stopAutoplay() {
-    if(timer) clearInterval(timer);
-    timer = null;
+    if(timer) {
+      clearInterval(timer);
+      timer = null;
+    }
   }
   
+  // Event listeners
   track.addEventListener('transitionend', handleTransitionEnd);
   
-  // FIXED: Add autoplay start/stop on button clicks
-  prev.addEventListener('click', function() { 
+  prevBtn.addEventListener('click', function(e) { 
+    e.preventDefault();
     stopAutoplay(); 
     goPrev(); 
     startAutoplay(); 
   });
   
-  next.addEventListener('click', function() { 
+  nextBtn.addEventListener('click', function(e) { 
+    e.preventDefault();
     stopAutoplay(); 
     goNext(); 
     startAutoplay(); 
   });
   
-  // ADDED: Pause on hover, resume on leave (like brands)
   wrap.addEventListener('mouseenter', stopAutoplay);
   wrap.addEventListener('mouseleave', startAutoplay);
   
+  var resizeTimer;
   window.addEventListener('resize', function() {
-    slideTo(currentIndex, true);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      slideTo(currentIndex, true);
+    }, 250);
   });
   
+  // Initialize
   slideTo(0, true);
-  startAutoplay(); // ADDED: Start autoplay on load
+  startAutoplay();
 })();
 
 // Brands Carousel
 (function(){
-  var root=document.querySelector('[data-brands]'); 
+  var root = document.querySelector('[data-brands]'); 
   if(!root) return;
   
-  var track=root.querySelector('[data-track]');
-  var prev=root.querySelector('[data-prev]');
-  var next=root.querySelector('[data-next]');
-  var originalItems=Array.from(track.children);
+  var track = root.querySelector('[data-track]');
+  var prevBtn = root.querySelector('[data-prev]');
+  var nextBtn = root.querySelector('[data-next]');
+  var originalItems = Array.from(track.children);
   
-  if(!track || !prev || !next || originalItems.length === 0) return;
+  if(!track || !prevBtn || !nextBtn || originalItems.length === 0) return;
   
-  var rtl = document.documentElement.getAttribute('dir') === 'rtl';
   var currentIndex = 0;
   var timer = null;
   var dur = 3000;
   var isTransitioning = false;
   
-  // Clone items twice for infinite loop
+  // Clone items for infinite loop
   for(let i = 0; i < 2; i++) {
     originalItems.forEach(function(item) {
       track.appendChild(item.cloneNode(true));
     });
   }
   
-  var allItems = Array.from(track.children);
   var totalOriginal = originalItems.length;
   
   function getItemWidth() {
-    return originalItems[0].offsetWidth;
+    if(originalItems[0]) {
+      return originalItems[0].offsetWidth;
+    }
+    return 0;
   }
   
   function getGap() {
-    return 20;
+    return window.innerWidth <= 680 ? 16 : 42;
   }
   
   function getSlideWidth() {
@@ -240,17 +240,11 @@ document.addEventListener('DOMContentLoaded', function(){
   function slideTo(index, instant) {
     var offset = index * getSlideWidth();
     
-    if(instant) {
-      track.style.transition = 'none';
-    } else {
-      track.style.transition = 'transform 0.5s ease-in-out';
-    }
-    
-    // ALWAYS use negative translateX (move left) regardless of RTL/LTR
+    track.style.transition = instant ? 'none' : 'transform 0.5s ease-in-out';
     track.style.transform = 'translateX(-' + offset + 'px)';
     
     if(instant) {
-      track.offsetHeight; // force reflow
+      void track.offsetHeight; // force reflow
     }
   }
   
@@ -281,24 +275,41 @@ document.addEventListener('DOMContentLoaded', function(){
   
   function startAutoplay() {
     stopAutoplay();
-    timer = setInterval(function() {
-      goNext();
-    }, dur);
+    timer = setInterval(goNext, dur);
   }
   
   function stopAutoplay() {
-    if(timer) clearInterval(timer);
-    timer = null;
+    if(timer) {
+      clearInterval(timer);
+      timer = null;
+    }
   }
   
   track.addEventListener('transitionend', handleTransitionEnd);
-  prev.addEventListener('click', function() { stopAutoplay(); goPrev(); startAutoplay(); });
-  next.addEventListener('click', function() { stopAutoplay(); goNext(); startAutoplay(); });
+  
+  prevBtn.addEventListener('click', function(e) { 
+    e.preventDefault();
+    stopAutoplay(); 
+    goPrev(); 
+    startAutoplay(); 
+  });
+  
+  nextBtn.addEventListener('click', function(e) { 
+    e.preventDefault();
+    stopAutoplay(); 
+    goNext(); 
+    startAutoplay(); 
+  });
+  
   root.addEventListener('mouseenter', stopAutoplay);
   root.addEventListener('mouseleave', startAutoplay);
   
+  var resizeTimer;
   window.addEventListener('resize', function() {
-    slideTo(currentIndex, true);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      slideTo(currentIndex, true);
+    }, 250);
   });
   
   slideTo(0, true);
