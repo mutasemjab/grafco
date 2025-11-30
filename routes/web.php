@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ConsumableController;
 use App\Http\Controllers\ContactController;
@@ -49,7 +50,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/products/{category?}/{subcategory?}', [ProductController::class, 'index'])
         ->name('products.index');
     
-    
+    Route::get('/brands', [BrandController::class, 'index'])->name('brands');
+
     Route::post('/career/apply', [CareerController::class, 'apply'])->name('career.apply');
 
     // Frontend Page Routes

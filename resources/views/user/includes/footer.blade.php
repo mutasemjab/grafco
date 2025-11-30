@@ -42,6 +42,7 @@
             $nav = [
                 ['name' => __('front.about'), 'route' => 'about'],
                 ['name' => __('front.products'), 'route' => 'products.index'],
+                ['name' => __('front.brands'), 'route' => 'brands'],
                 ['name' => __('front.consumable'), 'route' => 'consumable'],
                 ['name' => __('front.contact'), 'route' => 'contact'],
             ];

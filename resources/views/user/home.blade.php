@@ -108,7 +108,7 @@
         <div class="container brands-head">
             <h2 class="brands-title">{{ __('front.Our Partners') }}</h2>
         </div>
-<br>
+        <br>
 
         <div class="brands-wrap">
             <button class="brands-nav" data-prev type="button">
