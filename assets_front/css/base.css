@@ -282,6 +282,7 @@ html,body{overflow-x:hidden}
     flex-direction: column;
     height: 480px;
     min-width: 350px;
+    cursor: pointer;
 }
 
 .feat-card:hover{
@@ -459,6 +460,19 @@ html[dir="rtl"] .feat-card-text{
     html[dir="rtl"] .featured-left{
         text-align: center;
     }
+}
+
+.feat-card > a {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.feat-card-img,
+.feat-card-content {
+    position: relative;
+    z-index: 0;
 }
 
 .brands{position:relative;background:none}
