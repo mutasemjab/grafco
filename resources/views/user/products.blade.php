@@ -131,10 +131,6 @@
                                     @foreach ($category->children as $subcategory)
                                         @if ($subcategory->filteredProducts->count() > 0)
                                             <div class="prod-section is-visible">
-                                                <div class="prod-subheading">
-                                                    <span class="prod-heading-mark">//</span>
-                                                    <span>{{ $subcategory->name }}</span>
-                                                </div>
                                                 <div class="prod-grid">
                                                     @foreach ($subcategory->filteredProducts as $product)
                                                         <article class="prod-card">
