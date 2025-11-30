@@ -44,7 +44,7 @@
                 <div class="cons-side-bottom" data-cons-type data-type-id="digital">
                     <span class="cons-side-caret-light">
                         <svg width="12" height="12" viewBox="0 0 24 24">
-                            <path d="M7 10l5 5 5-5" fill="none" stroke="#665D99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10l5 5 5-5" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </span>
                     <span class="cons-side-bottom-label">{{ __('front.digital') }}</span>
@@ -256,18 +256,18 @@
 }
 
 .cons-logo-item:hover {
-    border-color: #665D99;
+    border-color: #9b51e0;
     background-color: rgba(102, 93, 153, 0.05);
 }
 
 .cons-logo-item.is-active {
-    border-color: #665D99;
+    border-color: #9b51e0;
     background-color: rgba(102, 93, 153, 0.1);
 }
 
 .cons-logo-item.is-active .cons-logo-name {
     font-weight: 600;
-    color: #665D99;
+    color: #9b51e0;
 }
 
 .cons-panel {

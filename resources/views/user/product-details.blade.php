@@ -38,7 +38,7 @@
                             <span class="prod-nav-arrow">
                                 <svg width="10" height="10" viewBox="0 0 24 24">
                                     <path d="M9 6l6 6-6 6" fill="none"
-                                        stroke="{{ $product->category->id == $category->id ? '#fff' : '#665D99' }}"
+                                        stroke="{{ $product->category->id == $category->id ? '#fff' : '#9b51e0' }}"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
@@ -173,7 +173,7 @@
                                             download class="pdetail-download-btn">
                                             <svg width="16" height="16" viewBox="0 0 24 24">
                                                 <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" fill="none"
-                                                    stroke="#665D99" stroke-width="2" stroke-linecap="round"
+                                                    stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
                                                     stroke-linejoin="round" />
                                             </svg>
                                         </a>

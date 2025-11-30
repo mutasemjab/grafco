@@ -27,7 +27,7 @@
                
                     <span class="prod-nav-arrow">
                         <svg width="10" height="10" viewBox="0 0 24 24">
-                            <path d="M9 6l6 6-6 6" fill="none" stroke="<?php echo e($product->consumable_id == $consumable->id ? '#fff' : '#665D99'); ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 6l6 6-6 6" fill="none" stroke="<?php echo e($product->consumable_id == $consumable->id ? '#fff' : '#9b51e0'); ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </span>
                     <span><?php echo e($locale === 'ar' ? $consumable->name_ar : $consumable->name_en); ?></span>

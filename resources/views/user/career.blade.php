@@ -34,9 +34,9 @@
                     @else
                         <!-- Default SVG icon -->
                         <svg width="40" height="40" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" fill="#665D99" opacity=".12"/>
-                            <path d="M12 6a3 3 0 0 1 3 3c0 1.3-.4 2.1-.9 2.6l-.5.5V14h-2.2v-2.3l-.5-.5C10.4 11.1 10 10.3 10 9a3 3 0 0 1 3-3Z" fill="#665D99"/>
-                            <path d="M8.5 17.5c.4-1.5 1.9-2.5 3.5-2.5s3.1 1 3.5 2.5" stroke="#665D99" stroke-width="1.6" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="10" fill="#9b51e0" opacity=".12"/>
+                            <path d="M12 6a3 3 0 0 1 3 3c0 1.3-.4 2.1-.9 2.6l-.5.5V14h-2.2v-2.3l-.5-.5C10.4 11.1 10 10.3 10 9a3 3 0 0 1 3-3Z" fill="#9b51e0"/>
+                            <path d="M8.5 17.5c.4-1.5 1.9-2.5 3.5-2.5s3.1 1 3.5 2.5" stroke="#9b51e0" stroke-width="1.6" stroke-linecap="round"/>
                         </svg>
                     @endif
                 </div>
@@ -215,7 +215,7 @@
 .job-modal-title {
     font-size: 28px;
     font-weight: 700;
-    color: #665D99;
+    color: #9b51e0;
     margin-bottom: 10px;
 }
 
@@ -285,7 +285,7 @@
     align-items: center;
     gap: 10px;
     padding: 12px 24px;
-    background-color: #665D99;
+    background-color: #9b51e0;
     color: white;
     border-radius: 8px;
     cursor: pointer;

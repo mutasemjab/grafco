@@ -44,7 +44,7 @@
                                 data-panel="category-{{ $category->id }}" data-title="{{ $category->name }}" type="button">
                                 <span class="prod-nav-arrow">
                                     <svg width="10" height="10" viewBox="0 0 24 24">
-                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99" stroke-width="2"
+                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </span>
@@ -67,7 +67,7 @@
                                                 data-title="{{ $subcategory->name }}" type="button">
                                                 <span class="prod-nav-arrow">
                                                     <svg width="8" height="8" viewBox="0 0 24 24">
-                                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99"
+                                                        <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0"
                                                             stroke-width="2" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                     </svg>
@@ -342,12 +342,12 @@
 
         .prod-brand-item:hover {
             background-color: rgba(102, 93, 153, 0.05);
-            border-left-color: #665D99;
+            border-left-color: #9b51e0;
         }
 
         .prod-brand-item.is-active {
             background-color: rgba(0, 0, 0, 0.1);
-            border-left-color: #665D99;
+            border-left-color: #9b51e0;
             font-weight: 600;
         }
 

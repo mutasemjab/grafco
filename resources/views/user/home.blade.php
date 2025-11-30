@@ -52,13 +52,13 @@
                 <div class="featured-arrows">
                     <button class="featured-arrow" data-prev type="button" aria-label="{{ __('messages.previous') }}">
                         <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M15 6l-6 6 6 6" fill="none" stroke="#665D99" stroke-width="2" stroke-linecap="round"
+                            <path d="M15 6l-6 6 6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </button>
                     <button class="featured-arrow" data-next type="button" aria-label="{{ __('messages.next') }}">
                         <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M9 6l6 6-6 6" fill="none" stroke="#665D99" stroke-width="2" stroke-linecap="round"
+                            <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </button>
