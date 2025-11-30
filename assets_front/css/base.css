@@ -639,7 +639,7 @@ html,body{overflow-x:hidden}
 .prod-nav-item{width:100%;padding:10px 14px;border:0;background:#f7f7fb;display:flex;align-items:center;gap:10px;justify-content:flex-start;font-size:14px;color:#464846;cursor:pointer}
 .prod-nav-item + .prod-nav-item{border-top:1px solid #e3e5ec}
 .prod-nav-arrow{width:16px;display:inline-flex;align-items:center;justify-content:center}
-.prod-nav-item.is-active{background:#665D99;color:#fff}
+.prod-nav-item.is-active{background:#665D99;color:#665D99}
 .prod-nav-item.is-active svg path{stroke:#fff}
 
 .prod-main{min-width:0}
