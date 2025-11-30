@@ -150,10 +150,7 @@
                                 @else
                                     @if ($category->filteredProducts->count() > 0)
                                         <div class="prod-section is-visible">
-                                            <div class="prod-subheading">
-                                                <span class="prod-heading-mark">//</span>
-                                                <span>{{ $category->name }}</span>
-                                            </div>
+                                           
                                             <div class="prod-grid">
                                                 @foreach ($category->filteredProducts as $product)
                                                     <article class="prod-card">
@@ -182,10 +179,7 @@
                                             @foreach ($category->children as $subcategory)
                                                 <div class="prod-section {{ $selectedSubcategory && $selectedSubcategory->id == $subcategory->id ? 'is-visible' : ($selectedSubcategory ? 'is-hidden' : '') }}"
                                                     data-subcategory-section="{{ $subcategory->id }}">
-                                                    <div class="prod-subheading">
-                                                        <span class="prod-heading-mark">//</span>
-                                                        <span>{{ $subcategory->name }}</span>
-                                                    </div>
+                                                  
                                                     <div class="prod-grid">
                                                         @forelse($subcategory->filteredProducts ?? [] as $product)
                                                             <article class="prod-card">
