@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 
+// Hero Slider
 (function(){
   var slider = document.querySelector('[data-slider]');
   if(!slider) return;
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function(){
   start();
 })();
 
+// Featured Products Carousel - FIXED VERSION
 (function(){
   var wrap=document.querySelector('[data-featured]'); 
   if(!wrap) return;
@@ -84,7 +86,10 @@ document.addEventListener('DOMContentLoaded', function(){
   
   if(!track || !prev || !next || originalCards.length === 0) return;
   
+  var rtl = document.documentElement.getAttribute('dir') === 'rtl';
   var currentIndex = 0;
+  var timer = null;
+  var dur = 4000; // autoplay duration (4 seconds)
   var isTransitioning = false;
   
   // Clone items twice for infinite loop
@@ -96,18 +101,14 @@ document.addEventListener('DOMContentLoaded', function(){
   
   var totalOriginal = originalCards.length;
   
-  function getPerView(){
-    if(window.innerWidth <= 680) return 1;
-    else if(window.innerWidth <= 1200) return 2;
-    else return 3;
-  }
-  
   function getCardWidth() {
     return originalCards[0].offsetWidth;
   }
   
   function getGap() {
-    return 22; // gap between cards
+    // FIXED: Use correct gap value
+    if(window.innerWidth <= 680) return 16;
+    else return 22;
   }
   
   function getSlideWidth() {
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function(){
       track.style.transition = 'transform 0.45s ease';
     }
     
-    // Always move left regardless of RTL/LTR
+    // ALWAYS use negative translateX (move left) regardless of RTL/LTR
     track.style.transform = 'translateX(-' + offset + 'px)';
     
     if(instant) {
@@ -156,17 +157,47 @@ document.addEventListener('DOMContentLoaded', function(){
     slideTo(currentIndex, false);
   }
   
+  // ADDED: Autoplay functions (like brands section)
+  function startAutoplay() {
+    stopAutoplay();
+    timer = setInterval(function() {
+      goNext();
+    }, dur);
+  }
+  
+  function stopAutoplay() {
+    if(timer) clearInterval(timer);
+    timer = null;
+  }
+  
   track.addEventListener('transitionend', handleTransitionEnd);
-  prev.addEventListener('click', function() { goPrev(); });
-  next.addEventListener('click', function() { goNext(); });
+  
+  // FIXED: Add autoplay start/stop on button clicks
+  prev.addEventListener('click', function() { 
+    stopAutoplay(); 
+    goPrev(); 
+    startAutoplay(); 
+  });
+  
+  next.addEventListener('click', function() { 
+    stopAutoplay(); 
+    goNext(); 
+    startAutoplay(); 
+  });
+  
+  // ADDED: Pause on hover, resume on leave (like brands)
+  wrap.addEventListener('mouseenter', stopAutoplay);
+  wrap.addEventListener('mouseleave', startAutoplay);
   
   window.addEventListener('resize', function() {
     slideTo(currentIndex, true);
   });
   
   slideTo(0, true);
+  startAutoplay(); // ADDED: Start autoplay on load
 })();
 
+// Brands Carousel
 (function(){
   var root=document.querySelector('[data-brands]'); 
   if(!root) return;
@@ -274,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function(){
   startAutoplay();
 })();
 
+// About Tabs
 (function(){
   var tabs=document.querySelectorAll('.about-tab');
   if(!tabs.length) return;
@@ -290,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 })();
 
+// News Filtering
 (function(){
   var list=document.querySelector('[data-news-list]');
   if(!list) return;
@@ -362,35 +395,39 @@ document.addEventListener('DOMContentLoaded', function(){
   applyFilters();
 })();
 
+// Contact Form Tabs
 (function(){
-  var root=document.querySelector('[data-contact]');
-  if(!root) return;
-  var tabs=[].slice.call(root.querySelectorAll('.contact-tab'));
-  var extraRow=root.querySelector('[data-extra="product"]');
-  var btn=root.querySelector('[data-contact-btn]');
-  var btnText=btn ? btn.querySelector('.contact-submit-text') : null;
+  var roots=document.querySelectorAll('[data-contact]');
+  if(!roots.length) return;
+  roots.forEach(function(root){
+    var tabs=[].slice.call(root.querySelectorAll('.contact-tab'));
+    var extraRow=root.querySelector('[data-extra="product"]');
+    var btn=root.querySelector('[data-contact-btn]');
+    var btnText=btn ? btn.querySelector('.contact-submit-text') : null;
 
-  function applyTab(tab){
-    tabs.forEach(function(t){t.classList.remove('is-active');});
-    tab.classList.add('is-active');
-    var showProduct=tab.getAttribute('data-product')==="1";
-    var label=tab.getAttribute('data-btn') || '';
-    if(extraRow){
-      if(showProduct) extraRow.classList.add('is-visible');
-      else extraRow.classList.remove('is-visible');
+    function applyTab(tab){
+      tabs.forEach(function(t){t.classList.remove('is-active');});
+      tab.classList.add('is-active');
+      var showProduct=tab.getAttribute('data-product')==="1";
+      var label=tab.getAttribute('data-btn') || '';
+      if(extraRow){
+        if(showProduct) extraRow.classList.add('is-visible');
+        else extraRow.classList.remove('is-visible');
+      }
+      if(btnText) btnText.textContent=label;
     }
-    if(btnText) btnText.textContent=label;
-  }
 
-  tabs.forEach(function(tab){
-    tab.addEventListener('click',function(){
-      applyTab(tab);
+    tabs.forEach(function(tab){
+      tab.addEventListener('click',function(){
+        applyTab(tab);
+      });
     });
-  });
 
-  if(tabs[0]) applyTab(tabs[0]);
+    if(tabs[0]) applyTab(tabs[0]);
+  });
 })();
 
+// Service Panel Switching
 (function(){
   var root=document.querySelector('.service-shell__inner');
   if(!root) return;
@@ -430,37 +467,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(btns[0]) activate(btns[0]);
 })();
 
-(function(){
-  var roots=document.querySelectorAll('[data-contact]');
-  if(!roots.length) return;
-  roots.forEach(function(root){
-    var tabs=[].slice.call(root.querySelectorAll('.contact-tab'));
-    var extraRow=root.querySelector('[data-extra="product"]');
-    var btn=root.querySelector('[data-contact-btn]');
-    var btnText=btn ? btn.querySelector('.contact-submit-text') : null;
-
-    function applyTab(tab){
-      tabs.forEach(function(t){t.classList.remove('is-active');});
-      tab.classList.add('is-active');
-      var showProduct=tab.getAttribute('data-product')==="1";
-      var label=tab.getAttribute('data-btn') || '';
-      if(extraRow){
-        if(showProduct) extraRow.classList.add('is-visible');
-        else extraRow.classList.remove('is-visible');
-      }
-      if(btnText) btnText.textContent=label;
-    }
-
-    tabs.forEach(function(tab){
-      tab.addEventListener('click',function(){
-        applyTab(tab);
-      });
-    });
-
-    if(tabs[0]) applyTab(tabs[0]);
-  });
-})();
-
+// Consumables Navigation
 (function(){
   var root=document.querySelector('.cons-shell__inner');
   if(!root) return;
@@ -491,6 +498,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(navs[0]) activate(navs[0]);
 })();
 
+// Consumables Sidebar Toggle
 (function(){
   var top=document.querySelector('.cons-side-top');
   var box=document.querySelector('.cons-side-box');
@@ -501,6 +509,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 })();
 
+// Products Brand Navigation
 (function(){
   var root=document.querySelector('.products-shell__inner');
   if(!root) return;
@@ -531,6 +540,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(navs[0]) activate(navs[0]);
 })();
 
+// Product Detail Tabs
 (function(){
   var root=document.querySelector('[data-pdetail-tabs]');
   if(!root) return;
@@ -550,4 +560,3 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   if(tabs[0]) activate(tabs[0]);
 })();
-
