@@ -381,7 +381,7 @@ html,body{overflow-x:hidden}
     }
     .feat-card{
         flex: 0 0 calc((100% - 22px)/2);
-        min-width: 300px;
+        min-width: 250px;
     }
     .feat-card-img{
         height: 280px;
