@@ -90,3 +90,80 @@ html[dir="rtl"] .pdetail-spec-row{grid-template-columns:minmax(0,1fr)200px}
 html[dir="rtl"] .pdetail-spec-label{text-align:right}
 html[dir="rtl"] .pdetail-specialist-contacts{justify-content:flex-end}
 html[dir="rtl"] .pdetail-download-bottom{direction:rtl}
+/* RTL Fixes for Featured Products Carousel */
+/* CRITICAL: Override any RTL transform reversals */
+html[dir="rtl"] .feat-track {
+    /* Do NOT reverse the transform direction */
+    /* JavaScript handles everything with negative translateX */
+    transform: none !important;
+}
+
+/* Ensure track stays in correct position */
+html[dir="rtl"] .feat-viewport {
+    direction: ltr !important;
+}
+
+/* But keep card content RTL */
+html[dir="rtl"] .feat-card {
+    direction: rtl;
+}
+
+html[dir="rtl"] .feat-card-content {
+    text-align: right;
+}
+
+html[dir="rtl"] .feat-card-title,
+html[dir="rtl"] .feat-card-text {
+    text-align: right;
+}
+
+/* Fix separator gradient direction */
+html[dir="rtl"] .feat-sep {
+    background: linear-gradient(270deg, #9b51e0 0%, #e1ddf1 100%);
+}
+
+/* Ensure arrows don't get flipped */
+html[dir="rtl"] .featured-arrow svg {
+    transform: none;
+}
+
+/* Fix featured grid alignment */
+html[dir="rtl"] .featured-grid {
+    direction: rtl;
+}
+
+html[dir="rtl"] .featured-left {
+    text-align: right;
+}
+
+html[dir="rtl"] .featured-arrows {
+    justify-content: flex-end;
+}
+
+@media (max-width:900px){
+    html[dir="rtl"] .featured-left {
+        text-align: center;
+    }
+    html[dir="rtl"] .featured-arrows {
+        justify-content: center;
+    }
+}
+
+/* Make sure the track container allows proper sliding */
+.feat-viewport {
+    overflow: hidden;
+    position: relative;
+}
+
+.feat-track {
+    display: flex;
+    gap: 22px;
+    will-change: transform;
+    /* Ensure transform origin is consistent */
+    transform-origin: left center;
+}
+
+html[dir="rtl"] .feat-track {
+    /* Keep same origin even in RTL */
+    transform-origin: left center !important;
+}

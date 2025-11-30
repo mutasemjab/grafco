@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function(){
   start();
 })();
 
-// Featured Products Carousel - CLEAN VERSION WITH RTL FIX
+// Featured Products Carousel - FINAL FIX
 (function(){
   var wrap = document.querySelector('[data-featured]'); 
   if(!wrap) return;
@@ -82,118 +82,151 @@ document.addEventListener('DOMContentLoaded', function(){
   var track = wrap.querySelector('[data-track]');
   var prevBtn = wrap.querySelector('[data-prev]');
   var nextBtn = wrap.querySelector('[data-next]');
-  var originalCards = Array.from(track.children);
   
-  if(!track || !prevBtn || !nextBtn || originalCards.length === 0) return;
+  if(!track || !prevBtn || !nextBtn) return;
   
-  var currentIndex = 0;
-  var timer = null;
-  var dur = 4000;
-  var isTransitioning = false;
-  
-  // Clone cards for infinite loop
-  for(let i = 0; i < 2; i++) {
-    originalCards.forEach(function(card) {
-      track.appendChild(card.cloneNode(true));
+  // Wait for track to have children
+  setTimeout(function() {
+    var originalCards = Array.from(track.children);
+    
+    if(originalCards.length === 0) return;
+    
+    var currentIndex = 0;
+    var timer = null;
+    var dur = 4000;
+    var isTransitioning = false;
+    var isRTL = document.documentElement.dir === 'rtl';
+    
+    // Clone cards for infinite loop
+    for(let i = 0; i < 2; i++) {
+      originalCards.forEach(function(card) {
+        var clone = card.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+    
+    var totalOriginal = originalCards.length;
+    
+    function getCardWidth() {
+      if(originalCards[0]) {
+        return originalCards[0].offsetWidth;
+      }
+      return 0;
+    }
+    
+    function getGap() {
+      return window.innerWidth <= 680 ? 16 : 22;
+    }
+    
+    function getSlideWidth() {
+      return getCardWidth() + getGap();
+    }
+    
+    function slideTo(index, instant) {
+      var offset = index * getSlideWidth();
+      
+      if(instant) {
+        track.style.transition = 'none';
+      } else {
+        track.style.transition = 'transform 0.45s ease';
+      }
+      
+      // Use negative translateX for both LTR and RTL
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      
+      if(instant) {
+        setTimeout(function() {
+          track.style.transition = '';
+        }, 50);
+      }
+    }
+    
+    function handleTransitionEnd(e) {
+      // Only handle transform transitions on the track
+      if(e.target !== track || e.propertyName !== 'transform') return;
+      
+      if(currentIndex >= totalOriginal) {
+        currentIndex = currentIndex - totalOriginal;
+        slideTo(currentIndex, true);
+      } else if(currentIndex < 0) {
+        currentIndex = totalOriginal + currentIndex;
+        slideTo(currentIndex, true);
+      }
+      isTransitioning = false;
+    }
+    
+    function goNext() {
+      if(isTransitioning) return;
+      isTransitioning = true;
+      currentIndex++;
+      slideTo(currentIndex, false);
+    }
+    
+    function goPrev() {
+      if(isTransitioning) return;
+      isTransitioning = true;
+      currentIndex--;
+      slideTo(currentIndex, false);
+    }
+    
+    function startAutoplay() {
+      stopAutoplay();
+      timer = setInterval(function() {
+        goNext();
+      }, dur);
+    }
+    
+    function stopAutoplay() {
+      if(timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+    
+    // Event listeners
+    track.addEventListener('transitionend', handleTransitionEnd);
+    
+    prevBtn.addEventListener('click', function(e) { 
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay(); 
+      goPrev(); 
+      startAutoplay(); 
     });
-  }
-  
-  var totalOriginal = originalCards.length;
-  
-  function getCardWidth() {
-    if(originalCards[0]) {
-      return originalCards[0].offsetWidth;
-    }
-    return 0;
-  }
-  
-  function getGap() {
-    return window.innerWidth <= 680 ? 16 : 22;
-  }
-  
-  function getSlideWidth() {
-    return getCardWidth() + getGap();
-  }
-  
-  function slideTo(index, instant) {
-    var offset = index * getSlideWidth();
     
-    track.style.transition = instant ? 'none' : 'transform 0.45s ease';
-    track.style.transform = 'translateX(-' + offset + 'px)';
+    nextBtn.addEventListener('click', function(e) { 
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay(); 
+      goNext(); 
+      startAutoplay(); 
+    });
     
-    if(instant) {
-      void track.offsetHeight; // force reflow
-    }
-  }
-  
-  function handleTransitionEnd() {
-    if(currentIndex >= totalOriginal) {
-      currentIndex = currentIndex - totalOriginal;
-      slideTo(currentIndex, true);
-    } else if(currentIndex < 0) {
-      currentIndex = totalOriginal + currentIndex;
-      slideTo(currentIndex, true);
-    }
-    isTransitioning = false;
-  }
-  
-  function goNext() {
-    if(isTransitioning) return;
-    isTransitioning = true;
-    currentIndex++;
-    slideTo(currentIndex, false);
-  }
-  
-  function goPrev() {
-    if(isTransitioning) return;
-    isTransitioning = true;
-    currentIndex--;
-    slideTo(currentIndex, false);
-  }
-  
-  function startAutoplay() {
-    stopAutoplay();
-    timer = setInterval(goNext, dur);
-  }
-  
-  function stopAutoplay() {
-    if(timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  }
-  
-  // Event listeners
-  track.addEventListener('transitionend', handleTransitionEnd);
-  
-  prevBtn.addEventListener('click', function(e) { 
-    e.preventDefault();
-    stopAutoplay(); 
-    goPrev(); 
-    startAutoplay(); 
-  });
-  
-  nextBtn.addEventListener('click', function(e) { 
-    e.preventDefault();
-    stopAutoplay(); 
-    goNext(); 
-    startAutoplay(); 
-  });
-  
-  wrap.addEventListener('mouseenter', stopAutoplay);
-  wrap.addEventListener('mouseleave', startAutoplay);
-  
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      slideTo(currentIndex, true);
-    }, 250);
-  });
-  
-  // Initialize
-  slideTo(0, true);
-  startAutoplay();
+    wrap.addEventListener('mouseenter', function() {
+      stopAutoplay();
+    });
+    
+    wrap.addEventListener('mouseleave', function() {
+      startAutoplay();
+    });
+    
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        slideTo(currentIndex, true);
+      }, 250);
+    });
+    
+    // Initialize - CRITICAL: Set position first, then start autoplay
+    slideTo(0, true);
+    
+    // Start autoplay after a small delay to ensure everything is ready
+    setTimeout(function() {
+      startAutoplay();
+    }, 100);
+    
+  }, 100); // Wait 100ms for DOM to be fully ready
 })();
 
 // Brands Carousel
@@ -204,116 +237,143 @@ document.addEventListener('DOMContentLoaded', function(){
   var track = root.querySelector('[data-track]');
   var prevBtn = root.querySelector('[data-prev]');
   var nextBtn = root.querySelector('[data-next]');
-  var originalItems = Array.from(track.children);
   
-  if(!track || !prevBtn || !nextBtn || originalItems.length === 0) return;
+  if(!track || !prevBtn || !nextBtn) return;
   
-  var currentIndex = 0;
-  var timer = null;
-  var dur = 3000;
-  var isTransitioning = false;
-  
-  // Clone items for infinite loop
-  for(let i = 0; i < 2; i++) {
-    originalItems.forEach(function(item) {
-      track.appendChild(item.cloneNode(true));
+  setTimeout(function() {
+    var originalItems = Array.from(track.children);
+    
+    if(originalItems.length === 0) return;
+    
+    var currentIndex = 0;
+    var timer = null;
+    var dur = 3000;
+    var isTransitioning = false;
+    
+    // Clone items for infinite loop
+    for(let i = 0; i < 2; i++) {
+      originalItems.forEach(function(item) {
+        var clone = item.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+    
+    var totalOriginal = originalItems.length;
+    
+    function getItemWidth() {
+      if(originalItems[0]) {
+        return originalItems[0].offsetWidth;
+      }
+      return 0;
+    }
+    
+    function getGap() {
+      return window.innerWidth <= 680 ? 16 : 42;
+    }
+    
+    function getSlideWidth() {
+      return getItemWidth() + getGap();
+    }
+    
+    function slideTo(index, instant) {
+      var offset = index * getSlideWidth();
+      
+      if(instant) {
+        track.style.transition = 'none';
+      } else {
+        track.style.transition = 'transform 0.5s ease-in-out';
+      }
+      
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      
+      if(instant) {
+        setTimeout(function() {
+          track.style.transition = '';
+        }, 50);
+      }
+    }
+    
+    function handleTransitionEnd(e) {
+      if(e.target !== track || e.propertyName !== 'transform') return;
+      
+      if(currentIndex >= totalOriginal) {
+        currentIndex = currentIndex - totalOriginal;
+        slideTo(currentIndex, true);
+      } else if(currentIndex < 0) {
+        currentIndex = totalOriginal + currentIndex;
+        slideTo(currentIndex, true);
+      }
+      isTransitioning = false;
+    }
+    
+    function goNext() {
+      if(isTransitioning) return;
+      isTransitioning = true;
+      currentIndex++;
+      slideTo(currentIndex, false);
+    }
+    
+    function goPrev() {
+      if(isTransitioning) return;
+      isTransitioning = true;
+      currentIndex--;
+      slideTo(currentIndex, false);
+    }
+    
+    function startAutoplay() {
+      stopAutoplay();
+      timer = setInterval(function() {
+        goNext();
+      }, dur);
+    }
+    
+    function stopAutoplay() {
+      if(timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+    
+    track.addEventListener('transitionend', handleTransitionEnd);
+    
+    prevBtn.addEventListener('click', function(e) { 
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay(); 
+      goPrev(); 
+      startAutoplay(); 
     });
-  }
-  
-  var totalOriginal = originalItems.length;
-  
-  function getItemWidth() {
-    if(originalItems[0]) {
-      return originalItems[0].offsetWidth;
-    }
-    return 0;
-  }
-  
-  function getGap() {
-    return window.innerWidth <= 680 ? 16 : 42;
-  }
-  
-  function getSlideWidth() {
-    return getItemWidth() + getGap();
-  }
-  
-  function slideTo(index, instant) {
-    var offset = index * getSlideWidth();
     
-    track.style.transition = instant ? 'none' : 'transform 0.5s ease-in-out';
-    track.style.transform = 'translateX(-' + offset + 'px)';
+    nextBtn.addEventListener('click', function(e) { 
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoplay(); 
+      goNext(); 
+      startAutoplay(); 
+    });
     
-    if(instant) {
-      void track.offsetHeight; // force reflow
-    }
-  }
-  
-  function handleTransitionEnd() {
-    if(currentIndex >= totalOriginal) {
-      currentIndex = currentIndex - totalOriginal;
-      slideTo(currentIndex, true);
-    } else if(currentIndex < 0) {
-      currentIndex = totalOriginal + currentIndex;
-      slideTo(currentIndex, true);
-    }
-    isTransitioning = false;
-  }
-  
-  function goNext() {
-    if(isTransitioning) return;
-    isTransitioning = true;
-    currentIndex++;
-    slideTo(currentIndex, false);
-  }
-  
-  function goPrev() {
-    if(isTransitioning) return;
-    isTransitioning = true;
-    currentIndex--;
-    slideTo(currentIndex, false);
-  }
-  
-  function startAutoplay() {
-    stopAutoplay();
-    timer = setInterval(goNext, dur);
-  }
-  
-  function stopAutoplay() {
-    if(timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  }
-  
-  track.addEventListener('transitionend', handleTransitionEnd);
-  
-  prevBtn.addEventListener('click', function(e) { 
-    e.preventDefault();
-    stopAutoplay(); 
-    goPrev(); 
-    startAutoplay(); 
-  });
-  
-  nextBtn.addEventListener('click', function(e) { 
-    e.preventDefault();
-    stopAutoplay(); 
-    goNext(); 
-    startAutoplay(); 
-  });
-  
-  root.addEventListener('mouseenter', stopAutoplay);
-  root.addEventListener('mouseleave', startAutoplay);
-  
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      slideTo(currentIndex, true);
-    }, 250);
-  });
-  
-  slideTo(0, true);
-  startAutoplay();
+    root.addEventListener('mouseenter', function() {
+      stopAutoplay();
+    });
+    
+    root.addEventListener('mouseleave', function() {
+      startAutoplay();
+    });
+    
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        slideTo(currentIndex, true);
+      }, 250);
+    });
+    
+    slideTo(0, true);
+    setTimeout(function() {
+      startAutoplay();
+    }, 100);
+    
+  }, 100);
 })();
 
 // About Tabs
