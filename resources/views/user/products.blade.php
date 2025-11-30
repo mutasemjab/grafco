@@ -121,18 +121,7 @@
                 </div>
 
                 <div class="prod-body">
-                    <div class="prod-heading">
-                        <span class="prod-heading-mark">//</span>
-                        <span class="prod-heading-tag" data-prod-heading>
-                            @if ($selectedBrand)
-                                {{ $selectedBrand->name }} {{ __('front.products') }}
-                            @elseif($selectedCategory)
-                                {{ $selectedCategory->name }}
-                            @else
-                                {{ __('front.all_products') }}
-                            @endif
-                        </span>
-                    </div>
+                 
 
                     <div class="prod-panels">
                         @if ($showAllBrandProducts)
