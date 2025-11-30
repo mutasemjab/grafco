@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('product_specifications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->string('label_en');
-            $table->string('label_ar');
-            $table->string('value_en');
-            $table->string('value_ar');
+            $table->text('label_en');
+            $table->text('label_ar');
+            $table->text('value_en');
+            $table->text('value_ar');
             $table->integer('sort_order')->default(0);
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
