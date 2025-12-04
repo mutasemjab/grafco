@@ -12,7 +12,7 @@
                 @foreach($products as $product)
                     <div class="product-card">
                         <a href="{{ route('product.details', $product->slug) }}">
-                            <img src="{{ asset($product->main_image) }}" alt="{{ $product->name }}">
+                            <img src="{{ asset('assets/admin/uploads/' . $product->thumbnail) }}" alt="{{ $product->name }}">
                             <h3>{{ $product->name }}</h3>
                             <p>{{ Str::limit($product->subtitle, 100) }}</p>
                             <span class="price">{{ $product->price_display }}</span>
