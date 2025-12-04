@@ -103,7 +103,7 @@
     </div>
 
     <div class="search-drop" data-search>
-        <form class="search-form" action="{{ route('product.search') }}" method="GET">
+        <form class="search-form" action="{{ route('products.search') }}" method="GET">
             <input type="text" name="q" placeholder="{{ __('front.search_placeholder') }}" required />
             <button type="submit" class="btn-primary">{{ __('front.search') }}</button>
             <button class="icon-btn" type="button" data-close="search" aria-label="{{ __('front.close') }}">
