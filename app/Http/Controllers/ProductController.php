@@ -153,7 +153,28 @@ class ProductController extends Controller
 
         $setting = Setting::first();
 
-        return view('user.product-details', compact('product', 'categories', 'setting'));
+        // Get similar products (same category, different product, active, limit 4)
+        $similarProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('is_active', true)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        // If not enough similar products in same category, get from same brand
+        if ($similarProducts->count() < 4) {
+            $additionalProducts = Product::where('brand_id', $product->brand_id)
+                ->where('id', '!=', $product->id)
+                ->where('is_active', true)
+                ->whereNotIn('id', $similarProducts->pluck('id'))
+                ->inRandomOrder()
+                ->limit(4 - $similarProducts->count())
+                ->get();
+            
+            $similarProducts = $similarProducts->merge($additionalProducts);
+        }
+
+        return view('user.product-details', compact('product', 'categories', 'setting', 'similarProducts'));
     }
 
     public function storeRequest(Request $request, $productId)

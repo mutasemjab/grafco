@@ -197,6 +197,8 @@ return [
 'products' => 'منتجات',
 'no_products_found' => 'لم يتم العثور على منتجات مطابقة لبحثك.',
 'view_all_products' => 'عرض جميع المنتجات',
+'similar_products' => 'منتجات مشابهة',
+'you_might_also_like' => 'قد تعجبك هذه المنتجات أيضاً',
   '' => '',
   '' => '',
   '' => '',

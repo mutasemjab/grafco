@@ -197,6 +197,8 @@ return [
 'products' => 'products',
 'no_products_found' => 'No products found matching your search.',
 'view_all_products' => 'View All Products',
+'similar_products' => 'Similar Products',
+'you_might_also_like' => 'You might also like these products',
    '' => '',
    '' => '',
    '' => '',

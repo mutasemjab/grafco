@@ -275,6 +275,44 @@
                 </div>
             </div>
         </div>
+        @if($similarProducts->count() > 0)
+        <div class="similar-products">
+            <div class="container">
+                <div class="similar-products-head">
+                    <h2 class="similar-products-title">{{ __('front.similar_products') }}</h2>
+                    <p class="similar-products-subtitle">{{ __('front.you_might_also_like') }}</p>
+                </div>
+                
+                <div class="similar-products-grid">
+                    @foreach($similarProducts as $similarProduct)
+                        <div class="similar-product-card">
+                            <a href="{{ route('product.details', $similarProduct->slug) }}" class="similar-product-link">
+                                <div class="similar-product-img">
+                                    <img src="{{ asset('assets/admin/uploads/' . $similarProduct->thumbnail) }}" 
+                                         alt="{{ $similarProduct->name }}">
+                                </div>
+                                <div class="similar-product-content">
+                                    <div class="similar-product-brand">{{ $similarProduct->brand->name }}</div>
+                                    <h3 class="similar-product-name">{{ $similarProduct->name }}</h3>
+                                    <p class="similar-product-subtitle">{{ Str::limit($similarProduct->subtitle, 80) }}</p>
+                                    <div class="similar-product-footer">
+                                        <span class="similar-product-price">{{ $similarProduct->price_display }}</span>
+                                        <span class="similar-product-arrow">
+                                            <svg width="18" height="18" viewBox="0 0 24 24">
+                                                <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" 
+                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+    
     </section>
    <style>
 .pdetail-tabs--rtl {
@@ -367,6 +405,210 @@
         border-left: none !important;
         border-bottom: 1px solid #e5e5e5;
     }
+}
+
+/* Similar Products Section */
+.similar-products {
+    padding: 60px 0 0;
+    background: #f7f8fb;
+    border-top: 1px solid #e3e5e8;
+}
+
+.similar-products-head {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.similar-products-title {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000;
+}
+
+.similar-products-subtitle {
+    margin: 0;
+    font-size: 15px;
+    color: #8a8f96;
+}
+
+.similar-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+
+.similar-product-card {
+    background: #fff;
+    border: 2px solid #e1ddf1;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.similar-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(155, 81, 224, 0.15);
+    border-color: #9b51e0;
+}
+
+.similar-product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.similar-product-img {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f3fa 0%, #ffffff 100%);
+}
+
+.similar-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.similar-product-card:hover .similar-product-img img {
+    transform: scale(1.08);
+}
+
+.similar-product-content {
+    padding: 18px;
+}
+
+.similar-product-brand {
+    font-size: 12px;
+    color: #8a8f96;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.similar-product-name {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #9b51e0;
+    line-height: 1.3;
+    min-height: 48px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.similar-product-subtitle {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #464846;
+    line-height: 1.5;
+    min-height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.similar-product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #e3e5e8;
+}
+
+.similar-product-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.similar-product-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f5f3fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9b51e0;
+    transition: all 0.3s ease;
+}
+
+.similar-product-card:hover .similar-product-arrow {
+    background: #9b51e0;
+    color: #fff;
+    transform: translateX(4px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .similar-products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .similar-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .similar-products-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 640px) {
+    .similar-products {
+        padding: 40px 0 0;
+    }
+    
+    .similar-products-head {
+        margin-bottom: 28px;
+    }
+    
+    .similar-products-title {
+        font-size: 24px;
+    }
+    
+    .similar-products-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 40px;
+    }
+    
+    .similar-product-img {
+        height: 200px;
+    }
+}
+
+/* RTL Support */
+html[dir="rtl"] .similar-products-head,
+html[dir="rtl"] .similar-products-title,
+html[dir="rtl"] .similar-products-subtitle {
+    text-align: center;
+}
+
+html[dir="rtl"] .similar-product-content {
+    text-align: right;
+}
+
+html[dir="rtl"] .similar-product-footer {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .similar-product-card:hover .similar-product-arrow {
+    transform: translateX(-4px);
+}
+
+html[dir="rtl"] .similar-product-arrow svg {
+    transform: scaleX(-1);
 }
 </style>
 @endsection
