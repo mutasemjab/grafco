@@ -39,7 +39,7 @@
                     <!-- Consumable Filter -->
                     <div class="col-md-3">
                         <label class="form-label">{{ __('messages.consumable') }}</label>
-                        <select name="consumable" class="form-select">
+                        <select name="consumable" class="form-control">
                             <option value="">{{ __('messages.all_consumables') }}</option>
                             @foreach($consumables as $consumable)
                                 <option value="{{ $consumable->id }}" 
@@ -53,7 +53,7 @@
                     <!-- Type Filter -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.type') }}</label>
-                        <select name="type" class="form-select">
+                        <select name="type" class="form-control">
                             <option value="">{{ __('messages.all_types') }}</option>
                             <option value="offset" {{ request('type') == 'offset' ? 'selected' : '' }}>
                                 {{ __('messages.offset') }}
@@ -67,7 +67,7 @@
                     <!-- Sort By -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.sort_by') }}</label>
-                        <select name="sort_by" class="form-select">
+                        <select name="sort_by" class="form-control">
                             <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>
                                 {{ __('messages.date_created') }}
                             </option>
@@ -83,7 +83,7 @@
                     <!-- Sort Order -->
                     <div class="col-md-1">
                         <label class="form-label">{{ __('messages.order') }}</label>
-                        <select name="sort_order" class="form-select">
+                        <select name="sort_order" class="form-control">
                             <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>
                                 {{ __('messages.asc') }}
                             </option>
