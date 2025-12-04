@@ -41,7 +41,7 @@
                     <!-- Category Filter -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.category') }}</label>
-                        <select name="category" class="form-select">
+                        <select name="category" class="form-control">
                             <option value="">{{ __('messages.all_categories') }}</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" 
@@ -55,7 +55,7 @@
                     <!-- Brand Filter -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.brand') }}</label>
-                        <select name="brand" class="form-select">
+                        <select name="brand" class="form-control">
                             <option value="">{{ __('messages.all_brands') }}</option>
                             @foreach($brands as $brand)
                                 <option value="{{ $brand->id }}" 
@@ -69,7 +69,7 @@
                     <!-- Status Filter -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.status') }}</label>
-                        <select name="status" class="form-select">
+                        <select name="status" class="form-control">
                             <option value="">{{ __('messages.all_status') }}</option>
                             <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>
                                 {{ __('messages.active') }}
@@ -83,7 +83,7 @@
                     <!-- Featured Filter -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.featured') }}</label>
-                        <select name="featured" class="form-select">
+                        <select name="featured" class="form-control">
                             <option value="">{{ __('messages.all') }}</option>
                             <option value="1" {{ request('featured') === '1' ? 'selected' : '' }}>
                                 {{ __('messages.featured_only') }}
@@ -97,7 +97,7 @@
                     <!-- Sort By -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.sort_by') }}</label>
-                        <select name="sort_by" class="form-select">
+                        <select name="sort_by" class="form-control">
                             <option value="sort_order" {{ request('sort_by') == 'sort_order' ? 'selected' : '' }}>
                                 {{ __('messages.default_order') }}
                             </option>
@@ -116,7 +116,7 @@
                     <!-- Sort Order -->
                     <div class="col-md-2">
                         <label class="form-label">{{ __('messages.order') }}</label>
-                        <select name="sort_order" class="form-select">
+                        <select name="sort_order" class="form-control">
                             <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>
                                 {{ __('messages.ascending') }}
                             </option>
