@@ -23,7 +23,14 @@
                 </div>
             </div>
 
-           
+            <div class="prod-nav">               
+                    <span class="prod-nav-arrow">
+                        <svg width="10" height="10" viewBox="0 0 24 24">
+                            <path d="M9 6l6 6-6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>{{ $locale === 'ar' ? $product->consumable->name_ar : $product->consumable->name_en }}</span>
+            </div>
         </aside>
 
         <div class="pdetail-main">
