@@ -23,13 +23,73 @@ class ProductController extends Controller
         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['category', 'brand'])
-            ->orderBy('sort_order')
-            ->paginate(20);
+        $query = Product::with(['category', 'brand']);
 
-        return view('admin.products.index', compact('products'));
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name_en', 'LIKE', "%{$search}%")
+                ->orWhere('name_ar', 'LIKE', "%{$search}%")
+                ->orWhere('model', 'LIKE', "%{$search}%")
+                ->orWhereHas('brand', function($q) use ($search) {
+                    $q->where('name_en', 'LIKE', "%{$search}%")
+                        ->orWhere('name_ar', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        // Filter by Category
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Filter by Brand
+        if ($request->filled('brand')) {
+            $query->where('brand_id', $request->brand);
+        }
+
+        // Filter by Status
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status);
+        }
+
+        // Filter by Featured
+        if ($request->filled('featured')) {
+            $query->where('is_featured', $request->featured);
+        }
+
+        // Filter by Price Display
+        if ($request->filled('price_display')) {
+            $query->where('show_price', $request->price_display);
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'sort_order');
+        $sortOrder = $request->get('sort_order', 'asc');
+        
+        if ($sortBy === 'name') {
+            $query->orderBy('name_en', $sortOrder);
+        } elseif ($sortBy === 'price') {
+            $query->orderBy('price', $sortOrder);
+        } elseif ($sortBy === 'created_at') {
+            $query->orderBy('created_at', $sortOrder);
+        } else {
+            $query->orderBy('sort_order', 'asc');
+        }
+
+        $products = $query->paginate(20)->withQueryString();
+
+        // Get filter options
+        $categories = \App\Models\Category::where('is_active', true)
+            ->orderBy('name_en')
+            ->get();
+        
+        $brands = \App\Models\Brand::orderBy('name_en')->get();
+
+        return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
     public function create()
