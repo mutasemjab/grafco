@@ -50,6 +50,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/products/{category?}/{subcategory?}', [ProductController::class, 'index'])
         ->name('products.index');
     
+    Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
+    
     Route::get('/brands', [BrandController::class, 'index'])->name('brands');
 
     Route::post('/career/apply', [CareerController::class, 'apply'])->name('career.apply');
