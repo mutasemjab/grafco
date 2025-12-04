@@ -22,19 +22,6 @@
                     <span class="prod-side-label">{{ __('front.consumable') }}</span>
                 </div>
             </div>
-
-            <div class="prod-nav">
-                @foreach($consumables as $consumable)
-               
-                    <span class="prod-nav-arrow">
-                        <svg width="10" height="10" viewBox="0 0 24 24">
-                            <path d="M9 6l6 6-6 6" fill="none" stroke="{{ $product->consumable_id == $consumable->id ? '#fff' : '#9b51e0' }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span>{{ $locale === 'ar' ? $consumable->name_ar : $consumable->name_en }}</span>
-                </button>
-                @endforeach
-            </div>
         </aside>
 
         <div class="pdetail-main">
