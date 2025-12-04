@@ -1164,6 +1164,8 @@ html[dir="rtl"] .feat-card-text{
     align-items: center;
     gap: 8px;
     margin-top: 48px;
+    list-style: none;  
+    padding: 0;         
 }
 
 .pagination .page-link {
