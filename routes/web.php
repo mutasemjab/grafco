@@ -43,6 +43,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
     Route::get('/career', [CareerController::class, 'index'])->name('career');
+    Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.details');
     Route::post('/product/{product}/request', [ProductController::class, 'storeRequest'])->name('product.request');
@@ -50,7 +51,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     Route::get('/products/{category?}/{subcategory?}', [ProductController::class, 'index'])
         ->name('products.index');
     
-    Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
     
     Route::get('/brands', [BrandController::class, 'index'])->name('brands');
 
