@@ -22,6 +22,8 @@
                     <span class="prod-side-label">{{ __('front.consumable') }}</span>
                 </div>
             </div>
+
+           
         </aside>
 
         <div class="pdetail-main">
@@ -31,7 +33,7 @@
                     <span class="prod-sep">›</span>
                     <span>{{ __('front.consumables') }}</span>
                     <span class="prod-sep">›</span>
-                    <span>{{ $locale === 'ar' ? $consumable->name_ar : $consumable->name_en }}</span>
+                    <span>{{ $locale === 'ar' ? $product->consumable->name_ar : $product->consumable->name_en }}</span>
                 </div>
             </div>
 
