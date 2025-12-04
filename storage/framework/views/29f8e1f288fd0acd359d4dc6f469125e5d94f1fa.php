@@ -4,7 +4,7 @@
 <section class="page-hero about-banner" style="background-image:url('<?php echo e(asset('assets_front/img/about-banner.jpg')); ?>')">
     <div class="about-banner__overlay"></div>
     <div class="container about-banner__inner">
-        <h1 class="about-banner__title"><?php echo e(__('front.graphco_full_name')); ?></h1>
+        <h1 class="about-banner__title"><?php echo e(__('front.Graphic Supplies')); ?></h1>
     </div>
 </section>
 

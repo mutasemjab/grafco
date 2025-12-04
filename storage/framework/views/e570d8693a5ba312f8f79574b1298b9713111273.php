@@ -45,65 +45,75 @@
         <div class="hero-dots" data-dots></div>
     </section>
 
-    <section class="featured" data-featured>
-        <div class="container featured-grid">
-            <div class="featured-left">
-                <h2 class="featured-title"><?php echo e(__('front.featured_products')); ?></h2>
-                <a href="<?php echo e(route('products.index')); ?>" class="featured-btn"><?php echo e(__('messages.view_all')); ?></a>
-                <div class="featured-arrows">
-                    <button class="featured-arrow" data-prev type="button" aria-label="<?php echo e(__('messages.previous')); ?>">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M15 6l-6 6 6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <button class="featured-arrow" data-next type="button" aria-label="<?php echo e(__('messages.next')); ?>">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
+   <section class="featured" data-featured>
+    <div class="container featured-grid">
+        <div class="featured-left">
+            <h2 class="featured-title"><?php echo e(__('front.featured_products')); ?></h2>
+            <a href="<?php echo e(route('products.index')); ?>" class="featured-btn"><?php echo e(__('messages.view_all')); ?></a>
+            <div class="featured-arrows">
+                <button class="featured-arrow" data-prev type="button" aria-label="<?php echo e(__('messages.previous')); ?>">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M15 6l-6 6 6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="featured-arrow" data-next type="button" aria-label="<?php echo e(__('messages.next')); ?>">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M9 6l6 6-6 6" fill="none" stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <div class="featured-right">
-                <?php if($featuredProducts->count() > 0): ?>
-                    <div class="feat-viewport">
-                        <div class="feat-track" data-track>
-                            <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                             <a href="<?php echo e(route('product.details', $product->slug)); ?>" style="color: inherit;text-decoration: none;">
+        <div class="featured-right">
+            <?php if($featuredProducts->count() > 0): ?>
+                <div class="feat-viewport">
+                    <div class="feat-track" data-track>
+                        <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a href="<?php echo e(route('product.details', $product->slug)); ?>" style="color: inherit; text-decoration: none;">
                                 <article class="feat-card">
-                                    <h3 class="feat-card-title">
-                                        <?php echo e(app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en); ?>
-
-                                    </h3>
-                                    <div class="feat-sep"></div>
-                                   <p class="feat-card-text">
-                                        <?php echo Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 100); ?>
-
-                                    </p>
                                     <div class="feat-card-img">
                                         <img src="<?php echo e(asset('assets/admin/uploads/' . $product->main_image)); ?>"
                                             alt="<?php echo e(app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en); ?>"
                                             loading="lazy">
                                     </div>
+                                    <div class="feat-card-content">
+                                        <h3 class="feat-card-title">
+                                            <?php echo e(app()->getLocale() == 'ar' ? $product->name_ar : $product->name_en); ?>
+
+                                        </h3>
+                                        <div class="feat-sep"></div>
+                                        <p class="feat-card-text">
+                                            <?php echo Str::limit(app()->getLocale() == 'ar' ? $product->subtitle_ar ?? $product->description_ar : $product->subtitle_en ?? $product->description_en, 120); ?>
+
+                                        </p>
+                                    </div>
                                 </article>
-                             </a>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </div>
+                            </a>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                <?php else: ?>
-                    <div class="feat-viewport">
-                        <div class="feat-track">
-                            <div class="text-center py-5">
-                                <p class="text-muted"><?php echo e(__('messages.no_featured_products')); ?></p>
+                </div>
+            <?php else: ?>
+                <div class="feat-viewport">
+                    <div class="feat-track">
+                        <div class="feat-empty">
+                            <div class="feat-empty-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9b51e0" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
                             </div>
+                            <p class="feat-empty-text"><?php echo e(__('messages.no_featured_products')); ?></p>
                         </div>
                     </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
-    </section>
+    </div>
+</section>
+
     <br>
     <br>
 
@@ -111,7 +121,7 @@
         <div class="container brands-head">
             <h2 class="brands-title"><?php echo e(__('front.Our Partners')); ?></h2>
         </div>
-<br>
+        <br>
 
         <div class="brands-wrap">
             <button class="brands-nav" data-prev type="button">

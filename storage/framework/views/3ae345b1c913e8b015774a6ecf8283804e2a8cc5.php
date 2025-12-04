@@ -124,21 +124,7 @@
                 </div>
 
                 <div class="prod-body">
-                    <div class="prod-heading">
-                        <span class="prod-heading-mark">//</span>
-                        <span class="prod-heading-tag" data-prod-heading>
-                            <?php if($selectedBrand): ?>
-                                <?php echo e($selectedBrand->name); ?> <?php echo e(__('front.products')); ?>
-
-                            <?php elseif($selectedCategory): ?>
-                                <?php echo e($selectedCategory->name); ?>
-
-                            <?php else: ?>
-                                <?php echo e(__('front.all_products')); ?>
-
-                            <?php endif; ?>
-                        </span>
-                    </div>
+                 
 
                     <div class="prod-panels">
                         <?php if($showAllBrandProducts): ?>
@@ -148,10 +134,6 @@
                                     <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php if($subcategory->filteredProducts->count() > 0): ?>
                                             <div class="prod-section is-visible">
-                                                <div class="prod-subheading">
-                                                    <span class="prod-heading-mark">//</span>
-                                                    <span><?php echo e($subcategory->name); ?></span>
-                                                </div>
                                                 <div class="prod-grid">
                                                     <?php $__currentLoopData = $subcategory->filteredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <article class="prod-card">
@@ -171,10 +153,7 @@
                                 <?php else: ?>
                                     <?php if($category->filteredProducts->count() > 0): ?>
                                         <div class="prod-section is-visible">
-                                            <div class="prod-subheading">
-                                                <span class="prod-heading-mark">//</span>
-                                                <span><?php echo e($category->name); ?></span>
-                                            </div>
+                                           
                                             <div class="prod-grid">
                                                 <?php $__currentLoopData = $category->filteredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <article class="prod-card">
@@ -203,10 +182,7 @@
                                             <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div class="prod-section <?php echo e($selectedSubcategory && $selectedSubcategory->id == $subcategory->id ? 'is-visible' : ($selectedSubcategory ? 'is-hidden' : '')); ?>"
                                                     data-subcategory-section="<?php echo e($subcategory->id); ?>">
-                                                    <div class="prod-subheading">
-                                                        <span class="prod-heading-mark">//</span>
-                                                        <span><?php echo e($subcategory->name); ?></span>
-                                                    </div>
+                                                  
                                                     <div class="prod-grid">
                                                         <?php $__empty_1 = true; $__currentLoopData = $subcategory->filteredProducts ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                             <article class="prod-card">
@@ -379,8 +355,8 @@
         }
 
         .prod-brand-item img {
-            width: 50px;
-            height: 30px;
+            width: 80px;
+            height: 50px;
             object-fit: contain;
             margin-right: 10px;
         }

@@ -45,8 +45,6 @@
                     <span>{{ __('front.consumables') }}</span>
                     <span class="prod-sep">›</span>
                     <span>{{ $locale === 'ar' ? $product->consumable->name_ar : $product->consumable->name_en }}</span>
-                    <span class="prod-sep">›</span>
-                    <span class="prod-current">{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}</span>
                 </div>
             </div>
 
@@ -71,17 +69,6 @@
                         }
                     @endphp
 
-                    @if($keyFeatures && count($keyFeatures) > 0)
-                    <div class="pdetail-small-title">{{ __('front.key_features') }}</div>
-                    <ul class="pdetail-features">
-                        @foreach($keyFeatures as $feature)
-                            @if($feature)
-                            <li>{{ $feature }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                    @endif
-
                    
 
                     
@@ -89,29 +76,11 @@
             </div>
 
             <div class="pdetail-tabs" data-pdetail-tabs>
-                <button class="pdetail-tab is-active" data-tab="about">{{ __('front.about') }}</button>
-                <button class="pdetail-tab" data-tab="features">{{ __('front.features') }}</button>
+                <button class="pdetail-tab is-active" data-tab="features">{{ __('front.features') }}</button>
             </div>
 
             <div class="pdetail-panels">
-                <div class="pdetail-panel is-active" data-panel="about">
-                    <div class="pdetail-features-block">
-                        <h2 class="pdetail-block-title">{{ $locale === 'ar' ? $product->name_ar : $product->name_en }}</h2>
-                        @if($locale === 'ar' && $product->description_ar)
-                        <div class="pdetail-download-paragraph">
-                            {!! nl2br(e($product->description_ar)) !!}
-                        </div>
-                        @elseif($product->description_en)
-                        <div class="pdetail-download-paragraph">
-                            {!! nl2br(e($product->description_en)) !!}
-                        </div>
-                        @else
-                        <p>{{ __('front.no_description') }}</p>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="pdetail-panel" data-panel="features">
+                <div class="pdetail-panel is-active" data-panel="features">
                     <div class="pdetail-features-block">
                         <h2 class="pdetail-block-title">{{ __('front.key_features') }}</h2>
                         @if($keyFeatures && count($keyFeatures) > 0)

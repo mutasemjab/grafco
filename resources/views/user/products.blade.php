@@ -352,8 +352,8 @@
         }
 
         .prod-brand-item img {
-            width: 50px;
-            height: 30px;
+            width: 80px;
+            height: 50px;
             object-fit: contain;
             margin-right: 10px;
         }
