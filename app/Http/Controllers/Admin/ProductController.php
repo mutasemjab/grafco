@@ -87,7 +87,7 @@ class ProductController extends Controller
             ->orderBy('name_en')
             ->get();
         
-        $brands = \App\Models\Brand::orderBy('name_en')->get();
+        $brands = \App\Models\Brand::get();
 
         return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
