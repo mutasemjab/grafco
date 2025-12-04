@@ -11,7 +11,7 @@
             <div class="products-grid">
                 @foreach($products as $product)
                     <div class="product-card">
-                        <a href="{{ route('products.show', $product->slug) }}">
+                        <a href="{{ route('product.details', $product->slug) }}">
                             <img src="{{ asset($product->main_image) }}" alt="{{ $product->name }}">
                             <h3>{{ $product->name }}</h3>
                             <p>{{ Str::limit($product->subtitle, 100) }}</p>
