@@ -10,10 +10,55 @@ use Illuminate\Http\Request;
 
 class ConsumableProductController extends Controller
 {
-    public function index()
+   public function index(Request $request)
     {
-        $items = ConsumableProduct::with('consumable')->latest()->paginate(20);
-        return view('admin.consumable_products.index', compact('items'));
+        $query = ConsumableProduct::with('consumable');
+
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name_en', 'LIKE', "%{$search}%")
+                ->orWhere('name_ar', 'LIKE', "%{$search}%")
+                ->orWhereHas('consumable', function($q) use ($search) {
+                    $q->where('name_en', 'LIKE', "%{$search}%")
+                        ->orWhere('name_ar', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        // Filter by Consumable
+        if ($request->filled('consumable')) {
+            $query->where('consumable_id', $request->consumable);
+        }
+
+        // Filter by Type (from parent consumable)
+        if ($request->filled('type')) {
+            $query->whereHas('consumable', function($q) use ($request) {
+                $q->where('type', $request->type);
+            });
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        if ($sortBy === 'name') {
+            $query->orderBy('name_en', $sortOrder);
+        } elseif ($sortBy === 'consumable') {
+            $query->join('consumables', 'consumable_products.consumable_id', '=', 'consumables.id')
+                ->orderBy('consumables.name_en', $sortOrder)
+                ->select('consumable_products.*');
+        } else {
+            $query->orderBy('created_at', $sortOrder);
+        }
+
+        $items = $query->paginate(20)->withQueryString();
+
+        // Get filter options
+        $consumables = \App\Models\Consumable::orderBy('name_en')->get();
+
+        return view('admin.consumable_products.index', compact('items', 'consumables'));
     }
 
     public function create()
