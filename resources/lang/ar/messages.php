@@ -302,4 +302,7 @@ return [
 'desc' => '↓',
 'no_consumable_products_found' => 'لم يتم العثور على منتجات مواد استهلاكية.',
 'confirm_delete' => 'هل أنت متأكد من حذف هذا العنصر؟',
+'search' => 'بحث',
+'search_categories' => 'البحث بالاسم أو الرقم...',
+'all' => 'الكل',
 ];

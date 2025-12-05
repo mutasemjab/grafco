@@ -18,13 +18,39 @@ class CategoryController extends Controller
         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+   public function index(Request $request)
     {
-        $categories = Category::with(['parent', 'children', 'brands'])
-            ->orderBy('sort_order')
-            ->get();
+        $query = Category::with(['parent', 'children', 'brands'])
+            ->orderBy('sort_order');
         
-        return view('admin.categories.index', compact('categories'));
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name_en', 'like', "%{$search}%")
+                ->orWhere('name_ar', 'like', "%{$search}%")
+                ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+        
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status);
+        }
+        
+        // Filter by parent category
+        if ($request->filled('parent_id')) {
+            if ($request->parent_id == 'main') {
+                $query->whereNull('parent_id');
+            } else {
+                $query->where('parent_id', $request->parent_id);
+            }
+        }
+        
+        $categories = $query->get();
+        $parentCategories = Category::whereNull('parent_id')->get();
+        
+        return view('admin.categories.index', compact('categories', 'parentCategories'));
     }
 
     public function create()

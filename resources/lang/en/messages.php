@@ -304,4 +304,7 @@ return [
 'desc' => '↓',
 'no_consumable_products_found' => 'No consumable products found.',
 'confirm_delete' => 'Are you sure you want to delete this item?',
+'search' => 'Search',
+'search_categories' => 'Search by name or ID...',
+'all' => 'All',
 ];

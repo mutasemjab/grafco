@@ -11,6 +11,62 @@
         @endcan
     </div>
 
+     {{-- Search and Filter Form --}}
+    <div class="card mb-3">
+        <div class="card-body">
+            <form action="{{ route('admin.categories.index') }}" method="GET">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="search" class="form-label">{{ __('messages.search') }}</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="search" 
+                               name="search" 
+                               value="{{ request('search') }}"
+                               placeholder="{{ __('messages.search_categories') }}">
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="status" class="form-label">{{ __('messages.status') }}</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="">{{ __('messages.all') }}</option>
+                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
+                                {{ __('messages.active') }}
+                            </option>
+                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
+                                {{ __('messages.inactive') }}
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="parent_id" class="form-label">{{ __('messages.parent_category') }}</label>
+                        <select class="form-select" id="parent_id" name="parent_id">
+                            <option value="">{{ __('messages.all') }}</option>
+                            <option value="main" {{ request('parent_id') == 'main' ? 'selected' : '' }}>
+                                {{ __('messages.main_category') }}
+                            </option>
+                            @foreach($parentCategories as $parent)
+                                <option value="{{ $parent->id }}" 
+                                        {{ request('parent_id') == $parent->id ? 'selected' : '' }}>
+                                    {{ $parent->name_en }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search"></i> {{ __('messages.search') }}
+                        </button>
+                        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body">
