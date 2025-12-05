@@ -28,7 +28,7 @@
                     
                     <div class="col-md-3">
                         <label for="status" class="form-label">{{ __('messages.status') }}</label>
-                        <select class="form-select" id="status" name="status">
+                        <select class="form-control" id="status" name="status">
                             <option value="">{{ __('messages.all') }}</option>
                             <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
                                 {{ __('messages.active') }}
@@ -41,7 +41,7 @@
                     
                     <div class="col-md-3">
                         <label for="parent_id" class="form-label">{{ __('messages.parent_category') }}</label>
-                        <select class="form-select" id="parent_id" name="parent_id">
+                        <select class="form-control" id="parent_id" name="parent_id">
                             <option value="">{{ __('messages.all') }}</option>
                             <option value="main" {{ request('parent_id') == 'main' ? 'selected' : '' }}>
                                 {{ __('messages.main_category') }}
