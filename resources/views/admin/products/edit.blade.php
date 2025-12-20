@@ -44,7 +44,7 @@
                                    name="name_ar" 
                                    value="{{ old('name_ar', $product->name_ar) }}" 
                                    required 
-                                   dir="rtl">
+                                   >
                             @error('name_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -75,7 +75,7 @@
                                    id="subtitle_ar" 
                                    name="subtitle_ar" 
                                    value="{{ old('subtitle_ar', $product->subtitle_ar) }}" 
-                                   dir="rtl">
+                                   >
                             @error('subtitle_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -104,7 +104,7 @@
                                       id="description_ar" 
                                       name="description_ar" 
                                       rows="4" 
-                                      dir="rtl">{{ old('description_ar', $product->description_ar) }}</textarea>
+                                      >{{ old('description_ar', $product->description_ar) }}</textarea>
                             @error('description_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -312,7 +312,7 @@
                                 <input type="text" class="form-control" 
                                        name="features[{{ $index }}][feature_ar]" 
                                        value="{{ $feature->feature_ar }}" 
-                                       dir="rtl">
+                                       >
                             </div>
                             <div class="col-md-1">
                                 <label class="form-label">{{ __('messages.order') }}</label>
@@ -359,7 +359,7 @@
                                 <input type="text" class="form-control" 
                                        name="specifications[{{ $index }}][label_ar]" 
                                        value="{{ $spec->label_ar }}" 
-                                       dir="rtl">
+                                       >
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">{{ __('messages.value_en') }}</label>
@@ -372,7 +372,7 @@
                                 <input type="text" class="form-control" 
                                        name="specifications[{{ $index }}][value_ar]" 
                                        value="{{ $spec->value_ar }}" 
-                                       dir="rtl">
+                                       >
                             </div>
                             <div class="col-md-1">
                                 <label class="form-label">{{ __('messages.order') }}</label>
@@ -419,7 +419,7 @@
                                 <input type="text" class="form-control" 
                                        name="downloads[{{ $index }}][title_ar]" 
                                        value="{{ $download->title_ar }}" 
-                                       dir="rtl">
+                                       >
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">{{ __('messages.file') }}</label>
@@ -546,7 +546,7 @@ function addFeature() {
                 </div>
                 <div class="col-md-5">
                     <label class="form-label">{{ __('messages.feature_ar') }}</label>
-                    <input type="text" class="form-control" name="features[${featureIndex}][feature_ar]" dir="rtl">
+                    <input type="text" class="form-control" name="features[${featureIndex}][feature_ar]" >
                 </div>
                 <div class="col-md-1">
                     <label class="form-label">{{ __('messages.order') }}</label>
@@ -583,7 +583,7 @@ function addSpecification() {
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">{{ __('messages.label_ar') }}</label>
-                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_ar]" dir="rtl">
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][label_ar]" >
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">{{ __('messages.value_en') }}</label>
@@ -591,7 +591,7 @@ function addSpecification() {
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">{{ __('messages.value_ar') }}</label>
-                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_ar]" dir="rtl">
+                    <input type="text" class="form-control" name="specifications[${specificationIndex}][value_ar]" >
                 </div>
                 <div class="col-md-1">
                     <label class="form-label">{{ __('messages.order') }}</label>
@@ -628,7 +628,7 @@ function addDownload() {
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">{{ __('messages.title_ar') }}</label>
-                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_ar]" dir="rtl">
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_ar]" >
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">{{ __('messages.file') }}</label>
