@@ -4,5 +4,5 @@
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2023 <a href="">Grafco</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2023 <a href="">Graphco</a>.</strong> All rights reserved.
   </footer>

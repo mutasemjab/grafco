@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('photo');
             $table->string('name');
+            $table->integer('sort_order')->nullable();
             $table->timestamps();
         });
     }

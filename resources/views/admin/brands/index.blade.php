@@ -19,6 +19,7 @@
                     <tr>
                         <th>{{ __('messages.photo') }}</th>
                         <th>{{ __('messages.name') }}</th>
+                        <th>{{ __('messages.sort_order') }}</th>
                         <th width="150">{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                     <tr>
                         <td><img src="{{ asset('assets/admin/uploads/'.$brand->photo) }}" width="60" class="rounded"></td>
                         <td>{{ $brand->name }}</td>
+                        <td>{{ $brand->sort_order }}</td>
                         <td>
 
                             @can('brand-edit')

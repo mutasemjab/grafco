@@ -32,6 +32,7 @@ class BrandController extends Controller
     {
         $request->validate([
             'name'  => 'required|string',
+            'sort_order'  => 'nullable',
             'photo' => 'required|image',
         ]);
 
@@ -39,6 +40,7 @@ class BrandController extends Controller
 
         Brand::create([
             'name'  => $request->name,
+            'sort_order'  => $request->sort_order,
             'photo' => $photoPath
         ]);
 
@@ -54,6 +56,7 @@ class BrandController extends Controller
     {
         $request->validate([
             'name'  => 'required|string',
+            'sort_order'  => 'nullable',
             'photo' => 'nullable|image',
         ]);
 
@@ -65,6 +68,7 @@ class BrandController extends Controller
 
         $brand->update([
             'name'  => $request->name,
+            'sort_order'  => $request->sort_order,
             'photo' => $photoPath
         ]);
 

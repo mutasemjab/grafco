@@ -21,6 +21,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label>{{ __('messages.sort_order') }}</label>
+                            <input type="number" name="sort_order" value="{{ old('sort_order') }}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
                             <label>{{ __('messages.photo') }}</label>
                             <input type="file" name="photo" class="form-control">
                         </div>

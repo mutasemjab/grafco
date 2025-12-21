@@ -8,7 +8,7 @@ class BrandController extends Controller
 {
     public function index()
     {
-        $brands = Brand::latest()->get();
+        $brands = Brand::orderBy('sort_order')->get();
         return view('user.brands', compact('brands'));
     }
 
