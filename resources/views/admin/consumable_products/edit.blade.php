@@ -123,6 +123,85 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $item->is_active) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_active">{{ __('messages.is_active') }}</label>
+                </div>
+            </div>
+
+            <!-- Downloads Section -->
+            <div class="card mb-3">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">{{ __('messages.downloads') }}</h5>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" name="deleted_downloads" id="deleted_downloads" value="">
+                    
+                    <div id="downloads-container">
+                        @foreach($item->downloads as $index => $download)
+                        <div class="download-item border rounded p-3 mb-3" data-download-id="{{ $download->id }}">
+                            <input type="hidden" name="downloads[{{ $index }}][id]" value="{{ $download->id }}">
+                            
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="mb-2">
+                                        <label class="form-label">{{ __('messages.title_en') }}</label>
+                                        <input type="text" class="form-control" name="downloads[{{ $index }}][title_en]" value="{{ old('downloads.'.$index.'.title_en', $download->title_en) }}" placeholder="{{ __('messages.title_en') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="mb-2">
+                                        <label class="form-label">{{ __('messages.title_ar') }}</label>
+                                        <input type="text" class="form-control" name="downloads[{{ $index }}][title_ar]" value="{{ old('downloads.'.$index.'.title_ar', $download->title_ar) }}" placeholder="{{ __('messages.title_ar') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="mb-2">
+                                        <label class="form-label">{{ __('messages.sort_order') }}</label>
+                                        <input type="number" class="form-control" name="downloads[{{ $index }}][sort_order]" value="{{ old('downloads.'.$index.'.sort_order', $download->sort_order) }}" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <label class="form-label">{{ __('messages.file') }}</label>
+                                        <input type="file" class="form-control" name="downloads[{{ $index }}][file]" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                        <small class="text-muted">{{ __('messages.max_file_size_10mb') }}</small>
+                                        @if($download->file_path)
+                                        <div class="mt-1">
+                                            <a href="{{ asset('assets/admin/uploads/downloads/'.$download->file_path) }}" target="_blank" class="text-primary">
+                                                <i class="fas fa-file-{{ strtolower($download->file_type) }}"></i> 
+                                                {{ __('messages.current_file') }}: {{ $download->file_type }}
+                                            </a>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-2">
+                                        <label class="form-label">{{ __('messages.updated_at') }}</label>
+                                        <input type="date" class="form-control" name="downloads[{{ $index }}][updated_date]" value="{{ old('downloads.'.$index.'.updated_date', $download->updated_date ? $download->updated_date->format('Y-m-d') : date('Y-m-d')) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger btn-sm mb-2" onclick="removeDownload(this, {{ $download->id }})">
+                                        <i class="fas fa-trash"></i> {{ __('messages.Delete') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    
+                    <button type="button" class="btn btn-sm btn-primary" onclick="addDownload()">
+                        <i class="fas fa-plus"></i> {{ __('messages.add_download') }}
+                    </button>
+                </div>
+            </div>
+
             <button class="btn btn-success">{{ __('messages.update') }}</button>
             <a href="{{ route('consumable_products.index') }}" class="btn btn-secondary">{{ __('messages.cancel') }}</a>
         </form>
@@ -131,6 +210,9 @@
 </div>
 
 <script>
+let downloadIndex = {{ count($item->downloads) }};
+let deletedDownloads = [];
+
 function addFeature(lang) {
     const container = document.getElementById(`key_features_${lang}_container`);
     const div = document.createElement('div');
@@ -141,5 +223,72 @@ function addFeature(lang) {
     `;
     container.appendChild(div);
 }
+
+function addDownload() {
+    const container = document.getElementById('downloads-container');
+    const downloadDiv = document.createElement('div');
+    downloadDiv.className = 'download-item border rounded p-3 mb-3';
+    downloadDiv.innerHTML = `
+        <div class="row">
+            <div class="col-md-5">
+                <div class="mb-2">
+                    <label class="form-label">{{ __('messages.title_en') }}</label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_en]" placeholder="{{ __('messages.title_en') }}">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="mb-2">
+                    <label class="form-label">{{ __('messages.title_ar') }}</label>
+                    <input type="text" class="form-control" name="downloads[${downloadIndex}][title_ar]" placeholder="{{ __('messages.title_ar') }}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="mb-2">
+                    <label class="form-label">{{ __('messages.sort_order') }}</label>
+                    <input type="number" class="form-control" name="downloads[${downloadIndex}][sort_order]" value="${downloadIndex}" min="0">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <label class="form-label">{{ __('messages.file') }}</label>
+                    <input type="file" class="form-control" name="downloads[${downloadIndex}][file]" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <small class="text-muted">{{ __('messages.max_file_size_10mb') }}</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-2">
+                    <label class="form-label">{{ __('messages.updated_at') }}</label>
+                    <input type="date" class="form-control" name="downloads[${downloadIndex}][updated_date]" value="{{ date('Y-m-d') }}">
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-danger btn-sm mb-2" onclick="this.closest('.download-item').remove()">
+                    <i class="fas fa-trash"></i> {{ __('messages.Delete') }}
+                </button>
+            </div>
+        </div>
+    `;
+    container.appendChild(downloadDiv);
+    downloadIndex++;
+}
+
+function removeDownload(button, downloadId) {
+    if (downloadId) {
+        // Add to deleted downloads list
+        deletedDownloads.push(downloadId);
+        document.getElementById('deleted_downloads').value = deletedDownloads.join(',');
+    }
+    // Remove the download item from DOM
+    button.closest('.download-item').remove();
+}
 </script>
+
+<style>
+.download-item {
+    background-color: #f8f9fa;
+    position: relative;
+}
+</style>
 @endsection

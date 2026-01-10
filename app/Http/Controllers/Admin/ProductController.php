@@ -312,7 +312,7 @@ class ProductController extends Controller
         if ($request->hasFile('main_image')) {
             // Delete old image
             if ($product->main_image) {
-                $oldPath = public_path('assets/admin/uploads/' . $product->main_image);
+                $oldPath = base_path('assets/admin/uploads/' . $product->main_image);
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
@@ -324,7 +324,7 @@ class ProductController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Delete old thumbnail
             if ($product->thumbnail) {
-                $oldPath = public_path('assets/admin/uploads/' . $product->thumbnail);
+                $oldPath = base_path('assets/admin/uploads/' . $product->thumbnail);
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
@@ -404,7 +404,7 @@ class ProductController extends Controller
             foreach ($downloads as $download) {
                 // Delete file
                 if ($download->file_path) {
-                    $filePath = public_path('assets/admin/uploads/downloads/' . $download->file_path);
+                    $filePath = base_path('assets/admin/uploads/downloads/' . $download->file_path);
                     if (file_exists($filePath)) {
                         unlink($filePath);
                     }
@@ -432,7 +432,7 @@ class ProductController extends Controller
                         if (!empty($downloadData['id'])) {
                             $oldDownload = ProductDownload::find($downloadData['id']);
                             if ($oldDownload && $oldDownload->file_path) {
-                                $oldPath = public_path('assets/admin/uploads/downloads/' . $oldDownload->file_path);
+                                $oldPath = base_path('assets/admin/uploads/downloads/' . $oldDownload->file_path);
                                 if (file_exists($oldPath)) {
                                     unlink($oldPath);
                                 }

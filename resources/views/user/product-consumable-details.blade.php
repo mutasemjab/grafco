@@ -73,6 +73,9 @@
 
             <div class="pdetail-tabs" data-pdetail-tabs>
                 <button class="pdetail-tab is-active" data-tab="features">{{ __('front.features') }}</button>
+                @if($product->downloads && $product->downloads->count() > 0)
+                <button class="pdetail-tab" data-tab="download">{{ __('front.downloads') }}</button>
+                @endif
             </div>
 
             <div class="pdetail-panels">
@@ -92,6 +95,46 @@
                         @endif
                     </div>
                 </div>
+
+                @if($product->downloads && $product->downloads->count() > 0)
+                <div class="pdetail-panel" data-panel="download">
+                    <div class="pdetail-downloads-grid">
+                        @foreach ($product->downloads as $download)
+                            <div class="pdetail-download-card">
+                                <div class="pdetail-download-main">
+                                    <div class="pdetail-download-ico">
+                                        <svg width="20" height="20" viewBox="0 0 24 24">
+                                            <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" fill="none"
+                                                stroke="#01AD5E" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <div class="pdetail-download-text">
+                                        <div class="pdetail-download-title">{{ $locale === 'ar' ? $download->title_ar : $download->title_en }}</div>
+                                        <div class="pdetail-download-meta">
+                                            {{ $download->file_type }}
+                                            @if ($download->file_size)
+                                                · {{ $download->file_size }}
+                                            @endif
+                                            @if ($download->updated_date)
+                                                · {{ __('front.updated') }} {{ $download->updated_date->format('M d, Y') }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ asset('assets/admin/uploads/downloads/' . $download->file_path) }}"
+                                    download class="pdetail-download-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24">
+                                        <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14" fill="none"
+                                            stroke="#9b51e0" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
 
             </div>
         </div>

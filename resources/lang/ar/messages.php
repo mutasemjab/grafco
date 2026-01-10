@@ -305,4 +305,8 @@ return [
 'search' => 'بحث',
 'search_categories' => 'البحث بالاسم أو الرقم...',
 'all' => 'الكل',
+'key_features_en' => 'المميزات في الانجليزي',
+'key_features_en' => 'المميزات في العربي',
+'is_active' => 'متاح',
+'current_file' => 'الملف الحالي',
 ];

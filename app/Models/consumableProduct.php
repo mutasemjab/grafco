@@ -20,4 +20,8 @@ class ConsumableProduct extends Model
     {
         return $this->belongsTo(Consumable::class);
     }
+     public function downloads()
+    {
+        return $this->hasMany(ConsumableProductDownload::class);
+    }
 }

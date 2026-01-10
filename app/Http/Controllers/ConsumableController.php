@@ -9,13 +9,17 @@ class ConsumableController extends Controller
 {
     public function index()
     {
-        // Get consumables grouped by type
-        $offsetConsumables = Consumable::with('products')
+        // Get consumables grouped by type with only active products
+        $offsetConsumables = Consumable::with(['products' => function($query) {
+                $query->where('is_active', true);
+            }])
             ->where('type', 'offset')
             ->orderBy('order')
             ->get();
         
-        $digitalConsumables = Consumable::with('products')
+        $digitalConsumables = Consumable::with(['products' => function($query) {
+                $query->where('is_active', true);
+            }])
             ->where('type', 'digital')
             ->orderBy('order')
             ->get();
@@ -27,9 +31,13 @@ class ConsumableController extends Controller
     }
    
 
-      public function show($id)
+    public function show($id)
     {
-        $product = ConsumableProduct::with('consumable')->findOrFail($id);
+        // Find active product only
+        $product = ConsumableProduct::with('consumable')
+            ->where('is_active', true)
+            ->findOrFail($id);
+            
         $consumables = Consumable::all();
         $locale = app()->getLocale();
         $setting = Setting::first();
