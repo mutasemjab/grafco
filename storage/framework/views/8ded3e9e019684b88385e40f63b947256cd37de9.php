@@ -27,7 +27,7 @@
             </span>
             <div class="help-text">
                 <div class="help-title"><?php echo e(__('front.need_help')); ?></div>
-             <a class="help-phone" href="tel:+08505447514" dir="ltr">
+             <a class="help-phone" href="tel: <?php echo e($setting->phone); ?>" dir="ltr">
                 <?php echo e($setting->phone); ?>
 
             </a>

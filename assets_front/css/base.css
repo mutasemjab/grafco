@@ -61,22 +61,33 @@ body {
     gap: 10px;
     color: var(--neutral);
 }
+
 .help .ico {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* 🔥 KEY FIX */
 }
+
+.help-text {
+    min-width: 0; /* 🔥 IMPORTANT for Android */
+}
+
 .help-title {
     font-size: 13px;
     opacity: 0.8;
     line-height: 1;
 }
+
 .help-phone {
     display: block;
     text-decoration: none;
     color: var(--ink);
     font-weight: 600;
     margin-top: 2px;
+    white-space: nowrap;
+        overflow: hidden;
+    text-overflow: ellipsis;
 }
 .top-actions {
     display: flex;

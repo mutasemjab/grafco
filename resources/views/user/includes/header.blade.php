@@ -27,7 +27,7 @@
             </span>
             <div class="help-text">
                 <div class="help-title">{{ __('front.need_help') }}</div>
-             <a class="help-phone" href="tel:+08505447514" dir="ltr">
+             <a class="help-phone" href="tel: {{$setting->phone}}" dir="ltr">
                 {{$setting->phone}}
             </a>
 
